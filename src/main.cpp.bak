@@ -1,0 +1,32 @@
+#include <SDL2/SDL_events.h>
+#include <iostream>
+#include <sstream>
+
+#include "../include/Knuppel/window/window.hpp"
+
+void process_keyboard(Window& window, Keyboard keyboard) {
+	if(keyboard.up == 27) {
+		std::cout << "Closing" << std::endl;
+		window.close();
+	}
+}
+
+
+int main() {
+	Window window = Window("Hello Knuppel", 800, 600);
+
+	while(window.is_open()) {
+		switch (window.process_event()) {
+			case Event::QUIT:
+				window.close();
+				break;
+
+			case Event::KEYUP:
+				process_keyboard(window, window.keyboard());
+				break;
+
+			default:
+				break;
+		}
+	}
+}
