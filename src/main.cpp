@@ -21,34 +21,18 @@ void process_keyboard(Window& window, Keyboard keyboard) {
 int main() {
 	Window window = Window("Hello Knuppel", 800, 600, true);
 
-	// Triangle triangle(500.0f, 400.0f, 50.0f);  // Triangle at (0, 0) with width 0.5 and height 0.5
-	// Rectangle rectangle(100.0f, 200.0f, 50, 50, { 1, 0, 0 });
-	// Rectangle rectangle2(300.0f, 250.0f, 70, 70);
-
-
-	// Triangle triangle(100, 100, 50.0f);
-	// Triangle triangle(100, 100, 50.0f, Color { 1.0f, 1.0f, 0.0f });
-	// Triangle triangle(100, 100, 50.0f,
-	// 	{
-	// 		1.0f, 0.0f, 0.0f,
-	// 		0.0f, 1.0f, 0.0f,
-	// 		0.0f, 0.0f, 1.0f
-	// 	}
-	// );
-
-
-	// Rectangle triangle(100, 100, 50.0f, 50.0f);
-	Rectangle triangle(100, 100, 50.0f, 50.0f, Color { 1.0f, 1.0f, 0.0f });
-	// Rectangle triangle(100, 100, 50.0f, 50.0f
-	// 	{
-	// 		1.0f, 0.0f, 0.0f,
-	// 		0.0f, 1.0f, 0.0f,
-	// 		0.0f, 0.0f, 1.0f
-	// 	}
-	// );
+	Triangle triangle(500.0f, 400.0f, 100.0f, Color { 1.0f, 1.0f, 0.0f });
+	Rectangle rectangle(100, 100, 100.0f, 100.0f,
+		{
+			1.0f, 0.0f, 0.0f, 1.0f,
+			0.0f, 1.0f, 0.0f, 1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f,
+			1.0f, 1.0f, 0.0f, 1.0f
+		}
+	);
 
 	while(window.is_open()) {
-		window.clear(1.0, 0.5, 1.0);
+		window.clear(1.0f, 0.5f, 1.0f);
 		switch (window.process_event()) {
 			case Event::QUIT:
 				window.close();
@@ -64,8 +48,7 @@ int main() {
 		}
 
 		triangle.draw();
-		// rectangle.draw();
-		// rectangle2.draw();
+		rectangle.draw();
 
 		window.swap();
 	}

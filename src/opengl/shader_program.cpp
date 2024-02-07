@@ -48,7 +48,7 @@ ShaderProgram::ShaderProgram(const char* vertex_shader_source, const char* fragm
 	if(!success) {
 		GLchar info_log[512];
 		glGetShaderInfoLog(fragment_shader, 512, NULL, info_log);
-		SDL_Log("Fragment shader compilation failed: \n~> %s", info_log);
+		SDL_Log("\nFragment shader compilation failed: \n~> %s", info_log);
 	}
 
 
@@ -63,7 +63,7 @@ ShaderProgram::ShaderProgram(const char* vertex_shader_source, const char* fragm
 	if(!success) {
 		GLchar info_log[512];
 		glGetProgramInfoLog(this->programID, 512, NULL, info_log);
-		SDL_Log("Had error on linking shaders: \n~> %s", info_log);
+		SDL_Log("Had error on linking shaders: \n~> %s\n", info_log);
 	}
 
 	// Not necessary anymore

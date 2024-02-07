@@ -12,42 +12,30 @@ BaseShape::BaseShape(const float x, const float y, const std::vector<unsigned in
 	this->vbo = std::make_unique<VBO>();
 	this->ebo = std::make_unique<const EBO>(indices);
 	this->shader = std::make_unique<const ShaderProgram>(this->vertexShaderSource, this->fragmentShaderSource);	
-
-	// this->vbo = new VBO();
-	// this->ebo = new EBO(indices);
-	// this->shader = new ShaderProgram(this->vertexShaderSource, this->fragmentShaderSource);
 }
 
 BaseShape::BaseShape(const float x, const float y, const std::vector<unsigned int>& indices, const Color& color, const int vertices_count)
 	: x(x), y(y) {
 
 	// This is important in case of a square
-	std::vector<float> colors(vertices_count * 3, 0.0f); 
+	const int dimension = 4; // RGBA
+	std::vector<float> colors(vertices_count * dimension, 0.0f); 
 	for(int i = 0; i < vertices_count; i++) {
-		auto it = colors.begin() + (i * 3); // Calculate the insertion position for this vertex
-		colors.insert(it, { color.r, color.g, color.b }); // Insert the color components
+		auto it = colors.begin() + (i * dimension);                // Calculate the insertion position for this vertex
+		colors.insert(it, { color.r, color.g, color.b, color.a }); // Insert the color components
 	}
 
-	this->vbo = std::make_unique<VBO>(colors);
+	this->vbo = std::make_unique<VBO>(colors, 1, dimension);
 	this->ebo = std::make_unique<const EBO>(indices);
 	this->shader = std::make_unique<const ShaderProgram>(this->vertexShaderSource, this->fragmentShaderSource);	
-
-	// this->vbo = new VBO(colors);
-	// this->ebo = new EBO(indices);
-	// this->shader = new ShaderProgram(this->vertexShaderSource, this->fragmentShaderSource);
-	
 }
 
 BaseShape::BaseShape(const float x, const float y, const std::vector<unsigned int>& indices, const std::vector<float>& colors)
 	: x(x), y(y) {
 
-	this->vbo = std::make_unique<VBO>(colors);
+	this->vbo = std::make_unique<VBO>(colors, 1, 4);
 	this->ebo = std::make_unique<const EBO>(indices);
 	this->shader = std::make_unique<const ShaderProgram>(this->vertexShaderSource, this->fragmentShaderSource);	
-
-	// this->vbo = new VBO(colors);
-	// this->ebo = new EBO(indices);
-	// this->shader = new ShaderProgram(this->vertexShaderSource, this->fragmentShaderSource);
 }
 
 

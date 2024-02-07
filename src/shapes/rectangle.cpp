@@ -13,10 +13,10 @@ Rectangle::Rectangle(const float x, const float y, const float width, const floa
 
 			// COLORS //
 			{
+				1.0f, 1.0f, 1.0f, // Top Right
 				1.0f, 1.0f, 1.0f, // Bottom Right
 				1.0f, 1.0f, 1.0f, // Bottom Left
-				1.0f, 1.0f, 1.0f, // Top
-				1.0f, 1.0f, 1.0f  // Top
+				1.0f, 1.0f, 1.0f  // Top Left
 			}
 		),
 

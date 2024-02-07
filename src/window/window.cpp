@@ -42,9 +42,16 @@ Window::Window(const std::string& title, const int width, const int height, cons
 
 	glViewport(0, 0, width, height); // Not really necessary
 
+	// Enable transparency
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Non-premultiplied alpha
+
 	if(show_info) {
-		SDL_Log("OpengGL Loaded! \nVersion: %s \nVendor: %s \nRenderer: %s", glGetString(GL_VERSION), glGetString(GL_VENDOR), glGetString(GL_RENDERER));
-		SDL_Log("Viewport: %dx%d", width, height);
+		SDL_Log("OpengGL Loaded!");
+		SDL_Log("Vendor: %s", glGetString(GL_VENDOR));
+		SDL_Log("Version: %s", glGetString(GL_VERSION));
+		SDL_Log("Renderer: %s", glGetString(GL_RENDERER));
+		SDL_Log("Viewport: %dx%d \n==========\n", width, height);
 	}
 }
 

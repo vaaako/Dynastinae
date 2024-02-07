@@ -6,7 +6,7 @@
 class VBO {
 	public:
 		VBO();
-		VBO(const std::vector<float>& data); // Any data as the first one
+		VBO(const std::vector<float>& data, const int position = 0, const int dimension = 3); // Any data as the first one
 		VBO(const std::vector<float>& vertices, const std::vector<float>& color);
 		~VBO() {
 			glDeleteBuffers(1, &this->id);

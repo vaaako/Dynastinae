@@ -2,8 +2,6 @@
 #include "../../include/utils/calc.hpp"
 #include "../../include/window/window.hpp"
 
-
-// TODO -- Add scaleY and scaleZ to constructor
 Triangle::Triangle(const float x, const float y, const float size)
 	: BaseShape(x, y, 
 			// INDICES //
@@ -62,7 +60,7 @@ void Triangle::make_vertices() const {
 
 		trans_x,                     trans_y,              0.0f, // Top Left
 		trans_x + trans_size,        trans_y,              0.0f, // Top Right
-		trans_x + trans_size / 2.0f, trans_y + trans_size, 0.0f // Bottom Middle
+		trans_x + trans_size / 2.0f, trans_y + trans_size, 0.0f  // Bottom Middle
 	};
 
 	// Colors was defined alredy as position 1, position of vertices keep 1
