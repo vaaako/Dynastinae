@@ -4,32 +4,29 @@
 #include "../opengl/vao.hpp"
 #include "../opengl/vbo.hpp"
 #include "../opengl/ebo.hpp"
+#include "../types/color.hpp"
+#include <algorithm>
+#include <memory>
 #include <vector>
 
 
 class BaseShape {
 	public:
-		BaseShape(const float x, const float y);
+		BaseShape(const float x, const float y, const std::vector<unsigned int>& indices);
+		BaseShape(const float x, const float y, const std::vector<unsigned int>& indices, const Color& color, const int vertices_count = 3);
 
-		// Only this is being used right now
+		// Be sure colors has the right amount of vertices
 		BaseShape(const float x, const float y, const std::vector<unsigned int>& indices, const std::vector<float>& colors);
 
-		BaseShape(const float x, const float y, const std::vector<float>& vertices, 
-			const std::vector<unsigned int>& indices, std::vector<float>& colors);
-
-		// For passing non declared vectors
-		BaseShape(const float x, const float y, const std::vector<float> vertices, 
-			const std::vector<unsigned int> indices, std::vector<float> colors);
-
-		~BaseShape() {
-			// delete vao;
-			// delete vbo;
-			// delete ebo;
-			// delete shader;
-		}
+		~BaseShape() = default;
 
 		virtual inline void draw() {
 			// glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+			// this->shader->use();
+			// this->vao->bind();
+			// this->draw_array();
+			// this->vao->unbind();
 
 			this->shader->use();
 			this->vao->bind();
@@ -40,14 +37,22 @@ class BaseShape {
 	protected:
 		const float x;
 		const float y;
+		
+		// VBO* vbo = nullptr;
+		std::unique_ptr<VBO> vbo; // VBO may use store_data after
 
-		const VAO* vao = nullptr;
-		VBO* vbo = nullptr; // VBO may use store_data after
-		const ShaderProgram* shader = nullptr;
+		// Make VAO right away
+		const std::unique_ptr<const VAO> vao = std::make_unique<VAO>(); 
+		std::unique_ptr<const ShaderProgram> shader = nullptr; // If try to make ShaderProgram here, the shaders will not be initialized yet
+		
+		// const VAO vao = VAO();
+		// const ShaderProgram* shader = nullptr;
+
 		virtual inline void draw_array() const = 0;
 
 	private:
-		const EBO* ebo = nullptr;
+		// const EBO* ebo = nullptr;
+		std::unique_ptr<const EBO> ebo = nullptr;
 
 		const char* vertexShaderSource = R"(
 			#version 330 core

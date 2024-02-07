@@ -26,35 +26,26 @@ int main() {
 	// Rectangle rectangle2(300.0f, 250.0f, 70, 70);
 
 
-    std::random_device rd; // obtain a random number from hardware
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> distr_w(10, window.get_width());
-	std::uniform_int_distribution<> distr_h(10, window.get_height());
-	std::uniform_int_distribution<> distr_size(10, 50);
-
-	std::vector<Rectangle> rects;
-	std::vector<Triangle> triangs;
-	for(int i = 0; i < 100; i++) {
-		const float x = (float)(distr_w(gen));
-		const float y = (float)(distr_h(gen));
-
-		const float r = (static_cast<float>(std::rand()) / RAND_MAX);
-		const float g = (static_cast<float>(std::rand()) / RAND_MAX);
-		const float b = (static_cast<float>(std::rand()) / RAND_MAX);
-		rects.push_back( Rectangle(x, y, (float)distr_size(gen), (float)(distr_size(gen)), { r, g, b }) );
-	}
-
-	for(int i = 0; i < 100; i++) {
-		const float x = (float)(distr_w(gen));
-		const float y = (float)(distr_h(gen));
-
-		const float r = (static_cast<float>(std::rand()) / RAND_MAX);
-		const float g = (static_cast<float>(std::rand()) / RAND_MAX);
-		const float b = (static_cast<float>(std::rand()) / RAND_MAX);
-		triangs.push_back( Triangle(x, y, (float)distr_size(gen), { r, g, b }) );
-	}
+	// Triangle triangle(100, 100, 50.0f);
+	// Triangle triangle(100, 100, 50.0f, Color { 1.0f, 1.0f, 0.0f });
+	// Triangle triangle(100, 100, 50.0f,
+	// 	{
+	// 		1.0f, 0.0f, 0.0f,
+	// 		0.0f, 1.0f, 0.0f,
+	// 		0.0f, 0.0f, 1.0f
+	// 	}
+	// );
 
 
+	// Rectangle triangle(100, 100, 50.0f, 50.0f);
+	Rectangle triangle(100, 100, 50.0f, 50.0f, Color { 1.0f, 1.0f, 0.0f });
+	// Rectangle triangle(100, 100, 50.0f, 50.0f
+	// 	{
+	// 		1.0f, 0.0f, 0.0f,
+	// 		0.0f, 1.0f, 0.0f,
+	// 		0.0f, 0.0f, 1.0f
+	// 	}
+	// );
 
 	while(window.is_open()) {
 		window.clear(1.0, 0.5, 1.0);
@@ -72,14 +63,9 @@ int main() {
 				break;
 		}
 
-		// triangle.draw();
+		triangle.draw();
 		// rectangle.draw();
 		// rectangle2.draw();
-
-		for(long unsigned int i = 0; i < rects.size(); i++) {
-			rects.at(i).draw();
-			triangs.at(i).draw();
-		}
 
 		window.swap();
 	}

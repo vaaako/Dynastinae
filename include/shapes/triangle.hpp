@@ -8,7 +8,7 @@ class Triangle : public BaseShape {
 	public:
 		Triangle(const float x, const float y, const float size);
 		Triangle(const float x, const float y, const float size, const Color& color);
-		// Triangle(const float x, const float y, const float size, const std::vector<float>& colors);
+		Triangle(const float x, const float y, const float size, const std::vector<float>& colors);
 
 		void make_vertices() const;
 

@@ -7,6 +7,7 @@ class Rectangle : public BaseShape {
 	public:
 		Rectangle(const float x, const float y, const float width, const float height);
 		Rectangle(const float x, const float y, const float width, const float height, const Color& color);
+		Rectangle(const float x, const float y, const float width, const float height, const std::vector<float>& colors);
 
 		void make_vertices() const;
 

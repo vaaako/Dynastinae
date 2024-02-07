@@ -4,19 +4,18 @@
 
 
 // TODO -- Add scaleY and scaleZ to constructor
-// TODO -- Fix to color edit Shader instead of color vector
-// TODO -- Add option to custom array of colors (check if lenght is correct then store_data vertex and colros)
 Triangle::Triangle(const float x, const float y, const float size)
 	: BaseShape(x, y, 
-		// INDICES //
-		{ 0, 1, 2 },
+			// INDICES //
+			{ 0, 1, 2 },
 
-		// COLORS //
-		{
-			1.0f, 1.0f, 1.0f, // Bottom Right
-			1.0f, 1.0f, 1.0f, // Bottom Left
-			1.0f, 1.0f, 1.0f  // Top
-		}),
+			// COLORS //
+			{
+				1.0f, 1.0f, 1.0f, // Bottom Right
+				1.0f, 1.0f, 1.0f, // Bottom Left
+				1.0f, 1.0f, 1.0f  // Top
+			}
+		),
 
 		size(size)
 
@@ -27,26 +26,21 @@ Triangle::Triangle(const float x, const float y, const float size)
 
 
 Triangle::Triangle(const float x, const float y, const float size, const Color& color)
-	: BaseShape(x, y, 
-		// INDICES //
-		{ 0, 1, 2 },
-
-		// COLORS //
-		{
-			color.r, color.g, color.b, // Bottom Right
-			color.r, color.g, color.b, // Bottom Left
-			color.r, color.g, color.b  // Top
-
-			// color.r,    0.0f,    0.0f, // Bottom Right
-			//    0.0f, color.g, color.b, // Bottom Left
-			//    0.0f,    0.0f,    0.0f  // Top
-		}),
-
-		size(size)
+	: BaseShape(x, y, { 0, 1, 2 }, color), size(size)
 
 	{
 		this->make_vertices();
 	}
+
+
+Triangle::Triangle(const float x, const float y, const float size, const std::vector<float>& colors)
+	: BaseShape(x, y, { 0, 1, 2 }, colors), size(size)
+
+	{
+
+		this->make_vertices();
+	}
+
 
 
 void Triangle::make_vertices() const {
