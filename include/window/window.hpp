@@ -44,9 +44,8 @@ class Window {
 			return this->window_open;
 		}
 
-		inline void clear(const float r, const float g, const float b, const float o) {
+		inline void clear(const float r, const float g, const float b, const float o = 1.0f) {
 			// Rendering
-			// glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClearColor(r, g, b, o);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
@@ -66,6 +65,26 @@ class Window {
 			return this->keybrd;
 		}
 
+		inline int get_width() {
+			return this->width;
+		}
+
+		inline int get_height() {
+			return this->height;
+		}
+
+		static inline int get_static_width() {
+			int width;
+			SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), &width, NULL);
+			return width;
+		}
+
+		static inline int get_static_height() {
+			int height;
+			SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), NULL, &height);
+			return height;
+		}
+
 		/**
 		 * VIRTUAL */
 		// virtual void keydown(const int code) = 0;
@@ -73,6 +92,8 @@ class Window {
 		SDL_Window* window;
 		SDL_GLContext glContext;
 		bool window_open = true;
+		const int width;
+		const int height;
 
 		// KEYS
 		Keyboard keybrd = Keyboard();

@@ -10,7 +10,7 @@ class EBO {
 			glDeleteBuffers(1, &this->id);
 		}
 
-		inline void bind() {
+		inline void bind() const {
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->id);
 		}
 	private:

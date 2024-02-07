@@ -1,7 +1,9 @@
 #include "../../include/opengl/vbo.hpp"
 
-VBO::VBO(const std::vector<float>& vertices) {
-	this->store_data(0, 3, vertices);
+VBO::VBO() {}
+
+VBO::VBO(const std::vector<float>& data) {
+	this->store_data(1, 3, data);
 }
 
 VBO::VBO(const std::vector<float>& vertices, const std::vector<float>& color) {

@@ -3,7 +3,8 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 
-Window::Window(const std::string& title, const int width, const int height, const bool show_info) {
+Window::Window(const std::string& title, const int width, const int height, const bool show_info)
+	: width(width), height(height) {
 	const bool init = this->init_window();
 
 	// Check if was inited succesfully
@@ -21,7 +22,7 @@ Window::Window(const std::string& title, const int width, const int height, cons
 
 		width, height,
 
-		SDL_WINDOW_OPENGL
+		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
 	);
 
 	if(!this->window) {
@@ -39,14 +40,18 @@ Window::Window(const std::string& title, const int width, const int height, cons
 		return;
 	}
 
+	glViewport(0, 0, width, height); // Not really necessary
+
 	if(show_info) {
-		SDL_Log("OpengGL Loaded! \nVersion: %s \nVendor: %s \nRenderer: %s", glGetString(GL_VERSION), glGetString(GL_RENDERER), glGetString(GL_VERSION));
+		SDL_Log("OpengGL Loaded! \nVersion: %s \nVendor: %s \nRenderer: %s", glGetString(GL_VERSION), glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+		SDL_Log("Viewport: %dx%d", width, height);
 	}
 }
 
 
 bool Window::init_window() const {
 	// Init SDL
+	// SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);

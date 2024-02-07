@@ -1,28 +1,81 @@
 #include "../../include/shapes/triangle.hpp"
+#include "../../include/utils/calc.hpp"
+#include "../../include/window/window.hpp"
 
-Triangle::Triangle(const float x, const float y, const float width, const float height) {
-	// Define the vertices and indices for a 2D triangle
+
+// TODO -- Add scaleY and scaleZ to constructor
+// TODO -- Fix to color edit Shader instead of color vector
+// TODO -- Add option to custom array of colors (check if lenght is correct then store_data vertex and colros)
+Triangle::Triangle(const float x, const float y, const float size)
+	: BaseShape(x, y, 
+		// INDICES //
+		{ 0, 1, 2 },
+
+		// COLORS //
+		{
+			1.0f, 1.0f, 1.0f, // Bottom Right
+			1.0f, 1.0f, 1.0f, // Bottom Left
+			1.0f, 1.0f, 1.0f  // Top
+		}),
+
+		size(size)
+
+	{
+		this->make_vertices();
+	}
+
+
+
+Triangle::Triangle(const float x, const float y, const float size, const Color& color)
+	: BaseShape(x, y, 
+		// INDICES //
+		{ 0, 1, 2 },
+
+		// COLORS //
+		{
+			color.r, color.g, color.b, // Bottom Right
+			color.r, color.g, color.b, // Bottom Left
+			color.r, color.g, color.b  // Top
+
+			// color.r,    0.0f,    0.0f, // Bottom Right
+			//    0.0f, color.g, color.b, // Bottom Left
+			//    0.0f,    0.0f,    0.0f  // Top
+		}),
+
+		size(size)
+
+	{
+		this->make_vertices();
+	}
+
+
+void Triangle::make_vertices() const {
+	const float width  = static_cast<float>(Window::get_static_width());
+	const float height = static_cast<float>(Window::get_static_height());
+
+	// Translate Width and Height
+	const float trans_size = Calc::translate_size(this->size, width);
+
+	// Translate X and Y
+	const float trans_x = Calc::translate_x(this->x + this->size  / 2.0f, width)  - trans_size / 2.0f;
+	const float trans_y = Calc::translate_y(this->y + this->size  / 2.0f, height) - trans_size / 2.0f;
+
+	// Dividing by 2: Creates an equilateral 
 	const std::vector<float> vertices = {
-		// x,                y,          0.0f,
-		// x + width,        y,          0.0f,
-		// x + width * 0.5f, y + height, 0.0f,
-		 0.5f, -0.5f, 0.0f,
-		-0.5f, -0.5f, 0.0f,
-		 0.0f,  0.5f, 0.0f,
+		// (-0.5f * trans_size) + trans_x, (-0.5f * trans_size) + trans_y, 0.0f, // Bottom left
+		// ( 0.5f * trans_size) + trans_x, (-0.5f * trans_size) + trans_y, 0.0f, // Bottom Right
+		//                        trans_x, ( 0.5f * trans_size) + trans_y, 0.0f, // Top corner
+
+		trans_x,                     trans_y,              0.0f, // Top Left
+		trans_x + trans_size,        trans_y,              0.0f, // Top Right
+		trans_x + trans_size / 2.0f, trans_y + trans_size, 0.0f // Bottom Middle
 	};
 
-	const std::vector<float> colors = {
-		1.0f, 0.0f, 0.0f, // Bottom Right
-		0.0f, 1.0f, 0.0f, // Bottom Left
-		0.0f, 0.0f, 1.0f  // Top
-	};
-
-	const std::vector<unsigned int> indices = {
-		0, 1, 2
-	};
-
-	this->vao = new VAO();
-	this->vbo = new VBO(vertices, colors);
-	this->ebo = new EBO(indices);
-	this->shader = new ShaderProgram(this->vertexShaderSource, this->fragmentShaderSource);
+	// Colors was defined alredy as position 1, position of vertices keep 1
+	this->vbo->store_data(0, 3, vertices);
 }
+
+
+// -0.5f, -0.5f, 0.0f,
+//  0.5f, -0.5f, 0.0f,
+//  0.0f,  0.5f, 0.0f

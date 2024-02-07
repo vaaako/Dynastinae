@@ -9,7 +9,7 @@ class ShaderProgram {
 			glDeleteProgram(this->programID);
 		}
 
-		inline void use() {
+		inline void use() const {
 			glUseProgram(this->programID);
 		}
 	private:

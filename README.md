@@ -4,6 +4,9 @@
 
 Using `SDL2` and `Glad` I aim to create a very simple to use framework to supply my needs
 
+![demo2](media/demo2.png)
+![demo3](media/demo3.png)
+
 # Current Stage
 **Knuppel** is in very early stages, check `src/main.cpp`
 
@@ -11,10 +14,10 @@ Using `SDL2` and `Glad` I aim to create a very simple to use framework to supply
 - [X] Window creation
 - [X] Events
     + Not all, but I can add more if I need
-- [ ] 2D shapes
-    + [ ] Draw
-    + [ ] Colors
-    + [ ] Position
+- [X] 2D shapes
+    + [X] Draw
+    + [X] Colors
+    + [X] Position
     + [ ] Texture
 - [ ] 3D shapes
     + [ ] Draw
