@@ -30,8 +30,8 @@ Using `SDL2` and `Glad` I aim to create a very simple to use framework to supply
 You will need to install[`SDL2`](https://www.libsdl.org/) *(If you are on Linux is probably avaiable on your package manager)*,
 
 ## Compiling
-- If you want to compile as `lib` and use in any project, you will need `Make`
-- If you just want to test and use `main.cpp` *(inside `src/`)*, you will ned `CMake`
+- If you want to compile as a `lib` `.so` file and use in any project, you will need `Make`
+- If you just want to test and use `main.cpp` *(inside `src/`)*, you will need `CMake`
 
 ## CMake
 ```sh
@@ -44,17 +44,10 @@ This way you will run the `main.cpp`
 
 ## Make
 ```sh
-mkdir build # Make build directory
-make        # Compile
+make
 ```
 This will create a `lib/` folder, inside it you should have a file called `libknuppel.so`, if you want to use this file,
  locally, you can move to your project directory and link to your program
-
-For now, You will also need `glad.o`
-```sh
-clang -c libs/glad/glad.c
-```
->I will change this later
 
 ## Linking to your program
 ### Locally
@@ -67,7 +60,7 @@ Let's say you have a file called `main.cpp` importing **Knuppel**, you should in
 
 To run the program with `Knuppel` linked, you should run the following command:
 ```sh
-clang++ main.cpp glad.o -lSDL2 -L. -lknuppel glad.o -o game
+clang++ main.cpp glad.o -lSDL2 -L. -lknuppel -o game
 ```
 
 ### Globally
