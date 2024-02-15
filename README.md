@@ -18,20 +18,24 @@ Using `SDL2` and `Glad` I aim to create a very simple to use framework to supply
     + [X] Draw
     + [X] Colors
     + [X] Position
-    + [ ] Texture
+    + [X] Texture
 - [ ] 3D shapes
     + [ ] Draw
     + [ ] Colors
     + [ ] Position
     + [ ] Texture
+- [ ] Audio
+- [ ] Gif texture?
 
 # Running
 ## Dependencies
-You will need to install[`SDL2`](https://www.libsdl.org/) *(If you are on Linux is probably avaiable on your package manager)*,
- With `SDL2 Image`
+- [`SDL2`](https://www.libsdl.org/) With [`SDL2 Image`](https://wiki.libsdl.org/SDL2_image/FrontPage)
+- [`GLEW`](https://glew.sourceforge.net/)
+
+*(If you are on Linux is probably all avaiable on your package manager)*,
 
 ## Compiling
-- If you want to compile as a `lib` `.so` file and use in any project, you will need `Make`
+- If you want to compile as a `lib` file and use in any project, you will need `Make`
 - If you just want to test and use `main.cpp` *(inside `src/`)*, you will need `CMake`
 
 ## CMake
@@ -41,8 +45,6 @@ cmake --build build # Compile
 ./build/knuppel     # Run
 ```
 
-This way you will run the `main.cpp`
-
 ## Make
 ```sh
 make
@@ -50,36 +52,40 @@ make
 This will create a `lib/` folder, inside it you should have a file called `libknuppel.so`, if you want to use this file,
  locally, you can move to your project directory and link to your program
 
+**WARNING:** Local link doesn't seem to work well, so follow the next section to have a global link of the lib
+
 ## Linking to your program
-### Locally
-Move `include` folder to your project
+<!-- ### Locally -->
+<!-- Move `include` folder to your project -->
+<!---->
+<!-- Let's say you have a file called `main.cpp` importing **Knuppel**, you should include with `""`: -->
+<!-- ```cpp -->
+<!-- #include "include/Knuppel/window/window.hpp" -->
+<!-- ``` -->
+<!---->
+<!-- To run the program with `Knuppel` linked, you should run the following command: -->
+<!-- ```sh -->
+<!-- clang++ main.cpp -lSDL2 -lSDL2_image -lGL -lGLEW -L. -lknuppel -o game -->
+<!-- ``` -->
 
-Let's say you have a file called `main.cpp` importing **Knuppel**, you should include with `""`:
-```cpp
-#include "include/Knuppel/window/window.hpp"
-```
+<!-- ### Globally -->
+<!-- Alternativally, to not have to use `-L.` flag, you can move `libknuppel.so` to `/usr/lib` and **Knuppel**'s include folder to `/usr/include`, -->
+<!--  this way you don't need to move `libknuppel.so` to every project you want to use it -->
 
-To run the program with `Knuppel` linked, you should run the following command:
-```sh
-clang++ main.cpp glad.o -lSDL2 -lSDL2_image -L. -lknuppel -o game
+Move some files
 ```
-
-### Globally
-Alternativally, to not have to use `-L.` flag, you can move `libknuppel.so` to `/usr/lib` and **Knuppel**'s include folder to `/usr/include`,
- this way you don't need to move `libknuppel.so` to every project you want to use it
-```
-sudo cp -r libknuppel.so /usr/lib/
+sudo cp libknuppel.so /usr/lib/
 sudo cp -r include/ /usr/include/Knuppel
 ```
 
-Then you can include with `<>`
+Then you can include properly
 ```cpp
 #include <Knuppel/window/window.hpp>
 ```
 
-And run without `-L.` flag
+And now you can run
 ```sh
-clang++ main.cpp -lSDL2 -lSDL2_image -lknuppel -o game
+clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lknuppel -o game
 ```
 
 # Credits

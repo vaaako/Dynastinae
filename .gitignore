@@ -5,7 +5,10 @@
 # Build
 build/
 lib/
+libs/
 *.o
 
-# Examples not ready yet
-example/
+*.a
+
+tests/
+examples/

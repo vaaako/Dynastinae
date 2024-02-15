@@ -1,13 +1,9 @@
 # COMPILER
-CC = clang
-CCFLAGS = -O3
 CXX = clang++
-CXXFLAGS = -std=c++20 -O3
+CXXFLAGS = -std=c++20 -O2
 
 # LIBS
-LIBS = -lSDL2 -lGL -lGLEW
-GLAD_OBJ = glad.o
-GLAD_SRC = libs/glad
+LIBS = -lGL -lGLEW -lSDL2 -lSDL2_image
 
 # DIRECTORIES
 BUILD_DIR = lib
@@ -17,16 +13,13 @@ OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRC_FILES)) # Derive obj
 
 # TARGET
 TARGET = knuppel
-TARGET_LIB = knuppel.so
+TARGET_LIB = libknuppel.so
 # $@ - Func name
 
 
 # FUNCTIONS
 #
 # Build shared library
-# $(TARGET_LIB): $(OBJS) $(BUILD_DIR)/$(GLAD_OBJ)
-# 	$(CXX) -shared -o $(BUILD_DIR)/$@ $^ $(LIBS)
-
 $(TARGET_LIB): $(OBJS)
 	$(CXX) -shared -o $(BUILD_DIR)/$@ $^ $(LIBS)
 
@@ -34,12 +27,6 @@ $(TARGET_LIB): $(OBJS)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D) # Make dir for each .cpp
 	$(CXX) $(CXXFLAGS) -fPIC -c -o $@ $<
-
-# Build and copy glad object
-# $(BUILD_DIR)/$(GLAD_OBJ): $(GLAD_SRC)/$(GLAD_OBJ)
-# 	@mkdir -p $(BUILD_DIR) # Make build dir
-# 	$(CC) $(CCFLAGS) -fPIC -c $(GLAD_SRC)/glad.c -o $(BUILD_DIR)/$(GLAD_OBJ) # Compile glad
-# 	cp $< $(BUILD_DIR)/$(GLAD_OBJ)
 
 clean:
 	rm -rf $(BUILD_DIR)/*/*.o $(BUILD_DIR)/$(TARGET_LIB)

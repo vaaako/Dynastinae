@@ -12,7 +12,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include) # Get headers
 
 
 # Libs
-# add_library(glad STATIC libs/glad/glad.c) # On libs folder
 find_library(GL_LIB GL)
 find_library(GLEW_LIB GLEW)
 find_library(SDL2_LIB SDL2)
@@ -43,7 +42,6 @@ else()
 endif()
 
 # Link libraries
-# target_link_libraries(knuppel PRIVATE glad ${SDL2_LIB} ${SDL2_IMAGE_LIB})
 target_link_libraries(knuppel PRIVATE ${GL_LIB} ${GLEW_LIB} ${SDL2_LIB} ${SDL2_IMAGE_LIB})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
