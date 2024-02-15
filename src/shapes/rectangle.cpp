@@ -19,10 +19,7 @@ Rectangle::Rectangle(const float x, const float y, const float width, const floa
 				color.r, color.g, color.b, color.a,
 				color.r, color.g, color.b, color.a,
 				color.r, color.g, color.b, color.a
-			},
-
-			4 // Vertices
-
+			}
 		),
 
 		width(width), height(height)
@@ -40,7 +37,7 @@ Rectangle::Rectangle(const float x, const float y, const float width, const floa
 		{
 			0, 1, 2, // First triangle
 			0, 2, 3  // Second triangle
-		}, colors, 4),
+		}, colors),
 
 		width(width), height(height)
 

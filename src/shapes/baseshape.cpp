@@ -6,8 +6,8 @@
 
 /**
  * NO COLOR */
-BaseShape::BaseShape(const float x, const float y, const std::vector<unsigned int>& indices,  const unsigned int vertices)
-	: x(x), y(y), vertices(vertices) {
+BaseShape::BaseShape(const float x, const float y, const std::vector<unsigned int>& indices)
+	: x(x), y(y), indices_size(static_cast<unsigned int>(indices.size())) {
 
 	this->vbo = std::make_unique<VBO>();
 	this->ebo = std::make_unique<const EBO>(indices);
@@ -17,8 +17,8 @@ BaseShape::BaseShape(const float x, const float y, const std::vector<unsigned in
 
 /**
  * COLOR ARRAY */
-BaseShape::BaseShape(const float x, const float y, const std::vector<unsigned int>& indices, const std::vector<float>& colors,  const unsigned int vertices)
-	: x(x), y(y), vertices(vertices) {
+BaseShape::BaseShape(const float x, const float y, const std::vector<unsigned int>& indices, const std::vector<float>& colors)
+	: x(x), y(y), indices_size(static_cast<unsigned int>(indices.size())) {
 
 	this->vbo = std::make_unique<VBO>(colors, 1, 4);
 	this->ebo = std::make_unique<const EBO>(indices);

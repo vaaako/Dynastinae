@@ -10,15 +10,19 @@
 
 class BaseShape {
 	public:
-		BaseShape(const float x, const float y, const std::vector<unsigned int>& indices,  const unsigned int vertices);
-		BaseShape(const float x, const float y, const std::vector<unsigned int>& indices, const std::vector<float>& colors,  const unsigned int vertices); // Be sure colors has the right amount of vertices
+		BaseShape(const float x, const float y, const std::vector<unsigned int>& indices);
+		BaseShape(const float x, const float y, const std::vector<unsigned int>& indices, const std::vector<float>& colors); // Be sure colors has the right amount of vertices
 
 		~BaseShape() = default;
 
-		virtual inline void draw(const bool line = true) {
-			// if(line) {
-				// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			// }
+		virtual inline void draw(const bool outline = false) {
+			if(outline) {
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+			// Back to fill mode if not set to line
+			} else {
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
 
 			this->shader->use();
 
@@ -28,7 +32,7 @@ class BaseShape {
 			}
 
 			this->vao->bind();
-			this->draw_array(); // Set by shape
+			glDrawElements(GL_TRIANGLES, indices_size, GL_UNSIGNED_INT, 0);
 			this->vao->unbind();
 		}
 
@@ -55,7 +59,7 @@ class BaseShape {
 		// Shape basic info
 		const float x;
 		const float y;
-		const unsigned int vertices;
+		const unsigned int indices_size;
 
 		// VBO may use store_data later
 		std::unique_ptr<VBO> vbo;
@@ -67,7 +71,7 @@ class BaseShape {
 		std::unique_ptr<const ShaderProgram> shader = nullptr; // If try to make ShaderProgram here, the shaders will not be initialized yet
 		std::unique_ptr<const Texture> texture = nullptr;
 
-		virtual inline void draw_array() const = 0;
+		// virtual inline void draw_array() const = 0;
 	private:
 		std::unique_ptr<const EBO> ebo = nullptr;
 

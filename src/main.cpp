@@ -12,6 +12,11 @@ void process_keyboard(Window& window, Keyboard keyboard) {
 	}
 }
 
+/**
+ * TODO --
+ * - Texture "PNG" support
+ *
+ * */
 
 
 int main() {
@@ -24,7 +29,6 @@ int main() {
 	triangle.bind_texture(texture);
 
 	Rectangle rectangle(250.0f, 350.0f, 100.0f, 100.0f);
-	// Rectangle rectangle(100.0f, 100.0f, 100.0f, 100.0f, Color { 1.0f, 1.0f, 0.0f });
 	rectangle.bind_texture(texture);
 
 	Rectangle rainbow(100.0f, 100.0f, 300.0f, 300.0f,
@@ -38,9 +42,9 @@ int main() {
 	rainbow.bind_texture(texture);
 
 
-	Texture tex_background = Texture("src/background.jpg");
-	Rectangle background = Rectangle(0.0f, 0.0f, window.get_width(), window.get_height());
-	background.bind_texture(tex_background);
+	// Texture tex_background = Texture("src/background.jpg");
+	// Rectangle background = Rectangle(0.0f, 0.0f, (float)window.get_width(), (float)window.get_height());
+	// background.bind_texture(tex_background);
 
 
 	while(window.is_open()) {
@@ -59,8 +63,8 @@ int main() {
 				break;
 		}
 
-		background.draw();
-		triangle.draw();
+		// background.draw();
+		triangle.draw(true);
 		rainbow.draw();
 		rectangle.draw();
 

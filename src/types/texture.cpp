@@ -1,8 +1,8 @@
 #include "../../include/types/texture.hpp"
 
 #include <SDL2/SDL_image.h>
-
 #include <SDL2/SDL_render.h>
+
 #include "../../include/utils/sdl.hpp"
 
 
@@ -21,7 +21,7 @@ Texture::Texture(const char* file) {
 	if(surf == NULL) {
 		IMG_Quit();
 		SDL_Quit();
-		SDL_Log("Failed to load texture: %s", SDL_GetError());
+		SDL_Log("Failed to load texture \"%s\" \n%s", file, SDL_GetError());
 		return;
 	}
 

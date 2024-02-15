@@ -2,28 +2,6 @@
 #include <SDL2/SDL_log.h>
 #include <cstddef>
 
-// TEST //
-// const char* vertexShaderSource = R"(
-// 	#version 330 core
-
-// 	layout (location = 0) in vec3 aPos;
-
-// 	void main() {
-// 		gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-// 	}
-// )";
-
-// const char* fragmentShaderSource = R"(
-// 	#version 330 core
-
-// 	out vec4 FragColor;
-
-// 	void main() {
-// 		FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
-// 	}
-// )";
-// TEST //
-
 ShaderProgram::ShaderProgram(const char* vertex_shader_source, const char* fragment_shader_source) {
 	// Compile shaders
 	GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);

@@ -8,9 +8,7 @@ Triangle::Triangle(const float x, const float y, const float size, const Color& 
 			color.r, color.g, color.b, color.a, // Bottom Right
 			color.r, color.g, color.b, color.a, // Bottom Left
 			color.r, color.g, color.b, color.a  // Top
-		},
-
-		3 // Vertices
+		}
 	), size(size)
 
 	{
@@ -19,7 +17,7 @@ Triangle::Triangle(const float x, const float y, const float size, const Color& 
 
 
 Triangle::Triangle(const float x, const float y, const float size, const std::vector<float>& colors)
-	: BaseShape(x, y, { 0, 1, 2 }, colors, 4), size(size)
+	: BaseShape(x, y, { 0, 1, 2 }, colors), size(size)
 
 	{
 
