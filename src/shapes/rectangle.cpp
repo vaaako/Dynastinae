@@ -5,7 +5,7 @@
 /**
  * NO COLOR / COLOR STRUCT */
 Rectangle::Rectangle(const float x, const float y, const float width, const float height, const Color& color)
-	: BaseShape(x, y,
+	: Shape2D(x, y,
 			// INDICES //
 			{
 				0, 1, 2, // First triangle
@@ -32,7 +32,7 @@ Rectangle::Rectangle(const float x, const float y, const float width, const floa
 /**
  * COLOR ARRAY */
 Rectangle::Rectangle(const float x, const float y, const float width, const float height, const std::vector<float>& colors)
-	: BaseShape(x, y,
+	: Shape2D(x, y,
 		// INDICES //
 		{
 			0, 1, 2, // First triangle

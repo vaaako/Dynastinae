@@ -8,21 +8,16 @@
 #include <memory>
 #include <vector>
 
-class BaseShape {
+class Shape2D {
 	public:
-		BaseShape(const float x, const float y, const std::vector<unsigned int>& indices);
-		BaseShape(const float x, const float y, const std::vector<unsigned int>& indices, const std::vector<float>& colors); // Be sure colors has the right amount of vertices
+		Shape2D(const float x, const float y, const std::vector<unsigned int>& indices);
+		Shape2D(const float x, const float y, const std::vector<unsigned int>& indices, const std::vector<float>& colors); // Be sure colors has the right amount of vertices
 
-		~BaseShape() = default;
+		~Shape2D() = default;
 
 		virtual inline void draw(const bool outline = false) {
-			if(outline) {
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-			// Back to fill mode if not set to line
-			} else {
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			}
+			(outline) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+				: glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Back to fill mode if not set to line
 
 			this->shader->use();
 

@@ -1,8 +1,7 @@
 #include "../types/color.hpp"
-#include "baseshape.hpp"
-#include <vector>
+#include "shape2d.hpp"
 
-class Rectangle : public BaseShape {
+class Rectangle : public Shape2D {
 	public:
 		// Color
 		Rectangle(const float x, const float y, const float width, const float height, const Color& color = { 1.0f, 1.0f, 1.0f, 1.0f });

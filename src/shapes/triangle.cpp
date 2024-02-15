@@ -3,7 +3,7 @@
 #include "../../include/utils/calc.hpp"
 
 Triangle::Triangle(const float x, const float y, const float size, const Color& color)
-	: BaseShape(x, y, { 0, 1, 2 },
+	: Shape2D(x, y, { 0, 1, 2 },
 		{
 			color.r, color.g, color.b, color.a, // Bottom Right
 			color.r, color.g, color.b, color.a, // Bottom Left
@@ -17,7 +17,7 @@ Triangle::Triangle(const float x, const float y, const float size, const Color& 
 
 
 Triangle::Triangle(const float x, const float y, const float size, const std::vector<float>& colors)
-	: BaseShape(x, y, { 0, 1, 2 }, colors), size(size)
+	: Shape2D(x, y, { 0, 1, 2 }, colors), size(size)
 
 	{
 
