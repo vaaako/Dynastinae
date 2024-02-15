@@ -1,23 +1,28 @@
 #include "../../include/shapes/rectangle.hpp"
-#include "../../include/utils/calc.hpp"
 #include "../../include/window/window.hpp"
-#include <vector>
+#include "../../include/utils/calc.hpp"
 
-Rectangle::Rectangle(const float x, const float y, const float width, const float height)
+/**
+ * NO COLOR / COLOR STRUCT */
+Rectangle::Rectangle(const float x, const float y, const float width, const float height, const Color& color)
 	: BaseShape(x, y,
 			// INDICES //
 			{
 				0, 1, 2, // First triangle
 				0, 2, 3  // Second triangle
+
 			},
 
 			// COLORS //
 			{
-				1.0f, 1.0f, 1.0f, // Top Right
-				1.0f, 1.0f, 1.0f, // Bottom Right
-				1.0f, 1.0f, 1.0f, // Bottom Left
-				1.0f, 1.0f, 1.0f  // Top Left
-			}
+				color.r, color.g, color.b, color.a,
+				color.r, color.g, color.b, color.a,
+				color.r, color.g, color.b, color.a,
+				color.r, color.g, color.b, color.a
+			},
+
+			4 // Vertices
+
 		),
 
 		width(width), height(height)
@@ -26,29 +31,16 @@ Rectangle::Rectangle(const float x, const float y, const float width, const floa
 		this->make_vertices();
 	}
 
-Rectangle::Rectangle(const float x, const float y, const float width, const float height, const Color& color)
-	: BaseShape(x, y,
-			// INDICES //
-			{
-				0, 1, 2, // First triangle
-				0, 2, 3  // Second triangle
 
-			}, color, 4),
-
-		width(width), height(height)
-
-	{
-		this->make_vertices();
-	}
-
-
+/**
+ * COLOR ARRAY */
 Rectangle::Rectangle(const float x, const float y, const float width, const float height, const std::vector<float>& colors)
 	: BaseShape(x, y,
 		// INDICES //
 		{
 			0, 1, 2, // First triangle
 			0, 2, 3  // Second triangle
-		}, colors),
+		}, colors, 4),
 
 		width(width), height(height)
 
@@ -57,7 +49,11 @@ Rectangle::Rectangle(const float x, const float y, const float width, const floa
 	}
 
 
+
+
 void Rectangle::make_vertices() const {
+
+	// glfwGetFramebufferSize(window, &width, &height);
 	const float win_width  = static_cast<float>(Window::get_static_width());
 	const float win_height = static_cast<float>(Window::get_static_height());
 
@@ -74,10 +70,15 @@ void Rectangle::make_vertices() const {
 		trans_x + trans_width, trans_y,                0.0f, // Top Right
 		trans_x + trans_width, trans_y + trans_height, 0.0f, // Bottom Right
 		trans_x,               trans_y + trans_height, 0.0f  // Bottom Left
+
+		// -0.5f, -0.5f, 0.0f,
+		//  0.5f, -0.5f, 0.0f,
+		//  0.5f,  0.5f, 0.0f,
+		// -0.5f,  0.5f, 0.0f,
 	};
 
 	// Colors was defined alredy as position 1, position of vertices keep 1
-	this->vbo->store_data(0, 3, vertices);
+	this->vbo->store_data(vertices, 0, 3);
 }
 
 // -0.5f, -0.5f, 0.0f,

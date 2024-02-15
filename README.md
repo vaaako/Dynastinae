@@ -28,6 +28,7 @@ Using `SDL2` and `Glad` I aim to create a very simple to use framework to supply
 # Running
 ## Dependencies
 You will need to install[`SDL2`](https://www.libsdl.org/) *(If you are on Linux is probably avaiable on your package manager)*,
+ With `SDL2 Image`
 
 ## Compiling
 - If you want to compile as a `lib` `.so` file and use in any project, you will need `Make`
@@ -60,7 +61,7 @@ Let's say you have a file called `main.cpp` importing **Knuppel**, you should in
 
 To run the program with `Knuppel` linked, you should run the following command:
 ```sh
-clang++ main.cpp glad.o -lSDL2 -L. -lknuppel -o game
+clang++ main.cpp glad.o -lSDL2 -lSDL2_image -L. -lknuppel -o game
 ```
 
 ### Globally
@@ -78,7 +79,7 @@ Then you can include with `<>`
 
 And run without `-L.` flag
 ```sh
-clang++ main.cpp -lSDL2 -lknuppel -o game
+clang++ main.cpp -lSDL2 -lSDL2_image -lknuppel -o game
 ```
 
 # Credits

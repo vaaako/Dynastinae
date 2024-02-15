@@ -3,6 +3,9 @@
 *.sublime-*
 
 # Build
-build
-lib
+build/
+lib/
 *.o
+
+# Examples not ready yet
+example/

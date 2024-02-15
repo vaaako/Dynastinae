@@ -4,9 +4,9 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_log.h>
 #include <SDL2/SDL_video.h>
+#include <GL/glew.h>
 #include <string>
 
-#include "../../libs/glad/glad.h"
 
 #include "../input/keyboard.hpp"
 #include "../input/mouse.hpp"
@@ -27,7 +27,7 @@ class Window {
 		Window(const std::string& title, const int width, const int height, const bool show_info = false);
 		~Window() {
 			SDL_Log("Window %d destroyed", SDL_GetWindowID(this->window));
-			SDL_GL_DeleteContext(glContext);
+			SDL_GL_DeleteContext(this->glContext);
 			SDL_DestroyWindow(this->window);
 			SDL_Quit();
 		}
@@ -84,10 +84,6 @@ class Window {
 			SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), NULL, &height);
 			return height;
 		}
-
-		/**
-		 * VIRTUAL */
-		// virtual void keydown(const int code) = 0;
 	private:
 		SDL_Window* window;
 		SDL_GLContext glContext;
@@ -97,7 +93,7 @@ class Window {
 
 		// KEYS
 		Keyboard keybrd = Keyboard();
-		Mouse mse = Mouse();
+		Mouse rat = Mouse(); // To not have the same name as the "mouse" function
 
 
 		bool init_window() const;

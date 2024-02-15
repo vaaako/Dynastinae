@@ -1,30 +1,17 @@
 #include "../../include/shapes/triangle.hpp"
-#include "../../include/utils/calc.hpp"
 #include "../../include/window/window.hpp"
-
-Triangle::Triangle(const float x, const float y, const float size)
-	: BaseShape(x, y, 
-			// INDICES //
-			{ 0, 1, 2 },
-
-			// COLORS //
-			{
-				1.0f, 1.0f, 1.0f, // Bottom Right
-				1.0f, 1.0f, 1.0f, // Bottom Left
-				1.0f, 1.0f, 1.0f  // Top
-			}
-		),
-
-		size(size)
-
-	{
-		this->make_vertices();
-	}
-
-
+#include "../../include/utils/calc.hpp"
 
 Triangle::Triangle(const float x, const float y, const float size, const Color& color)
-	: BaseShape(x, y, { 0, 1, 2 }, color), size(size)
+	: BaseShape(x, y, { 0, 1, 2 },
+		{
+			color.r, color.g, color.b, color.a, // Bottom Right
+			color.r, color.g, color.b, color.a, // Bottom Left
+			color.r, color.g, color.b, color.a  // Top
+		},
+
+		3 // Vertices
+	), size(size)
 
 	{
 		this->make_vertices();
@@ -32,7 +19,7 @@ Triangle::Triangle(const float x, const float y, const float size, const Color& 
 
 
 Triangle::Triangle(const float x, const float y, const float size, const std::vector<float>& colors)
-	: BaseShape(x, y, { 0, 1, 2 }, colors), size(size)
+	: BaseShape(x, y, { 0, 1, 2 }, colors, 4), size(size)
 
 	{
 
@@ -54,17 +41,13 @@ void Triangle::make_vertices() const {
 
 	// Dividing by 2: Creates an equilateral 
 	const std::vector<float> vertices = {
-		// (-0.5f * trans_size) + trans_x, (-0.5f * trans_size) + trans_y, 0.0f, // Bottom left
-		// ( 0.5f * trans_size) + trans_x, (-0.5f * trans_size) + trans_y, 0.0f, // Bottom Right
-		//                        trans_x, ( 0.5f * trans_size) + trans_y, 0.0f, // Top corner
-
 		trans_x,                     trans_y,              0.0f, // Top Left
 		trans_x + trans_size,        trans_y,              0.0f, // Top Right
 		trans_x + trans_size / 2.0f, trans_y + trans_size, 0.0f  // Bottom Middle
 	};
 
 	// Colors was defined alredy as position 1, position of vertices keep 1
-	this->vbo->store_data(0, 3, vertices);
+	this->vbo->store_data(vertices, 0, 3);
 }
 
 

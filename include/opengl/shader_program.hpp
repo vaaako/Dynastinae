@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../libs/glad/glad.h"
+#include <GL/glew.h>
 
 class ShaderProgram {
 	public:
@@ -11,6 +11,10 @@ class ShaderProgram {
 
 		inline void use() const {
 			glUseProgram(this->programID);
+		}
+
+		inline GLuint id() const {
+			return this->programID;
 		}
 	private:
 		GLuint programID;

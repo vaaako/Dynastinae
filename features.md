@@ -15,8 +15,8 @@ int main() {
 	Window window = Window("Hello Knuppel", 800, 600, true);
 
 	// Create 2D shapes to draw
-	Triangle rectangle(100.0f, 200.0f, 50.0f, Color { 1.0f, 1.0f, 0.0f }); // RGB
-	Rectangle rectangle(100.0f, 200.0f, 50.0f, 50.0f, Color { 0.5f, 1.0f, 0.5f }); // RGB
+	Triangle rectangle(100.0f, 250.0f, 200.0f, Color { 1.0f, 1.0f, 0.0f });
+	Rectangle rectangle(100.0f, 100.0f, 300.0f, 300.0f, Color { 0.5f, 1.0f, 0.5f });
 
 	// Main loop
 	while(window.is_open()) {
@@ -39,34 +39,130 @@ int main() {
 				break;
 		}
 
-		// Draw triangles
+		// Draw shapes
+		// The draw order matters
+		rectangle.draw();
 		triangle.draw();
 
 		// Swap buffers
 		window.swap();
 	}
 }
-
 ```
 
-# Shapes and Colors
-Você pode usar a struct `Color` para colorir com uma flat color usando RGB no range de
- **0 - 1**, ou então usar um vector para colorir cada canto com uma cor separada, criando
- um efeito gradiente
 
+![img_here]()
+
+
+# Shapes and Colors
+You can use the `Color` struct to color with a flat color using **RGBA** in the range of **0 - 1**.
+
+The `Color` struct also has an **alpha** optional parameter.
 
 ```cpp
+//        R     G     B     A
+Color { 1.0f, 0.0f, 0.0f, 1.0f }`
+```
+
+If you want to use **0 - 255** range, you can use a **Color** built-in method
+```
+//                                                            R    G   B   A
+Rectangle rectangle(100, 100, 50.0f, 50.0f, Color::from_rgba(255, 255, 0, 255));
+```
+
+The **alpha** parameter is optional
+
+
+## Examples
+```cpp
 // Default color is white
-Rectangle triangle(100, 100, 50.0f, 50.0f);
+Rectangle rectangle(100.0f, 100.0f, 50.0f, 50.0f);
 
 // Flat color
 // WARNING: Need to explicitaly indicate is a color vector
-Rectangle triangle(100, 100, 50.0f, 50.0f, Color { 1.0f, 1.0f, 0.0f }); // RGB / Alpha is optional
+Rectangle rectangle(100.0f, 100.0f, 200.0f, 200.0f, Color { 1.0f, 1.0f, 0.0f }); // RGB / Alpha is optional
+```
+
+The following are equivalent to the ones above
+```cpp
+Rectangle rectangle = Rectangle(100.0f, 100.0f, 50.0f, 50.0f);
+Rectangle rectangle = Rectangle(100.0f, 100.0f, 50.0f, 50.0f, Color( 1.0f, 1.0f, 0.0f ));
+Rectangle rectangle = Rectangle(100.0f, 100.0f, 50.0f, 50.0f, Color::from_rgba( 255.0f, 255.0f, 255.0f ));
+```
+
+
+![img_here]()
+
+
+Alternatively, use a vector to color each corner with a separate color, creating a gradient effect.
+```cpp
+// Corners color
+Rectangle rectangle(100.0f, 100.0f, 200.0f, 200.0f
+	{
+		// R    G     B     A
+		1.0f, 0.0f, 0.0f, 1.0f // Top Right
+		0.0f, 1.0f, 0.0f, 1.0f // Bottom Right
+		0.0f, 0.0f, 1.0f, 1.0f // Bottom Left
+		1.0f, 1.0f, 1.0f, 1.0f // Top Left
+	}
+);
+```
+
+![img_here]()
+
+
+You can do the same for **Triangle**
+```cpp
+// TRIANGLE //
+
+// Default color
+Triangle triangle(100.0f, 100.0f, 200.0f);
+
+// Flat color
+Triangle triangle(100.0f, 100.0f, 200.0f, Color { 1.0f, 1.0f, 0.0f, 1.0f }); // RGB / Alpha is optional
 
 // Corners color
-Rectangle triangle(100, 100, 50.0f, 50.0f
-	//  R     G     B     A
+Triangle triangle(100, 100, 50.0f,
 	{
+		// R    G     B     A
+		1.0f, 0.0f, 0.0f, 1.0f // Bottom Right
+		0.0f, 1.0f, 0.0f, 1.0f // Bottom Left
+		0.0f, 0.0f, 1.0f, 1.0f // Top
+	}
+);
+```
+
+
+![img_here]()
+
+
+# Textures
+Texture path is relative to the path you run
+
+e.g. if the executable file is inside `example/build/` but you run from `example/`
+ the texture path is relative from `example/`, so, if the texture is inside
+ `example/assets/texture.jpg` the path to the texture is `assets/texture.jpg`
+
+Load the texture
+```cpp
+Texture texture = Texture("assets/texture.jpg");
+```
+
+Then bind it to a shape
+```cpp
+rectangle.bind_texture(texture);
+```
+>This is the same for any other shape
+
+
+![img_here]()
+
+
+You can also bind to a colorized shape, this will create a filter on the texture
+```cpp
+Rectangle rectangle(100.0f, 100.0f, 200.0f, 200.0f
+	{
+		// R     G     B     A
 		1.0f, 0.0f, 0.0f, 1.0f // Top Right
 		0.0f, 1.0f, 0.0f, 1.0f // Bottom Right
 		0.0f, 0.0f, 1.0f, 1.0f // Bottom Left
@@ -75,25 +171,9 @@ Rectangle triangle(100, 100, 50.0f, 50.0f
 );
 
 
-// Triangle
-
-// Default color
-Triangle triangle(100, 100, 50.0f);
-
-// Flat color
-Triangle triangle(100, 100, 50.0f, Color { 1.0f, 1.0f, 0.0f }); // RGB / Alpha is optional
-
-// Corners color
-Triangle triangle(100, 100, 50.0f,
-	//  R     G     B     A
-	{
-		1.0f, 0.0f, 0.0f, 1.0f // Bottom Right
-		0.0f, 1.0f, 0.0f, 1.0f // Bottom Left
-		0.0f, 0.0f, 1.0f, 1.0f // Top
-	}
-);
+// Rainbow texture
+rectangle.bind_texture(texture);
 ```
 
-A struct `Color` também aceita **opacity** como parâmetro
 
-**e.g.:** `Color { 1.0f, 0.0f, 0.0f, 1.0f }`A
+![img_here]()

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../libs/glad/glad.h"
+#include <GL/glew.h>
 #include <vector>
 
 class EBO {

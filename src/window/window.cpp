@@ -1,5 +1,8 @@
 #include "../../include/window/window.hpp"
 
+#include <SDL2/SDL_image.h>
+#include <iostream>
+
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 
@@ -33,14 +36,25 @@ Window::Window(const std::string& title, const int width, const int height, cons
 
 	// Load OpenGL
 	this->glContext = SDL_GL_CreateContext(window);
-	if(!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
-		SDL_Log("Failed to initalize GLAD:  %s" , SDL_GetError());
-		SDL_DestroyWindow(window);
+	// if(!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
+	// 	SDL_Log("Failed to initalize GLAD:  %s" , SDL_GetError());
+	// 	SDL_DestroyWindow(window);
+	// 	SDL_Quit();
+	// 	return;
+	// }
+	
+	// Initialize GLEW
+	// glewExperimental = GL_TRUE;
+	GLenum err = glewInit();
+	if(err != GLEW_OK) {
+		SDL_Log("Failed to initialize GLEW: %s", glewGetErrorString(err));
+		SDL_GL_DeleteContext(this->glContext);
+		SDL_DestroyWindow(this->window);
 		SDL_Quit();
 		return;
 	}
 
-	glViewport(0, 0, width, height); // Not really necessary
+	glViewport(0, 0, width, height);
 
 	// Enable transparency
 	glEnable(GL_BLEND);
@@ -48,8 +62,9 @@ Window::Window(const std::string& title, const int width, const int height, cons
 
 	if(show_info) {
 		SDL_Log("OpengGL Loaded!");
+		SDL_Log("GLAD Version: %s", glGetString(GL_VERSION));
+		SDL_Log("GLEW Version: %s", glGetString(GLEW_VERSION));
 		SDL_Log("Vendor: %s", glGetString(GL_VENDOR));
-		SDL_Log("Version: %s", glGetString(GL_VERSION));
 		SDL_Log("Renderer: %s", glGetString(GL_RENDERER));
 		SDL_Log("Viewport: %dx%d \n==========\n", width, height);
 	}
@@ -59,18 +74,23 @@ Window::Window(const std::string& title, const int width, const int height, cons
 bool Window::init_window() const {
 	// Init SDL
 	// SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+	if(SDL_Init(SDL_INIT_VIDEO) != 0) {
+		return false;
+	}
+
+	// Initialize SDL_iage
+	int img_flags = IMG_INIT_JPG;
+	if(!(IMG_Init(img_flags) & img_flags)) {
+		SDL_Log("IMG_Init Error: %s", IMG_GetError());
 		return false;
 	}
 
 	return true;
 }
-
-#include <iostream>
 
 Event Window::process_event() {
 	SDL_Event event;
@@ -100,19 +120,19 @@ Event Window::process_event() {
 				// std::cout << "Mouse Click Axis: " << event.button.x << ":" << event.button.y << std::endl;
 				// std::cout << "Mouse Clicks: " << (int)event.button.clicks << std::endl;
 				SDL_MouseButtonEvent mouse_event = event.button;
-				mse.btndown(mouse_event.x, mouse_event.y, mouse_event.button, mouse_event.clicks);
+				rat.btndown(mouse_event.x, mouse_event.y, mouse_event.button, mouse_event.clicks);
 				return Event::MOUSEDOWN;
 			}
 
 			case SDL_MOUSEBUTTONUP: {
-				mse.btnup(event.button.button);
+				rat.btnup(event.button.button);
 				return Event::MOUSEUP;
 			}
 
 			case SDL_MOUSEMOTION: {
 				// std::cout << "Mouse Motion: " << event.motion.x << ":" << event.motion.y << std::endl;
 				SDL_MouseMotionEvent mouse_event = event.motion;
-				mse.motion(mouse_event.x, mouse_event.y, mouse_event.xrel, mouse_event.yrel);
+				rat.motion(mouse_event.x, mouse_event.y, mouse_event.xrel, mouse_event.yrel);
 				return Event::MOUSEMOTION;
 			}
 
