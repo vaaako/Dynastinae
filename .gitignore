@@ -8,8 +8,11 @@ lib/
 libs/
 *.o
 
+# Stuff
 *.a
+vgcore*
 
+# Test folders
 baks/
 tests/
 examples/
