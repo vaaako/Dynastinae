@@ -92,5 +92,3 @@ clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lknuppel -o game
 # Credits
 Made by me 🦇
 
-**Libraries used:** [`SDL2`](https://www.libsdl.org/) for graphics and input handling, and [`Glad`](https://glad.dav1d.de/) for OpenGL
-
