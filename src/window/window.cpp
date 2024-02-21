@@ -6,8 +6,8 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 
-Window::Window(const std::string& title, const int width, const int height, const bool show_info)
-	: width(width), height(height) {
+Window::Window(const std::string& title, const int width, const int height, const bool vsync, const bool debug_info)
+	: title(title), width(width), height(height) {
 	const bool init = this->init_window();
 
 	// Check if was inited succesfully
@@ -42,7 +42,14 @@ Window::Window(const std::string& title, const int width, const int height, cons
 	// 	SDL_Quit();
 	// 	return;
 	// }
-	
+
+
+	if (SDL_GL_SetSwapInterval(vsync) < 0) {
+		SDL_Log("Failed to enable VSync: %s", SDL_GetError());
+		return;
+	}
+	// SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED );
+
 	// Initialize GLEW
 	// glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
@@ -60,7 +67,10 @@ Window::Window(const std::string& title, const int width, const int height, cons
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Non-premultiplied alpha
 
-	if(show_info) {
+	// Enables the Depth Buffer
+	glEnable(GL_DEPTH_TEST);
+
+	if(debug_info) {
 		SDL_Log("OpengGL Loaded!");
 		SDL_Log("GLAD Version: %s", glGetString(GL_VERSION));
 		SDL_Log("GLEW Version: %s", glGetString(GLEW_VERSION));
@@ -82,7 +92,7 @@ bool Window::init_window() const {
 		return false;
 	}
 
-	// Initialize SDL_iage
+	// Initialize SDL_image
 	int img_flags = IMG_INIT_JPG;
 	if(!(IMG_Init(img_flags) & img_flags)) {
 		SDL_Log("IMG_Init Error: %s", IMG_GetError());

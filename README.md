@@ -17,13 +17,14 @@ Using `SDL2` and `Glad` I aim to create a very simple to use framework to supply
 - [X] 2D shapes
     + [X] Draw
     + [X] Colors
-    + [X] Position
     + [X] Texture
-- [ ] 3D shapes
-    + [ ] Draw
-    + [ ] Colors
+    + [X] Position
+- [X] 3D shapes
+    + [X] Draw
+    + [X] Colors
+    + [X] Texture
     + [ ] Position
-    + [ ] Texture
+- [X] Movement
 - [ ] Audio
 - [ ] Gif texture?
 

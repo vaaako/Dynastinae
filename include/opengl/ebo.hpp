@@ -6,6 +6,7 @@
 class EBO {
 	public:
 		EBO(const std::vector<unsigned int>& indices);
+		EBO(const std::vector<unsigned int>& indices, const std::vector<unsigned int>& indices2);
 		~EBO() {
 			glDeleteBuffers(1, &this->id);
 		}

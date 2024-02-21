@@ -10,5 +10,6 @@ libs/
 
 *.a
 
+baks/
 tests/
 examples/

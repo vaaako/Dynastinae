@@ -3,11 +3,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_log.h>
+#include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_video.h>
 #include <GL/glew.h>
 #include <string>
 
-
+#include "../types/color.hpp"
 #include "../input/keyboard.hpp"
 #include "../input/mouse.hpp"
 
@@ -24,7 +25,7 @@ enum class Event {
 
 class Window {
 	public:
-		Window(const std::string& title, const int width, const int height, const bool show_info = false);
+		Window(const std::string& title, const int width, const int height, const bool vsync = true, const bool debug_info = false);
 		~Window() {
 			SDL_Log("Window %d destroyed", SDL_GetWindowID(this->window));
 			SDL_GL_DeleteContext(this->glContext);
@@ -40,18 +41,23 @@ class Window {
 		
 		/**
 		 * WINDOW PROCESS */
-		inline bool is_open() const {
+		inline bool is_open() {
+			this->last_update = SDL_GetTicks();
+			this->frame_count++;
 			return this->window_open;
 		}
 
-		inline void clear(const float r, const float g, const float b, const float o = 1.0f) {
-			// Rendering
-			glClearColor(r, g, b, o);
+		inline void clear(const Color& color) {
+			glClearColor(color.r, color.g, color.b, color.a);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		}
+
+		inline void clear(const float r, const float g, const float b, const float a = 1.0f) {
+			glClearColor(r, g, b, a);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
 		inline void swap() {
-			// Swap the buffers
 			SDL_GL_SwapWindow(this->window);
 		}
 
@@ -60,41 +66,83 @@ class Window {
 		}
 
 		/**
+		 * SETTERS */
+		inline void set_title(const std::string& title) {
+			this->title = title.c_str();
+			SDL_SetWindowTitle(this->window, title.c_str());
+		}
+
+		/**
 		 * GETTERS */
-		inline Keyboard keyboard() {
+		inline Keyboard keyboard() const {
 			return this->keybrd;
 		}
 
-		inline int get_width() {
+		inline std::string get_title() const {
+			return this->title;
+		}
+
+		inline int get_width() const {
 			return this->width;
 		}
 
-		inline int get_height() {
+		inline int get_height() const {
 			return this->height;
 		}
 
-		static inline int get_static_width() {
+		inline float dt(const float time = 1000.0f) const {
+			// CURRENT - LAST to seconds
+			return static_cast<float>(SDL_GetTicks() - this->last_update) / time;
+		}
+
+		inline float fps() {
+			unsigned int current_time = SDL_GetTicks();
+
+			// Update every second
+			if(current_time - start_time >= 1000) {
+				// Calc FPS
+				this->FPS = static_cast<float>(frame_count) / (static_cast<float>(current_time - start_time) / 1000.0f);
+
+				// Reset
+				this->frame_count = 0;
+				this->start_time = current_time; // Update timer
+			}
+
+			return this->FPS;
+		}
+
+		static inline int static_width() {
 			int width;
 			SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), &width, NULL);
 			return width;
 		}
 
-		static inline int get_static_height() {
+		static inline int static_height() {
 			int height;
 			SDL_GetWindowSize(SDL_GL_GetCurrentWindow(), NULL, &height);
 			return height;
 		}
+
 	private:
+		// INFO
+		std::string title;
+		int width;
+		int height;
+		bool window_open = true;
+
+		// SDL2
 		SDL_Window* window;
 		SDL_GLContext glContext;
-		bool window_open = true;
-		const int width;
-		const int height;
+
+		// FPS
+		unsigned int start_time = SDL_GetTicks();
+		unsigned int last_update = 0;
+		int frame_count = 0;
+		float FPS = 0.0f;
 
 		// KEYS
 		Keyboard keybrd = Keyboard();
 		Mouse rat = Mouse(); // To not have the same name as the "mouse" function
-
 
 		bool init_window() const;
 };

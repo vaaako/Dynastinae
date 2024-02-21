@@ -1,10 +1,13 @@
 #pragma once
 
+#include <glm/vec4.hpp>
+#include <cmath>
+
 struct Color {
-	const float r;
-	const float g;
-	const float b;
-	const float a;
+	float r;
+	float g;
+	float b;
+	float a;
 
 	Color(const float r, const float g, const float b, const float a = 1.0f)
 		:
@@ -13,6 +16,38 @@ struct Color {
 			b((b < 0.0f || b > 1.0f) ? 1.0f : b),
 			a((a < 0.0f || a > 1.0f) ? 1.0f : a)
 		{}
+
+	Color(float color, const float a = 1.0f) : a(a) {
+		color = (color < 0.0f || color > 1.0f) ? 1.0f : color;
+
+		this->r = color;
+		this->g = color;
+		this->b = color;
+	}
+
+
+	inline glm::vec4 to_vector4f() const {
+		return glm::vec4(this->r, this->g, this->b, this->a);
+	}
+
+	inline void change_colors(const Color& new_color) {
+		this->r = new_color.r;
+		this->g = new_color.g;
+		this->b = new_color.b;
+		this->a = new_color.a;
+	}
+
+	inline bool empty() const {
+		const float epsilon = 1e-6f;
+		return std::fabs(this->r + this->g + this->b + this->a) < epsilon;
+	}
+
+	inline void reset(const float val = 1.0f) {
+		this->r = val;
+		this->g = val;
+		this->b = val;
+		this->a = val;
+	}
 
 	static Color from_rbga(const float r, const float g, const float b, const float a = 255) {
 		return Color(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f);

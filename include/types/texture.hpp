@@ -11,8 +11,19 @@ class Texture {
 		inline GLuint id() const {
 			return tex_id;
 		}
+
+		inline void bind() const {
+			glBindTexture(this->tex_type, this->tex_id);
+		}
+
+		inline void unbind() const {
+			glBindTexture(this->tex_type, 0);
+		}
 	private:
 		GLuint tex_id;
+
+		GLuint tex_type = GL_TEXTURE_2D; // Common
+		// GLuint tex_type = GL_TEXTURE_2D_ARRAY; // Texture Atlas
 };
 
 
