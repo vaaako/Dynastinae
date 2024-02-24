@@ -76,6 +76,7 @@ int main() {
 
 
 # 2D Shapes and Colors
+## Colors
 In order to draw a shape, you need to create a renderer, this is simple as that
 ```cpp
 Renderer2D renderer = Renderer2D();
@@ -145,6 +146,8 @@ You can rotate, and draw the outline only
 renderer.rectangle(100.0f, 100.0f, 50.0f, 50.0f, 180.0f, true);
 ```
 
+## Custom colors
+...
 <!--
 Alternatively, use a vector to color each corner with a separate color, creating a gradient effect.
 ```cpp
@@ -203,5 +206,9 @@ This will apply a yellow filter to the texture
 
 
 ![img_here]()
+
+## Filters
+...
+
 
 

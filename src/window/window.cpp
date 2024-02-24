@@ -93,7 +93,7 @@ bool Window::init_window() const {
 	}
 
 	// Initialize SDL_image
-	int img_flags = IMG_INIT_JPG;
+	int img_flags = IMG_INIT_PNG | IMG_INIT_JPG;
 	if(!(IMG_Init(img_flags) & img_flags)) {
 		SDL_Log("IMG_Init Error: %s", IMG_GetError());
 		return false;

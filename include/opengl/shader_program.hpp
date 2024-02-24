@@ -15,6 +15,10 @@ class ShaderProgram {
 			glUseProgram(this->programID);
 		}
 
+		inline void unbind() const {
+			glUseProgram(0);
+		}
+
 		inline GLuint id() const {
 			return this->programID;
 		}

@@ -90,9 +90,9 @@ class Window {
 			return this->height;
 		}
 
-		inline float dt(const float time = 1000.0f) const {
+		inline double dt(const float time = 1000.0f) const {
 			// CURRENT - LAST to seconds
-			return static_cast<float>(SDL_GetTicks() - this->last_update) / time;
+			return static_cast<double>(SDL_GetTicks() - this->last_update) / time;
 		}
 
 		inline float fps() {

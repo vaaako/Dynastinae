@@ -1,0 +1,2 @@
+- **Level of Detail (LOD):** Implement LOD techniques to dynamically adjust the level of detail based on the distance from the camera. This improves rendering performance by reducing the number of polygons rendered for distant objects.
+ - **Frustum Culling:** Implement frustum culling to eliminate objects that are outside the camera's view frustum from the rendering process. This reduces unnecessary draw calls and improves overall rendering performance.

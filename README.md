@@ -92,3 +92,5 @@ clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lknuppel -o game
 # Credits
 Made by me 🦇
 
+
+Not done by professionals

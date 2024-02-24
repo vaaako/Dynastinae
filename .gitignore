@@ -1,7 +1,5 @@
 .git
 
-*.sublime-*
-
 # Build
 build/
 lib/
@@ -11,6 +9,11 @@ libs/
 # Stuff
 *.a
 vgcore*
+
+
+# Workspaces
+*.sublime-*
+*.vim
 
 # Test folders
 baks/
