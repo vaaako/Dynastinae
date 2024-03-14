@@ -2,7 +2,7 @@
 # About
 **Knuppel** is a very simple and basic framework I am developing to code some games
 
-Using `SDL2` and `Glad` I aim to create a very simple to use framework to supply my needs
+I am using `SDL2` and `GLEW` to create a very simple to use framework to supply my needs
 
 ![demo](media/demo.gif)
 <!-- ![demo2](media/demo2.png) -->
