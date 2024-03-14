@@ -19,20 +19,22 @@ void process_keyboard(Window& window, Keyboard keyboard) {
  * - Custom vertex colors for 2D?
  *   + Later
  *   + Add to vertex attrib 2 on shape VBO and check if is to use on shape instance
- * - How 3d will work for different and custom shapes?
- *   + VAO for each VBO
+ *  
+ * - .obj
  *   + When creating a OBJ `OBJ obj = Obj()` -> `obj.draw()`. This makes a new VAO and VBO of that obj
  *  
- * - shape.hpp
- * - Pyramid and Cube on Renderer3D
+ * - Use Vector2f and Vector3f instead of glm versions
  * - Unify shader and shader_texture somehow
  * */
 
 int main() {
 	Window window = Window("Hello Knuppel", 800, 600, true, true);
 
-	// Texture* texture = new Texture("src/texture.jpg", TextureFilter::NEAREST, TextureWrap::MIRRORED);
-	Texture* texture = new Texture("src/brick.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
+	Texture* texture = new Texture("src/texture.jpg", TextureFilter::NEAREST, TextureWrap::MIRRORED);
+	Texture* kuromi = new Texture("src/kuromi.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
+	Texture* brick = new Texture("src/brick.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
+
+
 	Renderer2D renderer = Renderer2D();
 	Renderer3D renderer3d = Renderer3D(45.0f, 0.1f, 100.0f); // Set camera
 
@@ -54,17 +56,18 @@ int main() {
 		}
 
 
-		renderer.triangle(texture, 100.0f, 100.0f, 100.0f, 50.0f, false, Color(0.0f, 1.0f, 0.0f));
-		renderer.triangle(300.0f, 250.0f, 100.0f);
+		renderer.triangle(brick, 100.0f, 100.0f, 100.0f, 50.0f, false, Color(0.0f, 1.0f, 0.0f));
+		renderer.rectangle(brick, 50.0f, 100.0f, 200.0f, 200.0f);
 
-		renderer.rectangle(texture, 250.0f, 100.0f, 200.0f, 200.0f);
-		renderer.rectangle(350.0f, 300.0f, 200.0f, 200.0f, Color(0.0f, 0.0f, 1.0f));
+		renderer.triangle(550.0f, 350.0f, 100.0f);
+		renderer.rectangle(500.0f, 370.0f, 200.0f, 200.0f, Color(0.0f, 0.0f, 1.0f));
 
 
 		// Don't worry about draw order with 2D, 2D shapes are always above 3D shapes
-		// renderer3d.pyramid(texture, 0.0f, 0.0f, -4.0f, rotation, { 0.0f, 1.0f, 0.0f });
+		renderer3d.pyramid(texture, -1.0f, -1.0f, -7.0f, rotation, { 0.0f, 1.0f, 0.0f });
+		renderer3d.cube(kuromi, 1.0f, 1.0f, -8.0f, rotation, { 1.0f, 1.0f, 0.0f });
 
-		renderer3d.cube(texture, 0.0f, 0.0f, -4.0f, rotation, { 0.0f, 1.0f, 0.0f });
+
 
 		rotation += 1.0f;
 

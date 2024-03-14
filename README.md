@@ -4,7 +4,8 @@
 
 Using `SDL2` and `Glad` I aim to create a very simple to use framework to supply my needs
 
-![demo2](media/demo2.png)
+![demo](media/demo.gif)
+<!-- ![demo2](media/demo2.png) -->
 ![demo3](media/demo3.png)
 
 # Current Stage

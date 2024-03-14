@@ -26,6 +26,7 @@ int main() {
 	Renderer3D renderer = Renderer3D(45.0f, 0.1f, 100.0f); // Set camera
 
 	Texture* texture = new Texture("src/texture.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
+	Texture* texture2 = new Texture("src/texture2.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 
 	// Main loop
 	while(window.is_open()) {
@@ -51,12 +52,17 @@ int main() {
 		// Draw shapes
 		// The draw order matters
 		renderer.triangle(texture, 100.0f, 100.0f, 100.0f, 50.0f, false, Color(0.0f, 1.0f, 0.0f));
-		renderer.triangle(300.0f, 250.0f, 100.0f);
+		renderer.rectangle(texture, 50.0f, 100.0f, 200.0f, 200.0f);
 
-		renderer.rectangle(texture, 250.0f, 100.0f, 200.0f, 200.0f);
-		renderer.rectangle(350.0f, 300.0f, 200.0f, 200.0f, Color(0.0f, 0.0f, 1.0f));
+		renderer.triangle(550.0f, 350.0f, 100.0f);
+		renderer.rectangle(500.0f, 370.0f, 200.0f, 200.0f, Color(0.0f, 0.0f, 1.0f));
 
-		renderer3d.pyramid(texture, 0.0f, 0.0f, -4.0f, rotation, { 0.0f, 1.0f, 0.0f });
+
+		// Don't worry about draw order with 2D, 2D shapes are always above 3D shapes
+		renderer3d.pyramid(texture, -1.0f, -1.0f, -7.0f, rotation, { 0.0f, 1.0f, 0.0f });
+		renderer3d.cube(texture, 1.0f, 1.0f, -8.0f, rotation, { 1.0f, 1.0f, 0.0f });
+
+
 
 		rotation += 1.0f;
 		if(rotation > 360.0f) {
