@@ -2,5 +2,5 @@
 
 VAO::VAO() {
 	glGenVertexArrays(1, &this->id);
-	glBindVertexArray(this->id);
+	// glBindVertexArray(this->id);
 }

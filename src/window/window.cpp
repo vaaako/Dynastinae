@@ -8,6 +8,7 @@
 
 Window::Window(const std::string& title, const int width, const int height, const bool vsync, const bool debug_info)
 	: title(title), width(width), height(height) {
+
 	const bool init = this->init_window();
 
 	// Check if was inited succesfully
@@ -72,8 +73,7 @@ Window::Window(const std::string& title, const int width, const int height, cons
 
 	if(debug_info) {
 		SDL_Log("OpengGL Loaded!");
-		SDL_Log("GLAD Version: %s", glGetString(GL_VERSION));
-		SDL_Log("GLEW Version: %s", glGetString(GLEW_VERSION));
+		SDL_Log("GL Version: %s", glGetString(GL_VERSION));
 		SDL_Log("Vendor: %s", glGetString(GL_VENDOR));
 		SDL_Log("Renderer: %s", glGetString(GL_RENDERER));
 		SDL_Log("Viewport: %dx%d \n==========\n", width, height);

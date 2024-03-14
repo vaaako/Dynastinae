@@ -1,6 +1,6 @@
 #include "../include/window/window.hpp"
-#include "../include/shapes/2d/renderer2d.hpp"
-#include "../include/shapes/3d/renderer3d.hpp"
+#include "../include/shapes/renderer/renderer2d.hpp"
+#include "../include/shapes/renderer/renderer3d.hpp"
 
 #include <iostream>
 
@@ -17,25 +17,30 @@ void process_keyboard(Window& window, Keyboard keyboard) {
 /**
  * TODO --
  * - Custom vertex colors for 2D?
- *   + 
+ *   +  Later
  * - How 3d will work for different and custom shapes?
- *   - Be able to add to VBO at any time?
+ *   + VAO for each VBO
+ *   + When creating a OBJ `OBJ obj = Obj()` -> `obj.draw()`. This makes a new VAO and VBO of that obj
+ *  
+ * - shape.hpp
+ * - Pyramid and Cube on Renderer3D
+ * - Unify shader and shader_texture somehow
  * */
 
 int main() {
 	Window window = Window("Hello Knuppel", 800, 600, true, true);
 
-	Texture texture = Texture("src/texture.jpg", TextureFilter::NEAREST, TextureWrap::MIRRORED);
-	Renderer2D renderer = Renderer2D();
+	Texture* texture = new Texture("src/brick.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
+	// Renderer2D renderer = Renderer2D();
 	Renderer3D renderer3d = Renderer3D(45.0f, 0.1f, 100.0f); // Set camera
 
-	renderer.use_custom_color({
-		1.0f, 0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 0.0f, 1.0f
-	});
-
+	// renderer.use_custom_color({
+	// 	1.0f, 0.0f, 0.0f, 1.0f,
+	// 	0.0f, 1.0f, 0.0f, 1.0f,
+	// 	0.0f, 0.0f, 1.0f, 1.0f,
+	// 	1.0f, 1.0f, 0.0f, 1.0f
+	// });
+	//
 
 	float rotation = 0.0f;
 	while(window.is_open()) {
@@ -72,18 +77,28 @@ int main() {
 
 
 		// Don't worry about draw order with 2D, 2D shapes are always above 3D shapes
-		// renderer3d.pyramid(texture, 10.0f, 100.0f, 100.0f, 100.0f, rotation);
+		renderer3d.pyramid(texture, 10.0f, 100.0f, 100.0f, 100.0f, rotation);
 		// renderer3d.pyramid(10.0f, 100.0f, 100.0f, 100.0f, Color(0.0, 1.0f, 1.0f), rotation);
 
+		renderer3d.cube(texture, 10.0f, 100.0f, 100.0f, 100.0f, 100.0f, 78.0f);
 		renderer3d.cube(texture, 10.0f, 100.0f, 100.0f, 100.0f, 100.0f, rotation);
 		// renderer3d.cube(10.0f, 100.0f, 100.0f, 100.0f, 100.0f, Color(0.0, 1.0f, 1.0f), rotation);
 
 		rotation += 1.0f;
+
+		if(rotation > 360.0f) {
+			rotation = 0.0f;
+		}
 
 		// Each one second
 		window.set_title("Hello Knuppel | FPS: " + std::to_string(window.fps()));
 
 		window.swap();
 
+	}
+
+	GLenum err = glGetError();
+	if(err != GL_NO_ERROR) {
+		std::cout << "~> OpenGL error code: " << err << std::endl;
 	}
 }

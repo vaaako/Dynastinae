@@ -6,8 +6,6 @@
 class VBO {
 	public:
 		VBO();
-		VBO(const std::vector<float>& data, const int position = 0, const int dimension = 3); // Any data
-
 		~VBO() {
 			glDeleteBuffers(1, &this->id);
 		}
@@ -16,15 +14,15 @@ class VBO {
 			glBindBuffer(GL_ARRAY_BUFFER, this->id);
 		}
 
-		void store_single_data(const std::vector<float>& data, const unsigned int position, const unsigned int dimensions);
-		void store_data(const std::vector<float>& data, const std::vector<float>& data2, const unsigned int dimensions1, const unsigned int dimensions2);
-		void store_data(const std::vector<float>& data, const unsigned int dimension1, const unsigned int dimension2);
-		void store_data(const std::vector<float>& data, const unsigned int vertex_start, const std::vector<unsigned int> dimensions);
+		inline void unbind() const {
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+
+		void store_data(const std::vector<float>& data, const unsigned int position, const unsigned int dimension, const unsigned int total_dimensions, const void* offset);
+		void link_attrib(const unsigned int position, const unsigned int dimension, const unsigned int total_dimensions, const void* offset);
+		void store_two_fields_data(const std::vector<float>& data, const unsigned int pos_dim, const unsigned int tex_dim, const unsigned int vertex1 = 0, const unsigned int vertex2 = 1);
 		
-		void store_data(const std::vector<float>& data, const std::vector<float>& sub_data,
-				const std::vector<float>& data2, const std::vector<float>& sub_data2,
-				const unsigned int field1_dimensions, const unsigned int field2_dimensions);
 	private:
 		GLuint id;
-		long unsigned int vbo_size = 0; // INFO -- Maybe this will be used somewhere at some point
+		// long unsigned int size = 0; // INFO -- I don't think i will be using this
 };

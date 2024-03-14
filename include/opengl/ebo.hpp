@@ -14,6 +14,10 @@ class EBO {
 		inline void bind() const {
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->id);
 		}
+
+		inline void unbind() const {
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		}
 	private:
 		GLuint id;
 };

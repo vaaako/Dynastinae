@@ -30,11 +30,18 @@ struct Color {
 		return glm::vec4(this->r, this->g, this->b, this->a);
 	}
 
-	inline void change_colors(const Color& new_color) {
-		this->r = new_color.r;
-		this->g = new_color.g;
-		this->b = new_color.b;
-		this->a = new_color.a;
+	inline void swap_colors(const Color& color) {
+		this->r = color.r;
+		this->g = color.g;
+		this->b = color.b;
+		this->a = color.a;
+	}
+
+	inline void swap_colors(const float r, const float g, const float b, const float a = 1.0f) {
+		this->r = r;
+		this->g = g;
+		this->b = b;
+		this->a = a;
 	}
 
 	inline bool empty() const {
