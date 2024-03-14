@@ -1,13 +1,13 @@
-# Not complete yet, just for I don't forget
+# Not complete yet
 
 
 # Template
 
 
 ```cpp
-#include "../include/window/window.hpp"
-#include "../include/shapes/2d/renderer2d.hpp"
-#include "../include/shapes/3d/renderer3d.hpp"
+#include <window/window.hpp>
+#include <shapes/renderer/renderer2d.hpp>
+#include <shapes/renderer/renderer3d.hpp>
 #include <iostream>
 
 void process_keyboard(Window& window, Keyboard keyboard) {
@@ -25,6 +25,7 @@ int main() {
 	Renderer2D renderer = Renderer2D();
 	Renderer3D renderer = Renderer3D(45.0f, 0.1f, 100.0f); // Set camera
 
+	Texture* texture = new Texture("src/texture.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 
 	// Main loop
 	while(window.is_open()) {
@@ -49,17 +50,18 @@ int main() {
 
 		// Draw shapes
 		// The draw order matters
-		renderer.set_color(Color(1.0f, 1.0f, 0.0f ));
-		renderer.triangle(texture, 100.0f, 100.0f, 100.0f, Color(0.0f, 1.0f, 0.0f), 50.0f, false);
-		renderer.triangle(200.0f, 150.0f, 100.0f, -50.0f);
+		renderer.triangle(texture, 100.0f, 100.0f, 100.0f, 50.0f, false, Color(0.0f, 1.0f, 0.0f));
 		renderer.triangle(300.0f, 250.0f, 100.0f);
 
-		renderer.rectangle(texture, 200.0f, 150.0f, 200.0f, 200.0f, rotation);
+		renderer.rectangle(texture, 250.0f, 100.0f, 200.0f, 200.0f);
 		renderer.rectangle(350.0f, 300.0f, 200.0f, 200.0f, Color(0.0f, 0.0f, 1.0f));
+
+		renderer3d.pyramid(texture, 0.0f, 0.0f, -4.0f, rotation, { 0.0f, 1.0f, 0.0f });
+
 		rotation += 1.0f;
-
-		renderer3d.pyramid(texture, 10.0f, 100.0f, 100.0f, 100.0f, rotation);
-
+		if(rotation > 360.0f) {
+			rotation = 0.0f;
+		}
 
 		// Swap buffers
 		window.swap();
@@ -91,23 +93,12 @@ The `Color` struct also has an **alpha** optional parameter.
 Color(1.0f, 0.0f, 0.0f, 1.0f );`
 ```
 
-You can set a color to use on all 2D shapes
-```cpp
-renderer.set_color(Color(1.0f, 1.0f, 0.0f));
-```
-
-```cpp
-renderer.set_color(1.0f, 1.0f, 0.0f);
-```
-
-This will set the color for **ALL** shapes, even the ones above this *set*
-
 If you don't set the color, the default color will be white
 
 If you want to use **0 - 255** range, you can use a **Color** built-in method
 ```cpp
 //                                   R    G   B   A
-renderer.set_color(Color::from_rgba(255, 255, 0, 255));
+renderer.triangle(..., Color::from_rgba(255, 255, 0, 255));
 ```
 
 >The **alpha** parameter is optional
@@ -126,14 +117,6 @@ renderer.rectangle(100.0f, 100.0f, 50.0f, 50.0f, Color(0.0f, 1.0f, 1.0f, 1.0f));
 ```
 
 ```cpp
-// This is dark blue, because was the last color set to the renderer
-renderer.rectangle(100.0f, 100.0f, 50.0f, 50.0f);
-
-// Both below are dark blue
-renderer.set_color(0.0f, 0.0f, 1.0f);
-renderer.rectangle(150.0f, 100.0f, 50.0f, 50.0f);
-renderer.rectangle(200.0f, 100.0f, 50.0f, 50.0f);
-
 // This is yellow
 renderer.rectangle(100.0f, 300.0f, 50.0f, 50.0f, Color(1.0f, 1.0f, 0.0f));
 ```
@@ -146,9 +129,8 @@ You can rotate, and draw the outline only
 renderer.rectangle(100.0f, 100.0f, 50.0f, 50.0f, 180.0f, true);
 ```
 
-## Custom colors
-...
 <!--
+## Custom colors
 Alternatively, use a vector to color each corner with a separate color, creating a gradient effect.
 ```cpp
 // Corners color

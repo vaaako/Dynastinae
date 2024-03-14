@@ -23,9 +23,11 @@ Using `SDL2` and `Glad` I aim to create a very simple to use framework to supply
     + [X] Draw
     + [X] Colors
     + [X] Texture
-    + [ ] Position
+    + [X] Position
 - [X] Movement
 - [ ] Audio
+- [ ] Fonts
+- [ ] Load `.obj`
 - [ ] Gif texture?
 
 # Running
@@ -88,6 +90,8 @@ And now you can run
 ```sh
 clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lknuppel -o game
 ```
+
+>I will change this later
 
 # Credits
 Made by me 🦇

@@ -2,7 +2,7 @@
 
 #include "../../opengl/shader_program.hpp"
 #include "../../types/color.hpp"
-#include "../../types/texture.hpp"
+#include "../../types/vectors.hpp"
 #include "../../window/window.hpp"
 #include "../shape2d.hpp"
 #include "../shape3d.hpp"
@@ -13,13 +13,13 @@ class Renderer {
 		Renderer() = default;
 
 		// SET COLOR
-		inline void set_color(const Color& color) {
-			this->cur_color.swap_colors(color);
-		}
-
-		inline void set_color(const float r, const float g, const float b, const float a = 1.0f) {
-			this->cur_color = { r, g, b, a };
-		}
+		// inline void set_color(const Color& color) {
+		// 	this->cur_color.swap_colors(color);
+		// }
+		//
+		// inline void set_color(const float r, const float g, const float b, const float a = 1.0f) {
+		// 	this->cur_color = { r, g, b, a };
+		// }
 
 		// inline void use_custom_color(const std::vector<float>& color) {
 		// 	this->vbo->store_single_data(color, 2, 4);
@@ -40,42 +40,37 @@ class Renderer {
 		/**
 		 * DRAW 2D
 		 * */
+		inline void draw_2d(const Shape2D& shape, const ShaderProgram& shader, const GLenum draw_type,
+				const Texture* texture, const glm::vec2 pos, glm::vec2 size, const Color& color,
+				const float rotate, const bool outline) {
 
-		/*
-		inline void draw_2d(const Shader2D& shape, const ShaderProgram& shader, const GLenum draw_type, const Texture* texture, const glm::vec2 pos, glm::vec2 size,
-				const Color& color, const float rotate, const bool outline, const bool custom_color = false) {
-
-			(outline) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-				: glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Back to fill mode if not set to line
+			// TODO -- Change outline to ENUM
+			(outline) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Back to fill mode if not set to line
 
 			shader.use();
 
 			glm::mat4 model = glm::mat4(1.0f);
 
 			// Move, Resize and rotate
-			model = glm::translate(model, glm::vec3(pos.x, pos.y, 0.0f)); // Translate position
-			model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); // Origin from top-lef to center
-			model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f)); // Rotate
+			model = glm::translate(model, glm::vec3(pos.x, pos.y, 0.0f));                   // Translate position
+			model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));   // Origin from top-lef to center
+			model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));  // Rotate
 			model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // Origin back to top-left
-			model = glm::scale(model, glm::vec3(size.x, size.y, 1.0f)); // Resize
+			model = glm::scale(model, glm::vec3(size.x, size.y, 1.0f));                     // Resize
 
 			// Apply changes
 			shader.set_matrix4f("model", model);
+			shader.set_vector4f("shapeColor", glm::vec4(color.r, color.g, color.b, color.a));
 
-			// If color is empty, use class color
-			// if(!custom_color) {
-			// 	shader.set_vector4f("shapeColor", (color.empty())
-			// 			? this->cur_color.to_vector4f() : glm::vec4(color.r, color.g, color.b, color.a));
-			// } else {
-			// 	shader.set_int("useCustom", 1);
-			// }
+			// TODO -- Think on a way of avoiding "if"
+			//         + Think on something to add on shader
+			if(texture != nullptr)
+				texture->bind();
 
 			shape.vao->bind();
-			glDrawElements(draw_type, shape.vertices_count, GL_UNSIGNED_INT, (void*)0);
+			glDrawElements(draw_type, shape.indices_size, GL_UNSIGNED_INT, (void*)0);
 			// glDrawArrays(draw_type, 0, shape.vertices_count);
-			shape.vao->unbind();
-	}
-	*/
+		}
 
 
 
@@ -83,11 +78,12 @@ class Renderer {
 		/**
 		 * DRAW 3D
 		 * */
-		inline void draw_3d(const Shape3D& shape, const ShaderProgram& shader, const Texture* texture, const glm::vec3 pos, const glm::vec2 size,
-				const Color& color, const float rotate, const bool outline, const bool custom_color = false) {
+		inline void draw_3d(const Shape3D& shape, const ShaderProgram& shader,
+				const Texture* texture, const glm::vec3 pos, const Color& color,
+				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const bool outline = false) {
+
 			// TODO -- Change outline to ENUM
-			(outline) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
-				: glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Back to fill mode if not set to line
+			(outline) ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Back to fill mode if not set to line
 
 			shader.use();
 
@@ -96,10 +92,11 @@ class Renderer {
 			glm::mat4 proj  = glm::mat4(1.0f);
 
 			// Rotate on Y-Axis
-			model = glm::rotate(model, glm::radians(rotate), glm::vec3(1.0f, 1.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(rotate), glm::vec3(axis.x, axis.y, axis.z));
 
 			// Position
-			view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.0f));
+			// view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.0f));
+			view = glm::translate(view, glm::vec3(pos.x, pos.y, pos.z));
 
 			// Camera
 			proj = glm::perspective(glm::radians(this->fov),
@@ -111,25 +108,35 @@ class Renderer {
 			shader.set_matrix4f("view", view);
 			shader.set_matrix4f("proj", proj);
 
-			shader.set_vector4f("shapeColor", (color.empty())
-					? this->cur_color.to_vector4f() : glm::vec4(color.r, color.g, color.b, color.a));
-
-			// if(!custom_color) {
-			// 	// If color is empty, use class color
-			// 	shader.set_vector4f("shapeColor", (color.empty())
-			// 			? this->cur_color.to_vector4f() : glm::vec4(color.r, color.g, color.b, color.a));
-			// } else {
-			// 	shader.set_int("useCustom", 1);
-			// }
+			shader.set_vector4f("shapeColor", glm::vec4(color.r, color.g, color.b, color.a));
 
 			// TODO -- Think on a way of avoiding "if"
 			//         + Think on something to add on shader
-
 			if(texture != nullptr)
 				texture->bind();
 
 			shape.vao->bind();
 			glDrawElements(GL_TRIANGLES, shape.indices_size, GL_UNSIGNED_INT, (void*)0);
 		}
+
+/*
+		// Get camera position/rotation
+		rotation = camera.getRotation();
+		position = camera.getPosition();
+
+		// System.out.println("X: " + position.x + " Y: " + position.y + " Z: " + position.z);
+		
+		// Projection Matrix //
+		pMatrix.identity(); // Create matrix
+		pMatrix.perspective((float) Math.toRadians(camera.getFovDeg()), (float)camera.getWidth() / camera.getHeight(), nearPlane, farPlane); // Adds perspective to the scene
+
+		// Model view matrix //
+		mvMatrix.identity();
+		rotate2D(mvMatrix, (float) (rotation.x + Math.TAU / 4), (float) rotation.y);
+		mvMatrix.translate(-position.x, -position.y, -position.z); // Move camera (minus = away, positive = zoom)	
+
+		// Exports the camera amtrix to the Vertex Shader (proj * view)
+		shaderProgram.uniformMatrix(shaderProgram.findUniform("camMatrix"), pMatrix.mul(mvMatrix));
+*/
 };
 
