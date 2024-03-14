@@ -59,7 +59,7 @@ int main() {
 		renderer.triangle(brick, 100.0f, 100.0f, 100.0f, 50.0f, false, Color(0.0f, 1.0f, 0.0f));
 		renderer.rectangle(brick, 50.0f, 100.0f, 200.0f, 200.0f);
 
-		renderer.triangle(550.0f, 350.0f, 100.0f);
+		renderer.triangle(550.0f, 350.0f, 100.0f, rotation);
 		renderer.rectangle(500.0f, 370.0f, 200.0f, 200.0f, Color(0.0f, 0.0f, 1.0f));
 
 
