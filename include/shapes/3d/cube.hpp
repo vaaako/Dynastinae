@@ -70,6 +70,6 @@ struct Cube : Shape3D {
 	};
 
 	Cube();
-	Cube(const float x, const float y, const float z, const float width, const float height, const float rotate = 0.0f);
-	Cube(const glm::vec3 position, const glm::vec2 size, const float rotate = 0.0f);
+	Cube(const float x, const float y, const float z, const float rotate = 0.0f);
+	Cube(const Vector3f position, const float rotate = 0.0f);
 };

@@ -20,20 +20,25 @@ I am using `SDL2` and `GLEW` to create a very simple to use framework to supply 
     + [X] Colors
     + [X] Texture
     + [X] Position
+    + [ ] Line
+    + [ ] Better triangle
+    + [ ] Circle
 - [X] 3D shapes
     + [X] Draw
     + [X] Colors
     + [X] Texture
     + [X] Position
+    + [ ] 3D shapes width and size?
+    + [ ] Skybox
+    + [ ] Load `.obj`
 - [X] Movement
-- [ ] Audio
-- [ ] Fonts
-- [ ] Load `.obj`
+- [X] Audio
+- [X] Fonts
 - [ ] Gif texture?
 
 # Running
 ## Dependencies
-- [`SDL2`](https://www.libsdl.org/) With [`SDL2 Image`](https://wiki.libsdl.org/SDL2_image/FrontPage)
+- [`SDL2`](https://www.libsdl.org/), [`SDL2 Image`](https://wiki.libsdl.org/SDL2_image/FrontPage), [`SDL2 Mixer`](https://www.libsdl.org/projects/mixer/) and [`SDL3 TTF`](https://wiki.libsdl.org/SDL2_ttf/FrontPage)
 - [`GLEW`](https://glew.sourceforge.net/)
 
 *(If you are on Linux is probably all avaiable on your package manager)*,
@@ -89,7 +94,7 @@ Then you can include properly
 
 And now you can run
 ```sh
-clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lknuppel -o game
+clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lknuppel -o game
 ```
 
 >I will change this later

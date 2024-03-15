@@ -1,0 +1,7 @@
+# External Libs
+
+- SDL_Image
+- SDL_Mixer
+- SDL_ttf
+- GLEW
+- glm

@@ -19,46 +19,46 @@ class Renderer3D : public Renderer {
 
 		// Texture
 		inline void pyramid(const Texture* texture, const float x, const float y, const float z,
-				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const bool outline = false, const Color& color = { 1.0f }) {
+				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_3d(*this->pyramid_shape, *this->shader_texture, texture, glm::vec3(x, y, z), color, rotate, axis, outline);
-		}
-
-		// Rotate and Outline first
-		inline void pyramid(const float x, const float y, const float z,
-				const Color& color = { 1.0f }, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const bool outline = false) {
-
-			this->draw_3d(*this->pyramid_shape, *this->shader, nullptr, glm::vec3(x, y, z), color, rotate, axis, outline);
+			this->draw_3d(*this->pyramid_shape, *this->shader_texture, texture, Vector3f(x, y, z), color, rotate, axis, draw_mode);
 		}
 
 		// Color first
 		inline void pyramid(const float x, const float y, const float z,
-				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const bool outline = false, const Color& color = { 1.0f }) {
+				const Color& color, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_3d(*this->pyramid_shape, *this->shader, nullptr, glm::vec3(x, y, z), color, rotate, axis, outline);
+			this->draw_3d(*this->pyramid_shape, *this->shader, nullptr, Vector3f(x, y, z), color, rotate, axis, draw_mode);
+		}
+
+		// Rotate and draw_mode first
+		inline void pyramid(const float x, const float y, const float z,
+				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+
+			this->draw_3d(*this->pyramid_shape, *this->shader, nullptr, Vector3f(x, y, z), color, rotate, axis, draw_mode);
 		}
 
 
 		/**
 		 * CUBE */
 		inline void cube(const Texture* texture, const float x, const float y, const float z,
-				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const bool outline = false, const Color& color = { 1.0f }) {
+				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_3d(*this->cube_shape, *this->shader_texture, texture, glm::vec3(x, y, z), color, rotate, axis, outline);
+			this->draw_3d(*this->cube_shape, *this->shader_texture, texture, Vector3f(x, y, z), color, rotate, axis, draw_mode);
 		}
 
-		// Rotate and Outline first
+		// Rotate and draw_mode first
 		inline void cube(const float x, const float y, const float z,
-				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const bool outline = false, const Color& color = { 1.0f }) {
+				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_3d(*this->cube_shape, *this->shader, nullptr, glm::vec3(x, y, z), color, rotate, axis, outline);
+			this->draw_3d(*this->cube_shape, *this->shader, nullptr, Vector3f(x, y, z), color, rotate, axis, draw_mode);
 		}
 
 		// Color first
 		inline void cube(const float x, const float y, const float z,
-				const Color& color = { 1.0f }, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const bool outline = false) {
+				const Color& color, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_3d(*this->cube_shape, *this->shader, nullptr, glm::vec3(x, y, z), color, rotate, axis, outline);
+			this->draw_3d(*this->cube_shape, *this->shader, nullptr, Vector3f(x, y, z), color, rotate, axis, draw_mode);
 		}
 
 

@@ -3,7 +3,7 @@ CXX = clang++
 CXXFLAGS = -std=c++20 -O2
 
 # LIBS
-LIBS = -lGL -lGLEW -lSDL2 -lSDL2_image
+LIBS = -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 # DIRECTORIES
 BUILD_DIR = lib
@@ -21,7 +21,8 @@ TARGET_LIB = libknuppel.so
 #
 # Build shared library
 $(TARGET_LIB): $(OBJS)
-	$(CXX) -shared -o $(BUILD_DIR)/$@ $^ $(LIBS)
+	# $(CXX) -shared -o $(BUILD_DIR)/$@ $^ $(LIBS)
+	$(CXX) -shared -o $(BUILD_DIR)/$@ $^ -Wl,--no-as-needed $(LIBS)
 
 # Build object files of each .cpp
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp

@@ -1,10 +1,10 @@
 #include "../../include/window/window.hpp"
 
-#include <SDL2/SDL_image.h>
-#include <iostream>
-
+#include <SDL2/SDL_error.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
+
+#include <iostream>
 
 Window::Window(const std::string& title, const int width, const int height, const bool vsync, const bool debug_info)
 	: title(title), width(width), height(height) {
@@ -13,7 +13,7 @@ Window::Window(const std::string& title, const int width, const int height, cons
 
 	// Check if was inited succesfully
 	if(!init) {
-		SDL_Log("Could not init SDL: %s", SDL_GetError());
+		SDL_Log("Could not init SDL");
 		SDL_Quit();
 		return;
 	}
@@ -68,7 +68,7 @@ Window::Window(const std::string& title, const int width, const int height, cons
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Non-premultiplied alpha
 
-	// Enables the Depth Buffer
+	// Enables the Depth
 	glEnable(GL_DEPTH_TEST);
 
 	if(debug_info) {
@@ -89,8 +89,21 @@ bool Window::init_window() const {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	if(SDL_Init(SDL_INIT_VIDEO) != 0) {
+		SDL_Log("Video init error: %s", SDL_GetError());
 		return false;
 	}
+
+	if(SDL_Init(SDL_INIT_AUDIO) != 0) {
+		SDL_Log("Audio init error: %s", SDL_GetError());
+		return false;
+	}
+
+	if(TTF_Init() != 0) {
+		SDL_Log("Font init error: %s", SDL_GetError());
+		return false;
+	}
+
+
 
 	// Initialize SDL_image
 	int img_flags = IMG_INIT_PNG | IMG_INIT_JPG;

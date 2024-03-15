@@ -18,5 +18,5 @@ struct Triangle : Shape2D {
 
 	Triangle();
 	Triangle(const float x, const float y, const float width, const float height, const float rotate = 0.0f);
-	Triangle(const glm::vec2 position, const glm::vec2 size, const float rotate = 0.0f);
+	Triangle(const Vector2f position, const Vector2f size, const float rotate = 0.0f);
 };

@@ -8,7 +8,7 @@ struct Shape2D : Shape {
 
 	Shape2D() = default;
 	Shape2D(const float x, const float y, const float width, const float height, const float rotate);
-	Shape2D(const glm::vec2 position, const glm::vec2 size, const float rotate);
+	Shape2D(const Vector2f position, const Vector2f size, const float rotate);
 
 	inline void set_vbo(const std::vector<float>& vertices) override {
 		this->vertices = vertices;

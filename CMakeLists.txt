@@ -16,6 +16,8 @@ find_library(GL_LIB GL)
 find_library(GLEW_LIB GLEW)
 find_library(SDL2_LIB SDL2)
 find_library(SDL2_IMAGE_LIB SDL2_image)
+find_library(SDL2_MIXER_LIB SDL2_mixer)
+find_library(SDL2_TTF_LIB SDL2_ttf)
 
 if(GL_LIB)
 	message(STATUS "Found GL library: ${GL_LIB}")
@@ -30,19 +32,31 @@ else()
 endif()
 
 if(SDL2_LIB)
-	message(STATUS "Found SDL2 library: ${SDL2_LIBRARY}")
+	message(STATUS "Found SDL2 library: ${SDL2_LIB}")
 else()
 	message(FATAL_ERROR "SDL2 library not found")
 endif()
 
 if(SDL2_IMAGE_LIB)
-	message(STATUS "Found SDL2 Image library: ${SDL2_LIBRARY}")
+	message(STATUS "Found SDL2 Image library: ${SDL2_IMAGE_LIB}")
 else()
 	message(FATAL_ERROR "SDL2 Image library not found")
 endif()
 
+if(SDL2_IMAGE_LIB)
+	message(STATUS "Found SDL2 Mixer library: ${SDL2_MIXER_LIB}")
+else()
+	message(FATAL_ERROR "SDL2 Mixer library not found")
+endif()
+
+if(SDL2_TTF_LIB)
+	message(STATUS "Found SDL2 TTF library: ${SDL2_TTF_LIB}")
+else()
+	message(FATAL_ERROR "SDL2 TTF library not found")
+endif()
+
 # Link libraries
-target_link_libraries(knuppel PRIVATE ${GL_LIB} ${GLEW_LIB} ${SDL2_LIB} ${SDL2_IMAGE_LIB})
+target_link_libraries(knuppel PRIVATE ${GL_LIB} ${GLEW_LIB} ${SDL2_LIB} ${SDL2_IMAGE_LIB} ${SDL2_MIXER_LIB} ${SDL2_TTF_LIB})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

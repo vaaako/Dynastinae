@@ -6,10 +6,6 @@
 #include "../types/color.hpp"
 #include "../types/texture.hpp"
 
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
-#include <glm/ext.hpp>
-#include <glm/fwd.hpp>
 #include <memory>
 #include <stdexcept>
 
@@ -22,22 +18,18 @@ struct Shape {
 	std::unique_ptr<VBO> vbo = std::make_unique<VBO>();
 	std::unique_ptr<const EBO> ebo = nullptr; // EBO need to initialize later
 
-	glm::vec3 position; // INFO -- 3D default
-	glm::vec2 size;
+	Vector3f position; // INFO -- 3D default
+	Vector2f size;
 	float rotate = 0.0f;
 
-	Color color = { 1.0f };
+	Color color = { 255 };
 	Texture* texture = nullptr;
 
 	Shape() = default;
-	Shape(const glm::vec3 position, const glm::vec2 size, const float rotate);
+	Shape(const Vector3f position, const Vector2f size, const float rotate);
 
 	inline void colorize(const Color& color) {
-		this->color.swap_colors(color);
-	}
-
-	inline void colorize(const float r, const float g, const float b, const float a = 1.0f) {
-		this->color.swap_colors(r, g, b, a);
+		this->color = color;
 	}
 
 	inline void bind_texture(Texture* texture) {

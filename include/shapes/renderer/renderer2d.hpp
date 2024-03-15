@@ -1,11 +1,17 @@
 #pragma once
 
 #include "renderer.hpp"
-#include "../../types/texture.hpp"
-#include "../../types/color.hpp"
 #include "../2d/triangle.hpp"
 #include "../2d/rectangle.hpp"
+#include "../../types/font.hpp"
 
+/* TODO 
+
+	void rectangle(Rectangle& rectangle) {
+		...
+	}
+
+*/
 
 class Renderer2D : public Renderer {
 	public:
@@ -18,23 +24,23 @@ class Renderer2D : public Renderer {
 
 		// Texture
 		inline void triangle(const Texture* texture, const float x, const float y, const float size, 
-				const float rotate = 0.0f, const bool outline = false, const Color& color = { 1.0f }) {
+				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_2d(*this->triangle_shape, *this->shader_texture, GL_TRIANGLES, texture, glm::vec2(x, y), glm::vec2(size, size), color, rotate, outline);
+			this->draw_2d(*this->triangle_shape, *this->shader_texture, GL_TRIANGLES, texture, Vector2f(x, y), Vector2f(size, size), color, rotate, draw_mode);
 		}
 
-		// Rotate and Outline first
+		// Rotate and draw_mode first
 		inline void triangle(const float x, const float y, const float size, const float rotate = 0.0f,
-				const bool outline = false, const Color& color = { 1.0f }) {
+				const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_2d(*this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, glm::vec2(x, y), glm::vec2(size, size), color, rotate, outline);
+			this->draw_2d(*this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, Vector2f(x, y), Vector2f(size, size), color, rotate, draw_mode);
 		}
 
 		// Color first
 		inline void triangle(const float x, const float y, const float size,
-				const Color& color, const float rotate = 0.0f, const bool outline = false) {
+				const Color& color, const float rotate = 0.0f, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_2d(*this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, glm::vec2(x, y), glm::vec2(size, size), color, rotate, outline);
+			this->draw_2d(*this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, Vector2f(x, y), Vector2f(size, size), color, rotate, draw_mode);
 		}
 
 
@@ -43,25 +49,31 @@ class Renderer2D : public Renderer {
 
 		// Texture
 		inline void rectangle(const Texture* texture, const float x, const float y, const float width, const float height,
-				const float rotate = 0.0f, const bool outline = false, const Color& color = { 1.0f }) {
+				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_2d(*this->rectangle_shape, *this->shader_texture, GL_TRIANGLES, texture, glm::vec2(x, y), glm::vec2(width, height), color, rotate, outline);
+			this->draw_2d(*this->rectangle_shape, *this->shader_texture, GL_TRIANGLES, texture, Vector2f(x, y), Vector2f(width, height), color, rotate, draw_mode);
 		}
 
-		// Rotate and Outline first
+		// Rotate and draw_mode first
 		inline void rectangle(const float x, const float y, const float width, const float height,
-				const float rotate = 0.0f, const bool outline = false, const Color& color = { 1.0f }) {
+				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_2d(*this->rectangle_shape, *this->shader, GL_TRIANGLES, nullptr, glm::vec2(x, y), glm::vec2(width, height), color, rotate, outline);
+			this->draw_2d(*this->rectangle_shape, *this->shader, GL_TRIANGLES, nullptr, Vector2f(x, y), Vector2f(width, height), color, rotate, draw_mode);
 		}
 
 		// Color first
 		inline void rectangle(const float x, const float y, const float width, const float height,
-			const Color& color, const float rotate = 0.0f, const bool outline = false) {
+			const Color& color, const float rotate = 0.0f, const DrawMode draw_mode = DrawMode::FILL) {
 
-			this->draw_2d(*this->rectangle_shape, *this->shader, GL_TRIANGLES, nullptr, glm::vec2(x, y), glm::vec2(width, height), color, rotate, outline);
+			this->draw_2d(*this->rectangle_shape, *this->shader, GL_TRIANGLES, nullptr, Vector2f(x, y), Vector2f(width, height), color, rotate, draw_mode);
 		}
 
+
+
+		inline void draw_font(const Font& font, const float x, const float y) {
+			this->draw_2d(*this->rectangle_shape, *this->shader_texture, GL_TRIANGLE_FAN,
+				 font.texture, Vector2f(x, y), Vector2f((float)font.width, (float)font.height), { 255 }, 0.0f, DrawMode::FILL);
+		}
 
 
 	private:

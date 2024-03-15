@@ -1,4 +1,4 @@
-# Not complete yet
+# Not finished yet
 
 
 # Template
@@ -23,7 +23,7 @@ int main() {
 	Window window = Window(title, 800, 600, true); // Title, Width, Height, VSync
 
 	Renderer2D renderer = Renderer2D();
-	Renderer3D renderer = Renderer3D(45.0f, 0.1f, 100.0f); // Set camera
+	Renderer3D renderer3d = Renderer3D(45.0f, 0.1f, 100.0f); // Set camera
 
 	Texture* texture = new Texture("src/texture.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 	Texture* texture2 = new Texture("src/texture2.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);

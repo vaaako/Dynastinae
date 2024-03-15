@@ -44,6 +44,6 @@ struct Pyramid : Shape3D {
 	};
 
 	Pyramid();
-	Pyramid(const float x, const float y, const float z, const float width, const float height, const float rotate = 0.0f);
-	Pyramid(const glm::vec3 position, const glm::vec2 size, const float rotate = 0.0f);
+	Pyramid(const float x, const float y, const float z, const float rotate = 0.0f);
+	Pyramid(const Vector3f position, const float rotate = 0.0f);
 };
