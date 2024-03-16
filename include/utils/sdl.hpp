@@ -7,7 +7,7 @@ namespace SDLUtils {
 	inline void flip_vertically(SDL_Surface* surface) {
 		SDL_LockSurface(surface);
 
-		int pitch = surface->pitch; // row size
+		int pitch = surface->pitch; // Row size
 
 		uint8_t* temp = new uint8_t[pitch]; // Temp buffer to hold a single row
 		uint8_t* pixels = static_cast<uint8_t*>(surface->pixels);
@@ -30,7 +30,7 @@ namespace SDLUtils {
 	inline void flip_horizontally(SDL_Surface* surface) {
 		SDL_LockSurface(surface);
 
-		int pitch = surface->pitch; // row size
+		int pitch = surface->pitch; // Row size
 
 		uint8_t* temp = new uint8_t[pitch]; // Temp buffer to hold a single row
 		uint8_t* pixels = static_cast<uint8_t*>(surface->pixels);

@@ -19,16 +19,25 @@ struct Color {
 		this->b = color;
 		this->a = alpha;
 	}
+	// Copy constructor
+	Color(const Color& other) {
+		this->r = other.r;
+		this->g = other.g;
+		this->b = other.b;
+		this->a = other.a;
+	}
 
-
-	// TODO -- Deprecated, solve later 
-	Color operator=(const Color& other) {
+	Color& operator=(const Color& other) {
 		// Check if is not the same
-		if(this != &other) {
-			return other;
+		if (this != &other) {
+			this->r = other.r;
+			this->g = other.g;
+			this->b = other.b;
+			this->a = other.a;
 		}
 		return *this;
 	}
+
 
 	Color operator+(const Color& other) {
 		return Color(this->r + other.r, this->g + other.g, this->b + other.b);
@@ -73,7 +82,7 @@ struct Color {
 	}
 
 	inline SDL_Color sdl_color() const {
-		return SDL_Color({ static_cast<uint8_t>(this->r), static_cast<uint8_t>(this->g), static_cast<uint8_t>(this->b), static_cast<uint8_t>(this->a) });
+		return { static_cast<uint8_t>(this->r), static_cast<uint8_t>(this->g), static_cast<uint8_t>(this->b), static_cast<uint8_t>(this->a) };
 	}
 
 	static Color from_hex(const int hex_value, const unsigned char alpha = 255) {

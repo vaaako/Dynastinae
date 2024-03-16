@@ -101,6 +101,10 @@ class Window {
 
 		/**
 		 * TIMER */
+		inline unsigned int time() {
+			return SDL_GetTicks();
+		}
+
 		inline double dt(const float time = 1000.0f) const {
 			// CURRENT - LAST to seconds
 			return static_cast<double>(SDL_GetTicks() - this->last_update) / time;

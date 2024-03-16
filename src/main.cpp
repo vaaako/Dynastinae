@@ -6,10 +6,6 @@
 
 #include <iostream>
 
-// MUSIC - Play only one at the channel
-// SOUND - Can play multple at the same channel
-Audio* mp3 = new Audio("src/sound.mp3", false);
-Audio* wav = new Audio("src/sound2.wav", true);
 
 // See: https://wiki.libsdl.org/SDL2/SDLKeycodeLookup 
 void process_keyboard(Window& window, Keyboard keyboard) {
@@ -19,18 +15,8 @@ void process_keyboard(Window& window, Keyboard keyboard) {
 		window.close();
 	}
 
+	// Enter
 	if(keyboard.down == SDLK_RETURN) {}
-
-	if(keyboard.down == SDLK_z) {
-		mp3->set_volume(50);
-		mp3->play(0);
-	}
-
-	if(keyboard.down == SDLK_x) {
-		wav->set_volume(50);
-		wav->play();
-	}
-
 }
 
 
@@ -43,8 +29,6 @@ void process_keyboard(Window& window, Keyboard keyboard) {
  * - .obj
  *   + When creating a OBJ `OBJ obj = Obj()` -> `obj.draw()`. This makes a new VAO and VBO of that obj
  *  
- * - Line
- * - Skybox
  *  
  * - Use Vector2f and Vector3f instead of glm versions
  * - Unify shader and shader_texture somehow
@@ -59,13 +43,19 @@ int main() {
 	Texture* kuromi = new Texture("src/kuromi.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 	Texture* brick = new Texture("src/brick.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 
-	Font* font = new Font("src/msgothic.ttf", "Hello World!");
+	// MUSIC - Play only one at the channel
+	// SOUND - Can play multple at the same channel
+	Audio* mp3 = new Audio("src/sound.mp3", false); // Path, is music
+	Audio* wav = new Audio("src/sound2.wav", true);
+
+	Font* font = new Font("src/msgothic.ttf", "FPS: 0", 24, { 255 }); // Path, Text, Size, Color
 
 
 	Renderer2D renderer = Renderer2D();
 	Renderer3D renderer3d = Renderer3D(45.0f, 0.1f, 100.0f); // Set camera
 
 	float rotation = 0.0f;
+	unsigned int start_time = window.time(); // To count FPS
 	while(window.is_open()) {
 		window.clear({ 255, 127, 255 });
 		switch (window.process_event()) {
@@ -76,6 +66,17 @@ int main() {
 			case Event::KEYDOWN:
 			case Event::KEYUP:
 				process_keyboard(window, window.keyboard());
+
+				// Here just for demonstration
+				if(window.keyboard().down == SDLK_z) {
+					mp3->set_volume(50);
+					mp3->play(0);
+				}
+
+				if(window.keyboard().down == SDLK_x) {
+					wav->set_volume(50);
+					wav->play();
+				}
 				break;
 
 			default:
@@ -95,6 +96,12 @@ int main() {
 		renderer3d.cube(kuromi, 1.0f, 1.0f, -8.0f, rotation, { 255, 255, 0 });
 
 
+		// Update FPS each seconds
+		unsigned int current_time = window.time();
+		if(current_time - start_time >= 1000) {
+			font->set_text("FPS: " + std::to_string(window.fps()));
+			start_time = window.time();
+		}
 		renderer.draw_font(*font, 10.0f, 10.0f);
 
 		rotation += 1.0f;
@@ -102,11 +109,8 @@ int main() {
 			rotation = 0.0f;
 		}
 
-		// Each one second
-		window.set_title("Hello Knuppel | FPS: " + std::to_string(window.fps()));
 
 		window.swap();
-
 	}
 
 	GLenum err = glGetError();
