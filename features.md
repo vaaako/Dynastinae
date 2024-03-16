@@ -15,7 +15,7 @@
 
 void process_keyboard(Window& window, Keyboard keyboard) {
 	// 27 - ESC
-    // You can use keycode or Enum
+	// You can use keycode or Enum
 	if(keyboard.down == 27 || keyboard.down == SDLK_ESCAPE) {
 		std::cout << "Closing" << std::endl;
 		window.close();
@@ -24,23 +24,6 @@ void process_keyboard(Window& window, Keyboard keyboard) {
 	// Enter
 	if(keyboard.down == SDLK_RETURN) {}
 }
-
-
-/**
- * TODO --
- * - Custom vertex colors for 2D?
- *   + Later
- *   + Add to vertex attrib 2 on shape VBO and check if is to use on shape instance
- *  
- * - .obj
- *   + When creating a OBJ `OBJ obj = Obj()` -> `obj.draw()`. This makes a new VAO and VBO of that obj
- *  
- *  
- * - Use Vector2f and Vector3f instead of glm versions
- * - Unify shader and shader_texture somehow
- * - Code keyboard enums
- * - More window events
- * */
 
 int main() {
 	Window window = Window("Hello Knuppel", 800, 600, true, true);
