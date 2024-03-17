@@ -8,10 +8,9 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 	// Open image with SDL
 	SDL_Surface* surface = IMG_Load(path.c_str());
 	if(surface == NULL) {
-		SDL_Log("Failed to load texture \"%s\" \n~> %s", path.c_str(), SDL_GetError());
 		IMG_Quit();
 		SDL_Quit();
-		return;
+		throw std::runtime_error("Failed to load texture \"" + path + "\"\n~> " + SDL_GetError());
 	}
 
 	std::cout << "Texture loaded successfully! Width: " << surface->w << ", Height: " << surface->h << ", Format: " << surface->format->BytesPerPixel << " bytes per pixel" << std::endl;
@@ -23,31 +22,12 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 
 	// Set filter parameters
 	// Nearest: Pixelate / Linear: Blur
-	if(filter == TextureFilter::LINEAR) {
-		glTexParameteri(this->tex_type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(this->tex_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	} else {
-		glTexParameteri(this->tex_type, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(this->tex_type, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	}
+	glTexParameteri(this->tex_type, GL_TEXTURE_MIN_FILTER, (int)filter);
+	glTexParameteri(this->tex_type, GL_TEXTURE_MAG_FILTER, (int)filter);
 
 	// Repeat, Mirrored Repeat, Clamp to Edge, Clamp to Border (then use array of RGBA to color the border)
-	switch (wrap) {
-		case TextureWrap::REPEAT:
-			glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			break;
-		case TextureWrap::MIRRORED:
-			glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-			glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-			break;
-		case TextureWrap::CLAMP_TO_EDGE:
-			glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			break;
-		default:
-			break;
-	}
+	glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_S, (int)wrap);
+	glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_T, (int)wrap);
 
 	// Check before if is JPG or PNG
 	GLenum texture_format = 0;
@@ -70,10 +50,11 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 
 	// No format found
 	if(texture_format == 0) {
-		SDL_Log("Failed to load texture \"%s\" \n~> Supported extensions are: PNG, JPG and JPEG", path.c_str());
 		IMG_Quit();
 		SDL_Quit();
-		return;
+
+		// TODO -- I don't really know what are the supported extensions :/
+		throw std::invalid_argument("Failed to load texture \"" + path + "\"\n~> Supported extensions are: PNG, JPG and JPEG");
 	}
 
 	// Create texture
@@ -96,13 +77,8 @@ Texture::Texture(const SDL_Surface* surface, const TextureFilter filter) {
 
 	// Set filter parameters
 	// Nearest: Pixelate / Linear: Blur
-	if(filter == TextureFilter::LINEAR) {
-		glTexParameteri(this->tex_type, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(this->tex_type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	} else {
-		glTexParameteri(this->tex_type, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(this->tex_type, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	}
+	glTexParameteri(this->tex_type, GL_TEXTURE_MIN_FILTER, (int)filter);
+	glTexParameteri(this->tex_type, GL_TEXTURE_MAG_FILTER, (int)filter);
 
 	// Check before if is JPG or PNG
 	GLenum texture_format = 0;
@@ -123,7 +99,10 @@ Texture::Texture(const SDL_Surface* surface, const TextureFilter filter) {
 		}
 	}
 
+	// TODO -- Add supported formate here? I don't know if it is really necessary
+
 	glTexImage2D(GL_TEXTURE_2D, 0, colors, surface->w, surface->h, 0, texture_format, GL_UNSIGNED_BYTE, surface->pixels);
+
 	// Generate Mipmap
 	glGenerateMipmap(this->tex_type);
 

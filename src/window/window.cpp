@@ -9,14 +9,7 @@
 Window::Window(const std::string& title, const int width, const int height, const bool vsync, const bool debug_info)
 	: title(title), width(width), height(height) {
 
-	const bool init = this->init_window();
-
-	// Check if was inited succesfully
-	if(!init) {
-		SDL_Log("Could not init SDL");
-		SDL_Quit();
-		return;
-	}
+	this->init_window();
 
 	// Make window
 	this->window = SDL_CreateWindow(
@@ -37,19 +30,12 @@ Window::Window(const std::string& title, const int width, const int height, cons
 
 	// Load OpenGL
 	this->glContext = SDL_GL_CreateContext(window);
-	// if(!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
-	// 	SDL_Log("Failed to initalize GLAD:  %s" , SDL_GetError());
-	// 	SDL_DestroyWindow(window);
-	// 	SDL_Quit();
-	// 	return;
-	// }
-
 
 	if (SDL_GL_SetSwapInterval(vsync) < 0) {
 		SDL_Log("Failed to enable VSync: %s", SDL_GetError());
 		return;
 	}
-	// SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED );
+
 
 	// Initialize GLEW
 	// glewExperimental = GL_TRUE;
@@ -62,15 +48,17 @@ Window::Window(const std::string& title, const int width, const int height, cons
 		return;
 	}
 
+	// Init Viewport
 	glViewport(0, 0, width, height);
 
 	// Enable transparency
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Non-premultiplied alpha
 
-	// Enables the Depth
+	// Enables Depth
 	glEnable(GL_DEPTH_TEST);
 
+	// Show debug info
 	if(debug_info) {
 		SDL_Log("OpengGL Loaded!");
 		SDL_Log("GL Version: %s", glGetString(GL_VERSION));
@@ -81,7 +69,7 @@ Window::Window(const std::string& title, const int width, const int height, cons
 }
 
 
-bool Window::init_window() const {
+void Window::init_window() const {
 	// Init SDL
 	// SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -89,30 +77,25 @@ bool Window::init_window() const {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	if(SDL_Init(SDL_INIT_VIDEO) != 0) {
-		SDL_Log("Video init error: %s", SDL_GetError());
-		return false;
+		throw std::runtime_error("~> Failed to init video module " + std::string(SDL_GetError()));
 	}
 
 	if(SDL_Init(SDL_INIT_AUDIO) != 0) {
-		SDL_Log("Audio init error: %s", SDL_GetError());
-		return false;
+		throw std::runtime_error("~> Failed to init audio module " + std::string(SDL_GetError()));
 	}
 
 	if(TTF_Init() != 0) {
-		SDL_Log("Font init error: %s", SDL_GetError());
-		return false;
+		throw std::runtime_error("~> Failed to init font module " + std::string(SDL_GetError()));
 	}
 
 
-
+	// TODO -- do I really need to init IMG like this?
+	//
 	// Initialize SDL_image
 	int img_flags = IMG_INIT_PNG | IMG_INIT_JPG;
 	if(!(IMG_Init(img_flags) & img_flags)) {
-		SDL_Log("IMG_Init Error: %s", IMG_GetError());
-		return false;
+		throw std::runtime_error("~> Failed to init image module " + std::string(IMG_GetError()));
 	}
-
-	return true;
 }
 
 Event Window::process_event() {

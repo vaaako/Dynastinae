@@ -142,7 +142,6 @@ class Window {
 		}
 
 	private:
-		// INFO
 		std::string title;
 		int width;
 		int height;
@@ -162,5 +161,5 @@ class Window {
 		Keyboard keybrd = Keyboard();
 		Mouse rat = Mouse(); // To not have the same name as the "mouse" function
 
-		bool init_window() const;
+		void init_window() const;
 };

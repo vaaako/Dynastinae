@@ -8,14 +8,14 @@
 // 16x16, 32x32, 64x64, 128x128, 256x256 etc
 
 enum class TextureFilter {
-	NEAREST,
-	LINEAR
+	NEAREST =  9728,
+	LINEAR = 9729
 };
 
 enum class TextureWrap {
-	REPEAT,
-	MIRRORED,
-	CLAMP_TO_EDGE
+	REPEAT = 10497,
+	MIRRORED = 33648,
+	CLAMP_TO_EDGE = 33071
 };
 
 struct Texture {

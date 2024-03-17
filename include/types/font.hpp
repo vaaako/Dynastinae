@@ -7,13 +7,14 @@
 #include <GL/glew.h>
 #include <string>
 
-
-// TODO -- Update method for text, size and color
 struct Font {
-	const std::string path;
+	// const std::string path;
+	const char* path; // NOTE -- If font changes any element, frame-by-frame it loads from path, if it was a std::string a conversion would be done frame-by-frame
 	std::string text;
 	unsigned short size;
 	Color color;
+	TextureFilter filter;
+
 	Texture* texture = nullptr;
 	TTF_Font* font;
 
@@ -21,7 +22,8 @@ struct Font {
 	int width;
 	int height;
 
-	Font(const std::string& path, const std::string& text, const unsigned short size = 24, const Color& color = { 255 });
+
+	Font(const char* path, const std::string& text, const unsigned short size = 24, const Color& color = { 255 }, const TextureFilter filter = TextureFilter::LINEAR);
 	~Font() {
 		TTF_CloseFont(this->font);
 		delete texture;
