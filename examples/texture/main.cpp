@@ -19,7 +19,7 @@ void process_keyboard(Window& window, Keyboard keyboard) {
 
 
 int main() {
-	Window window = Window("Hello Knuppel", 800, 600, true);
+	Window window = Window("Hello Dynastinae", 800, 600, true);
 
 	// Load texture
 	Texture texture = Texture("src/texture.jpg");

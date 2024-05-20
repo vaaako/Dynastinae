@@ -1,15 +1,15 @@
-# Knuppel 🦇
+# Dynastinae 🪲
 # About
-**Knuppel** is a very simple and basic framework I am developing to code some games
+**Dynastinae** is a very simple and basic framework I am developing to code some games
 
-I am using `SDL2` and `GLEW` to create a very simple to use framework to supply my needs
+I am using `SDL2` and `GLEW` to create a very simple framework to supply my needs
 
 ![demo](media/demo.gif)
 <!-- ![demo2](media/demo2.png) -->
 ![demo3](media/demo3.png)
 
 # Current Stage
-**Knuppel** is in very early stages, check `src/main.cpp`
+**dynastinae** is in very early stages, check `src/main.cpp`
 
 # Objectives
 - [X] Window creation
@@ -51,14 +51,14 @@ I am using `SDL2` and `GLEW` to create a very simple to use framework to supply 
 ```sh
 cmake -S . -B build # Config
 cmake --build build # Compile
-./build/knuppel     # Run
+./build/dynastinae     # Run
 ```
 
 ## Make
 ```sh
 make
 ```
-This will create a `lib/` folder, inside it you should have a file called `libknuppel.so`, if you want to use this file,
+This will create a `lib/` folder, inside it you should have a file called `libdynastinae.so`, if you want to use this file,
  locally, you can move to your project directory and link to your program
 
 **WARNING:** Local link doesn't seem to work well, so follow the next section to have a global link of the lib
@@ -67,34 +67,34 @@ This will create a `lib/` folder, inside it you should have a file called `libkn
 <!-- ### Locally -->
 <!-- Move `include` folder to your project -->
 <!---->
-<!-- Let's say you have a file called `main.cpp` importing **Knuppel**, you should include with `""`: -->
+<!-- Let's say you have a file called `main.cpp` importing **dynastinae**, you should include with `""`: -->
 <!-- ```cpp -->
-<!-- #include "include/Knuppel/window/window.hpp" -->
+<!-- #include "include/dynastinae/window/window.hpp" -->
 <!-- ``` -->
 <!---->
-<!-- To run the program with `Knuppel` linked, you should run the following command: -->
+<!-- To run the program with `dynastinae` linked, you should run the following command: -->
 <!-- ```sh -->
-<!-- clang++ main.cpp -lSDL2 -lSDL2_image -lGL -lGLEW -L. -lknuppel -o game -->
+<!-- clang++ main.cpp -lSDL2 -lSDL2_image -lGL -lGLEW -L. -ldynastinae -o game -->
 <!-- ``` -->
 
 <!-- ### Globally -->
-<!-- Alternativally, to not have to use `-L.` flag, you can move `libknuppel.so` to `/usr/lib` and **Knuppel**'s include folder to `/usr/include`, -->
-<!--  this way you don't need to move `libknuppel.so` to every project you want to use it -->
+<!-- Alternativally, to not have to use `-L.` flag, you can move `libdynastinae.so` to `/usr/lib` and **Dynastinae**'s include folder to `/usr/include`, -->
+<!--  this way you don't need to move `libdynastinae.so` to every project you want to use it -->
 
 Move some files
 ```
-sudo cp libknuppel.so /usr/lib/
-sudo cp -r include/ /usr/include/Knuppel
+sudo cp libdynastinae.so /usr/lib/
+sudo cp -r include/ /usr/include/dynastinae
 ```
 
 Then you can include properly
 ```cpp
-#include <Knuppel/window/window.hpp>
+#include <dynastinae/window/window.hpp>
 ```
 
 And now you can run
 ```sh
-clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lknuppel -o game
+clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -ldynastinae -o game
 ```
 
 >I will change this later

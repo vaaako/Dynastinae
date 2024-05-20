@@ -4,12 +4,14 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 
+#include <algorithm>
 #include <iostream>
 
 Window::Window(const std::string& title, const int width, const int height, const bool vsync, const bool debug_info)
 	: title(title), width(width), height(height) {
 
-	this->init_window();
+	this->init_sdl();
+
 
 	// Make window
 	this->window = SDL_CreateWindow(
@@ -69,7 +71,7 @@ Window::Window(const std::string& title, const int width, const int height, cons
 }
 
 
-void Window::init_window() const {
+void Window::init_sdl() const {
 	// Init SDL
 	// SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -98,49 +100,29 @@ void Window::init_window() const {
 	}
 }
 
-Event Window::process_event() {
+
+void Window::process_events() {
+	// Get all events in this frame
 	SDL_Event event;
 	while(SDL_PollEvent(&event)) {
+		this->frame_events.emplace_back(event.type);
+
+		// Handle events necessary to the engine working
 		switch (event.type) {
-			case SDL_QUIT:
-				return Event::QUIT;
+			/**
+			 * KEYBOARD EVENTS */
+			case SDL_KEYDOWN:
+			case SDL_KEYUP:
+				this->keyboard_handler->handle_event(event);
+				break;
 
 			/**
-			 * KEYBOARD EVENT */
-			case SDL_KEYDOWN: {
-				std::cout << "Keydown: " << event.key.keysym.sym << std::endl;
-				// std::cout << "Repeat: " << (int)event.key.repeat << std::endl;
-				keybrd.keydown(event.key.keysym.sym, (bool)event.key.repeat);
-				return Event::KEYDOWN;
-			}
-
-			case SDL_KEYUP: {
-				std::cout << "Keyup: " << event.key.keysym.sym << std::endl;
-				keybrd.keyup(event.key.keysym.sym);
-				return Event::KEYUP;
-			}
-
-			/**
-			 * MOUSE EVENT */
-			case SDL_MOUSEBUTTONDOWN: {
-				// std::cout << "Mouse Click Axis: " << event.button.x << ":" << event.button.y << std::endl;
-				// std::cout << "Mouse Clicks: " << (int)event.button.clicks << std::endl;
-				SDL_MouseButtonEvent mouse_event = event.button;
-				rat.btndown(mouse_event.x, mouse_event.y, mouse_event.button, mouse_event.clicks);
-				return Event::MOUSEDOWN;
-			}
-
-			case SDL_MOUSEBUTTONUP: {
-				rat.btnup(event.button.button);
-				return Event::MOUSEUP;
-			}
-
-			case SDL_MOUSEMOTION: {
-				// std::cout << "Mouse Motion: " << event.motion.x << ":" << event.motion.y << std::endl;
-				SDL_MouseMotionEvent mouse_event = event.motion;
-				rat.motion(mouse_event.x, mouse_event.y, mouse_event.xrel, mouse_event.yrel);
-				return Event::MOUSEMOTION;
-			}
+			 * MOUSE EVENTS */
+			case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONUP:
+			case SDL_MOUSEMOTION:
+				this->mouse_handler->handle_event(event);
+				break;
 
 			/**
 			 * WINDOW EVENT */
@@ -161,12 +143,9 @@ Event Window::process_event() {
 				break;
 			}
 			*/
-
-
 			default:
-				return Event::NOTHING;
+				break;
 		}
 	}
-
-	return Event::NOTHING;
 }
+

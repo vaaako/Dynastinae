@@ -15,16 +15,20 @@
 #include <SDL2/SDL_ttf.h>
 
 #include <GL/glew.h>
+
+#include <algorithm>
 #include <string>
+#include <vector>
+
 
 enum class Event {
-	NOTHING,
-	KEYDOWN,
-	KEYUP,
-	MOUSEDOWN,
-	MOUSEUP,
-	MOUSEMOTION,
-	QUIT
+	NOTHING = 0,
+	KEYDOWN = 768,
+	KEYUP = 769,
+	MOUSEDOWN = 1025,
+	MOUSEUP = 1026,
+	MOUSEMOTION = 1024,
+	QUIT = 256
 };
 
 // Global window so i can acess from anywhere??
@@ -43,20 +47,28 @@ class Window {
 			SDL_CloseAudio();
 			TTF_Quit();
 			SDL_Quit();
+
+			delete this->keyboard_handler;
+			delete this->mouse_handler;
 		}
 
-		Event process_event();
+		// This method is intended to only run once per frame
+		void process_events();
 
-		inline SDL_Window* get_reference() const {
-			return this->window;
-		}
-		
 		/**
 		 * WINDOW PROCESS */
+		// Runs in the frame beggining
 		inline bool is_open() {
 			this->last_update = SDL_GetTicks();
 			this->frame_count++;
+
 			return this->window_open;
+		}
+
+		// Runs in the frame ending
+		inline void swap() {
+			this->frame_events.clear(); // Clear events
+			SDL_GL_SwapWindow(this->window);
 		}
 
 		inline void clear(const Color& color) {
@@ -64,25 +76,19 @@ class Window {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		inline void swap() {
-			SDL_GL_SwapWindow(this->window);
-		}
-
-		inline void close() {
-			this->window_open = false;
-		}
-
-		/**
-		 * SETTERS */
-		inline void set_title(const std::string& title) {
-			this->title = title.c_str();
-			SDL_SetWindowTitle(this->window, title.c_str());
-		}
 
 		/**
 		 * GETTERS */
-		inline Keyboard keyboard() const {
-			return this->keybrd;
+		inline SDL_Window* get_reference() const {
+			return this->window;
+		}
+
+		inline Keyboard* keyboard() const {
+			return this->keyboard_handler;
+		}
+
+		inline Mouse* mouse() const {
+			return this->mouse_handler;
 		}
 
 		inline std::string get_title() const {
@@ -97,6 +103,31 @@ class Window {
 			return this->height;
 		}
 
+		// Check if event in array is not 0, if not, event is activated
+		inline bool trigger_event(SDL_EventType event) {
+			return std::find(this->frame_events.begin(), this->frame_events.end(), event) != this->frame_events.end();
+		}
+
+		/**
+		 * SETTERS */
+		inline void close() {
+			this->window_open = false;
+		}
+
+		inline void set_title(const std::string& title) {
+			this->title = title.c_str();
+			SDL_SetWindowTitle(this->window, title.c_str());
+		}
+
+		// TODO -- Put on mouse struct, but how? how can i avoid circular? wjjjj
+		inline void set_cursor_position(const unsigned int x, const unsigned int y) {
+			if(x > this->width || y > this->height) {
+				return;
+			}
+
+			SDL_WarpMouseInWindow(this->window, x, y);
+			this->mouse_handler->set_position(x, y);
+		}
 
 
 		/**
@@ -142,10 +173,13 @@ class Window {
 		}
 
 	private:
+		// Window information
 		std::string title;
 		int width;
 		int height;
 		bool window_open = true;
+
+		std::vector<uint> frame_events;
 
 		// SDL2
 		SDL_Window* window;
@@ -158,8 +192,9 @@ class Window {
 		float FPS = 0.0f;
 
 		// KEYS
-		Keyboard keybrd = Keyboard();
-		Mouse rat = Mouse(); // To not have the same name as the "mouse" function
+		// Pointers because it has a getter method
+		Keyboard* keyboard_handler = new Keyboard();
+		Mouse* mouse_handler = new Mouse(); // To not have the same name as the "mouse" function
 
-		void init_window() const;
+		void init_sdl() const;
 };

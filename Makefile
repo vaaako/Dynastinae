@@ -12,8 +12,8 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*/*.cpp) # Only the files inside folders
 OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRC_FILES)) # Derive object file names from source files
 
 # TARGET
-TARGET = knuppel
-TARGET_LIB = libknuppel.so
+TARGET = dynastinae
+TARGET_LIB = libdynastinae.so
 # $@ - Func name
 
 

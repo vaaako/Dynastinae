@@ -1,9 +1,9 @@
 #pragma once
 
-#include "renderer.hpp"
+#include "../../types/font.hpp"
 #include "../2d/triangle.hpp"
 #include "../2d/rectangle.hpp"
-#include "../../types/font.hpp"
+#include "renderer.hpp"
 
 /* TODO 
 
@@ -15,7 +15,8 @@
 
 class Renderer2D : public Renderer {
 	public:
-		Renderer2D();
+		Renderer2D(const Window& window);
+		Renderer2D(const unsigned int width, const unsigned int height);
 
 		// TODO -- Think on a better way of drawing shapes function, because this is getting too much
 
@@ -74,6 +75,16 @@ class Renderer2D : public Renderer {
 			this->draw_2d(*this->rectangle_shape, *this->shader_texture, GL_TRIANGLE_FAN,
 				 font.texture, Vector2f(x, y), Vector2f((float)font.width, (float)font.height), { 255 }, 0.0f, DrawMode::FILL);
 		}
+
+
+
+		/**
+		* UPDATE VIEWPORT */
+		inline void update_viewport(const Window& window) {
+			this->update_viewport(window.get_width(), window.get_height());
+		}
+
+		void update_viewport(const unsigned int width, const unsigned int height);
 
 
 	private:
@@ -139,5 +150,10 @@ class Renderer2D : public Renderer {
 				FragColor = texture(texSampler, texCoord) * vec4(shapeColor.rgba);
 			}
 		)";
+
+
+		void draw_2d(const Shape2D& shape, const ShaderProgram& shader, const GLenum draw_type,
+				const Texture* texture, const Vector2f pos, Vector2f size, const Color& color = { 255 },
+				const float rotate = 0.0f, const DrawMode draw_mode = DrawMode::FILL) const;
 };
 

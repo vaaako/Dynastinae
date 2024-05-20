@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(Knuppel VERSION 0.0.1)
+project(Dynastinae VERSION 0.0.1)
 
 # Set compiler
 set(CMAKE_CXX_STANDARD 20)
@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -g -fdiagnostics-color=always
 
 # Link files
 file(GLOB_RECURSE SOURCE_FILES src/*.cpp src/*/*.cpp) # Get source files
-add_executable(knuppel ${SOURCE_FILES}) # Link sources files
+add_executable(dynastinae ${SOURCE_FILES}) # Link sources files
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include) # Get headers
 
 
@@ -56,7 +56,7 @@ else()
 endif()
 
 # Link libraries
-target_link_libraries(knuppel PRIVATE ${GL_LIB} ${GLEW_LIB} ${SDL2_LIB} ${SDL2_IMAGE_LIB} ${SDL2_MIXER_LIB} ${SDL2_TTF_LIB})
+target_link_libraries(dynastinae PRIVATE ${GL_LIB} ${GLEW_LIB} ${SDL2_LIB} ${SDL2_IMAGE_LIB} ${SDL2_MIXER_LIB} ${SDL2_TTF_LIB})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
