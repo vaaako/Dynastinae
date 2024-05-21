@@ -31,16 +31,16 @@ ShaderProgram::ShaderProgram(const char* vertex_shader_source, const char* fragm
 
 
 	// Create shader program
-	this->programID = glCreateProgram(); // Set program ID
-	glAttachShader(this->programID, vertex_shader);
-	glAttachShader(this->programID, fragment_shader);
-	glLinkProgram(this->programID);
+	this->id = glCreateProgram(); // Set program ID
+	glAttachShader(this->id, vertex_shader);
+	glAttachShader(this->id, fragment_shader);
+	glLinkProgram(this->id);
 
 	// Check link error
-	glGetProgramiv(this->programID, GL_LINK_STATUS, &success);
+	glGetProgramiv(this->id, GL_LINK_STATUS, &success);
 	if(!success) {
 		GLchar info_log[512];
-		glGetProgramInfoLog(this->programID, 512, NULL, info_log);
+		glGetProgramInfoLog(this->id, 512, NULL, info_log);
 		SDL_Log("\nHad error on linking shaders: \n~> %s\n", info_log);
 	}
 

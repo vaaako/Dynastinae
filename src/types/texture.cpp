@@ -16,8 +16,8 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 	std::cout << "Texture loaded successfully! Width: " << surface->w << ", Height: " << surface->h << ", Format: " << surface->format->BytesPerPixel << " bytes per pixel" << std::endl;
 	SDLUtils::flip_vertically(surface); // OpenGL draws image fliped, so flip before
 
-	glGenTextures(1, &this->tex_id); // num of textures, pointer
-	glBindTexture(this->tex_type, this->tex_id);
+	glGenTextures(1, &this->id); // num of textures, pointer
+	glBindTexture(this->tex_type, this->id);
 
 
 	// Set filter parameters
@@ -72,8 +72,8 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 
 
 Texture::Texture(const SDL_Surface* surface, const TextureFilter filter) {
-	glGenTextures(1, &this->tex_id); // num of textures, pointer
-	glBindTexture(this->tex_type, this->tex_id);
+	glGenTextures(1, &this->id); // num of textures, pointer
+	glBindTexture(this->tex_type, this->id);
 
 	// Set filter parameters
 	// Nearest: Pixelate / Linear: Blur

@@ -1,4 +1,6 @@
 # Not finished yet
+This file is not ready yet, and will not be until i release v1.0
+
 
 
 # Template
@@ -20,9 +22,6 @@ void process_keyboard(Window& window, Keyboard keyboard) {
 		std::cout << "Closing" << std::endl;
 		window.close();
 	}
-
-	// Enter
-	if(keyboard.down == SDLK_RETURN) {}
 }
 
 int main() {

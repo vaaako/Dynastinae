@@ -3,19 +3,20 @@
 #include <glm/ext.hpp>
 #include "../utils/math.hpp"
 
-struct Vector2f {
-	float x = 0.0f;
-	float y = 0.0f;
+template <typename T>
+struct Vector2 {
+	T x = 0.0f;
+	T y = 0.0f;
 
-	Vector2f() = default;
-	Vector2f(const float x, const float y);
+	Vector2() = default;
+	Vector2(const T x, const T y);
 
 	inline void clear() {
 		this->x = 0;
 		this->y = 0;
 	}
 
-	inline void set_values(const float x, const float y) {
+	inline void set_values(const T x, const T y) {
 		this->x = x;
 		this->y = y;
 	}
@@ -24,33 +25,33 @@ struct Vector2f {
 		return glm::vec2(this->x, this->y);
 	}
 
-	Vector2f operator+(const Vector2f& other) {
-		return Vector2f(this->x + other.x, this->y + other.y);
+	Vector2 operator+(const Vector2& other) {
+		return Vector2(this->x + other.x, this->y + other.y);
 	}
 
-	Vector2f operator-(const Vector2f& other) {
-		return Vector2f(this->x - other.x, this->y - other.y);
+	Vector2 operator-(const Vector2& other) {
+		return Vector2(this->x - other.x, this->y - other.y);
 	}
 
-	Vector2f operator*(const Vector2f& other) {
-		return Vector2f(this->x * other.x, this->y * other.y);
+	Vector2 operator*(const Vector2& other) {
+		return Vector2(this->x * other.x, this->y * other.y);
 	}
 
-	Vector2f operator/(const Vector2f& other) {
-		return Vector2f(this->x / other.x, this->y / other.y);
+	Vector2 operator/(const Vector2& other) {
+		return Vector2(this->x / other.x, this->y / other.y);
 	}
 
-	bool operator==(const Vector2f& other) {
+	bool operator==(const Vector2& other) {
 		return Math::compare_floats(this->x, other.x)
 				&& Math::compare_floats(this->y, other.y);
 	}
 };
 
-struct Vector3f : Vector2f {
+struct Vector3 : Vector2 {
 	float z = 0.0f;
 
-	Vector3f() = default;
-	Vector3f(const float x, const float y, const float z);
+	Vector3() = default;
+	Vector3(const float x, const float y, const float z);
 
 
 	inline void clear() {
@@ -69,34 +70,34 @@ struct Vector3f : Vector2f {
 		return glm::vec3(this->x, this->y, this->z);
 	}
 
-	Vector3f operator+(const Vector3f& other) {
-		return Vector3f(this->x + other.x, this->y + other.y, this->z + other.z);
+	Vector3 operator+(const Vector3& other) {
+		return Vector3(this->x + other.x, this->y + other.y, this->z + other.z);
 	}
 
-	Vector3f operator-(const Vector3f& other) {
-		return Vector3f(this->x - other.x, this->y - other.y, this->z + other.z);
+	Vector3 operator-(const Vector3& other) {
+		return Vector3(this->x - other.x, this->y - other.y, this->z + other.z);
 	}
 
-	Vector3f operator*(const Vector3f& other) {
-		return Vector3f(this->x * other.x, this->y * other.y, this->z + other.z);
+	Vector3 operator*(const Vector3& other) {
+		return Vector3(this->x * other.x, this->y * other.y, this->z + other.z);
 	}
 
-	Vector3f operator/(const Vector3f& other) {
-		return Vector3f(this->x / other.x, this->y / other.y, this->z + other.z);
+	Vector3 operator/(const Vector3& other) {
+		return Vector3(this->x / other.x, this->y / other.y, this->z + other.z);
 	}
 
-	bool operator==(const Vector3f& other) {
+	bool operator==(const Vector3& other) {
 		return Math::compare_floats(this->x, other.x)
 				&& Math::compare_floats(this->y, other.y)
 				&& Math::compare_floats(this->z, other.z);
 	}
 };
 
-struct Vector4f : Vector3f {
+struct Vector4 : Vector3 {
 	float w = 0.0f;
 
-	Vector4f() = default;
-	Vector4f(const float x, const float y, const float z, const float w);
+	Vector4() = default;
+	Vector4(const float x, const float y, const float z, const float w);
 
 	inline void clear() {
 		this->x = 0;
@@ -116,23 +117,23 @@ struct Vector4f : Vector3f {
 		return glm::vec4(this->x, this->y, this->z, this->w);
 	}
 
-	Vector4f operator+(const Vector4f& other) {
-		return Vector4f(this->x + other.x, this->y + other.y, this->z + other.z, this->w + other.w);
+	Vector4 operator+(const Vector4& other) {
+		return Vector4(this->x + other.x, this->y + other.y, this->z + other.z, this->w + other.w);
 	}
 
-	Vector4f operator-(const Vector4f& other) {
-		return Vector4f(this->x - other.x, this->y - other.y, this->z + other.z, this->w + other.w);
+	Vector4 operator-(const Vector4& other) {
+		return Vector4(this->x - other.x, this->y - other.y, this->z + other.z, this->w + other.w);
 	}
 
-	Vector4f operator*(const Vector4f& other) {
-		return Vector4f(this->x * other.x, this->y * other.y, this->z + other.z, this->w + other.w);
+	Vector4 operator*(const Vector4& other) {
+		return Vector4(this->x * other.x, this->y * other.y, this->z + other.z, this->w + other.w);
 	}
 
-	Vector4f operator/(const Vector4f& other) {
-		return Vector4f(this->x / other.x, this->y / other.y, this->z + other.z, this->w + other.w);
+	Vector4 operator/(const Vector4& other) {
+		return Vector4(this->x / other.x, this->y / other.y, this->z + other.z, this->w + other.w);
 	}
 
-	bool operator==(const Vector4f& other) {
+	bool operator==(const Vector4& other) {
 		return Math::compare_floats(this->x, other.x)
 				&& Math::compare_floats(this->y, other.y)
 				&& Math::compare_floats(this->z, other.z)
@@ -141,11 +142,11 @@ struct Vector4f : Vector3f {
 };
 
 
-struct Vector5f : Vector4f {
+struct Vector5 : Vector4 {
 	float h = 0.0f;
 
-	Vector5f() = default;
-	Vector5f(const float x, const float y, const float z, const float w, const float h);
+	Vector5() = default;
+	Vector5(const float x, const float y, const float z, const float w, const float h);
 
 
 	inline void clear() {
@@ -164,23 +165,23 @@ struct Vector5f : Vector4f {
 		this->h = h;
 	}
 
-	Vector5f operator+(const Vector5f& other) {
-		return Vector5f(this->x + other.x, this->y + other.y, this->z + other.z, this->w + other.w, this->h + other.h);
+	Vector5 operator+(const Vector5& other) {
+		return Vector5(this->x + other.x, this->y + other.y, this->z + other.z, this->w + other.w, this->h + other.h);
 	}
 
-	Vector5f operator-(const Vector5f& other) {
-		return Vector5f(this->x - other.x, this->y - other.y, this->z + other.z, this->w + other.w, this->h + other.h);
+	Vector5 operator-(const Vector5& other) {
+		return Vector5(this->x - other.x, this->y - other.y, this->z + other.z, this->w + other.w, this->h + other.h);
 	}
 
-	Vector5f operator*(const Vector5f& other) {
-		return Vector5f(this->x * other.x, this->y * other.y, this->z + other.z, this->w + other.w, this->h + other.h);
+	Vector5 operator*(const Vector5& other) {
+		return Vector5(this->x * other.x, this->y * other.y, this->z + other.z, this->w + other.w, this->h + other.h);
 	}
 
-	Vector5f operator/(const Vector5f& other) {
-		return Vector5f(this->x / other.x, this->y / other.y, this->z + other.z, this->w + other.w, this->h + other.h);
+	Vector5 operator/(const Vector5& other) {
+		return Vector5(this->x / other.x, this->y / other.y, this->z + other.z, this->w + other.w, this->h + other.h);
 	}
 
-	bool operator==(const Vector5f& other) {
+	bool operator==(const Vector5& other) {
 		return Math::compare_floats(this->x, other.x)
 				&& Math::compare_floats(this->y, other.y)
 				&& Math::compare_floats(this->z, other.z)

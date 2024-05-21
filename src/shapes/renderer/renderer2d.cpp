@@ -14,12 +14,11 @@ void Renderer2D::update_viewport(const unsigned int width, const unsigned int he
 	this->width = width;
 	this->height = height;
 
-
 	// Make camera
-	glm::mat4 projection = glm::ortho(0.0f, (float)width, (float)height, 0.0f, -1.0f, 1.0f);
+	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 
-	this->shader = std::make_unique<const ShaderProgram>(this->vertex_shader, this->fragment_shader);
-	this->shader_texture = std::make_unique<const ShaderProgram>(this->vertex_shader_texture, this->fragment_shader_texture);
+	this->shader = new ShaderProgram(this->vertex_shader, this->fragment_shader);
+	this->shader_texture = new ShaderProgram(this->vertex_shader_texture, this->fragment_shader_texture);
 
 	// If don't "set" shader in this order, shaders won't work
 	this->shader->use();
@@ -37,7 +36,7 @@ void Renderer2D::draw_2d(const Shape2D& shape, const ShaderProgram& shader, cons
 		const Texture* texture, const Vector2f pos, Vector2f size, const Color& color,
 		const float rotate, const DrawMode draw_mode) const {
 
-	glPolygonMode(GL_FRONT_AND_BACK, (int)draw_mode);
+	glPolygonMode(GL_FRONT_AND_BACK, static_cast<int>(draw_mode));
 
 	shader.use();
 
@@ -56,8 +55,9 @@ void Renderer2D::draw_2d(const Shape2D& shape, const ShaderProgram& shader, cons
 
 	// TODO -- Think on a way of avoiding "if"
 	//         + Think on something to add on shader
-	if(texture != nullptr)
+	if(texture != nullptr) {
 		texture->bind();
+	}
 
 	shape.vao->bind();
 	glDrawElements(draw_type, shape.indices_size, GL_UNSIGNED_INT, (void*)0);

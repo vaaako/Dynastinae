@@ -19,30 +19,25 @@ enum class TextureWrap {
 };
 
 struct Texture {
-	GLuint tex_id;
-	GLuint tex_type = GL_TEXTURE_2D; // Common
-	// GL_TEXTURE_2D_ARRAY; // Texture Atlas
-	const std::string path;
-
-
 	Texture(const std::string& path, const TextureFilter filter = TextureFilter::LINEAR, const TextureWrap wrap = TextureWrap::REPEAT);
 	Texture(const SDL_Surface* surface, const TextureFilter filter = TextureFilter::LINEAR); // NOTE -- This probably will just be used for Fonts
 	~Texture() {
-		glDeleteTextures(1, &this->tex_id);
-	}
-
-
-	inline GLuint id() const {
-		return tex_id;
+		glDeleteTextures(1, &this->id);
 	}
 
 	inline void bind() const {
-		glBindTexture(this->tex_type, this->tex_id);
+		glBindTexture(this->tex_type, this->id);
 	}
 
 	inline void unbind() const {
 		glBindTexture(this->tex_type, 0);
 	}
+
+	private:
+		GLuint id;
+		GLuint tex_type = GL_TEXTURE_2D; // Common
+		// GL_TEXTURE_2D_ARRAY; // Texture Atlas
+		const std::string path;
 };
 
 

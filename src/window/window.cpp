@@ -4,14 +4,37 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_video.h>
 
-#include <algorithm>
-#include <iostream>
+#include <stdexcept>
 
-Window::Window(const std::string& title, const int width, const int height, const bool vsync, const bool debug_info)
+Window::Window(const std::string& title, const unsigned int width, const unsigned int height, const bool vsync, const bool debug_info)
 	: title(title), width(width), height(height) {
 
-	this->init_sdl();
+	/**
+	 * INIT SDL */
+	// SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
+	if(SDL_Init(SDL_INIT_VIDEO) != 0) {
+		throw std::runtime_error("~> Failed to init video module " + std::string(SDL_GetError()));
+	}
+
+	if(SDL_Init(SDL_INIT_AUDIO) != 0) {
+		throw std::runtime_error("~> Failed to init audio module " + std::string(SDL_GetError()));
+	}
+
+	if(TTF_Init() != 0) {
+		throw std::runtime_error("~> Failed to init font module " + std::string(SDL_GetError()));
+	}
+
+
+	// TODO -- do I really need to init IMG like this?
+	// Initialize SDL_image
+	int img_flags = IMG_INIT_PNG | IMG_INIT_JPG;
+	if(!(IMG_Init(img_flags) & img_flags)) {
+		throw std::runtime_error("~> Failed to init image module " + std::string(IMG_GetError()));
+	}
 
 	// Make window
 	this->window = SDL_CreateWindow(
@@ -50,6 +73,11 @@ Window::Window(const std::string& title, const int width, const int height, cons
 		return;
 	}
 
+
+
+	/**
+	 * CONFIGURE OPENGL */
+
 	// Init Viewport
 	glViewport(0, 0, width, height);
 
@@ -71,40 +99,11 @@ Window::Window(const std::string& title, const int width, const int height, cons
 }
 
 
-void Window::init_sdl() const {
-	// Init SDL
-	// SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-	if(SDL_Init(SDL_INIT_VIDEO) != 0) {
-		throw std::runtime_error("~> Failed to init video module " + std::string(SDL_GetError()));
-	}
-
-	if(SDL_Init(SDL_INIT_AUDIO) != 0) {
-		throw std::runtime_error("~> Failed to init audio module " + std::string(SDL_GetError()));
-	}
-
-	if(TTF_Init() != 0) {
-		throw std::runtime_error("~> Failed to init font module " + std::string(SDL_GetError()));
-	}
-
-
-	// TODO -- do I really need to init IMG like this?
-	//
-	// Initialize SDL_image
-	int img_flags = IMG_INIT_PNG | IMG_INIT_JPG;
-	if(!(IMG_Init(img_flags) & img_flags)) {
-		throw std::runtime_error("~> Failed to init image module " + std::string(IMG_GetError()));
-	}
-}
-
 
 void Window::process_events() {
-	// Get all events in this frame
 	SDL_Event event;
 	while(SDL_PollEvent(&event)) {
+		// Store all events in this frame
 		this->frame_events.emplace_back(event.type);
 
 		// Handle events necessary to the engine working

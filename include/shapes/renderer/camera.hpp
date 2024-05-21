@@ -7,13 +7,12 @@
 #include "../3d/cube.hpp"
 #include "renderer.hpp"
 
-
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/vector_angle.hpp>
 
 
-#define TAU 6.283185307179586
+// #define TAU 6.283185307179586
 
 
 // https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/engine/Camera.java
@@ -22,60 +21,57 @@ class Camera : public Renderer {
 		Camera(const Window& window);
 		Camera(const unsigned int width, const unsigned int height);
 
-
 		/**
 		 * PYRAMID */
 
 		// Texture
-		inline void pyramid(const Texture* texture, const float x, const float y, const float z,
+		inline void pyramid(const Texture* texture, const Vector3f position,
 				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
 
-			// this->draw_3d(*this->pyramid_shape, *this->shader_texture, texture, Vector3f(x, y, z), color, rotate, axis, draw_mode);
-			this->matrix(*this->pyramid_shape, *this->shader_texture, texture, color, rotate, axis, draw_mode);
+			this->draw_3d(this->pyramid_shape, *this->shader_texture, texture, position, color, rotate, axis.to_glm(), draw_mode);
 		}
 
-		// NOTE -- Commenting so i can test matrix and implement after
 		// Color first
-		// inline void pyramid(const float x, const float y, const float z,
-		// 		const Color& color, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) {
-		//
-		// 	this->draw_3d(*this->pyramid_shape, *this->shader, nullptr, Vector3f(x, y, z), color, rotate, axis, draw_mode);
-		// }
-		//
-		// // Rotate and draw_mode first
-		// inline void pyramid(const float x, const float y, const float z,
-		// 		const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
-		//
-		// 	this->draw_3d(*this->pyramid_shape, *this->shader, nullptr, Vector3f(x, y, z), color, rotate, axis, draw_mode);
-		// }
+		inline void pyramid(const Vector3f position,
+				const Color& color, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) {
+
+			this->draw_3d(this->pyramid_shape, *this->shader, nullptr, position, color, rotate, axis.to_glm(), draw_mode);
+		}
+
+		// Rotate and draw_mode first
+		inline void pyramid(const Vector3f position,
+				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+
+			this->draw_3d(this->pyramid_shape, *this->shader, nullptr, position, color, rotate, axis.to_glm(), draw_mode);
+		}
 
 
 		/**
 		 * CUBE */
-		// inline void cube(const Texture* texture, const float x, const float y, const float z,
-		// 		const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
-		//
-		// 	this->draw_3d(*this->cube_shape, *this->shader_texture, texture, Vector3f(x, y, z), color, rotate, axis, draw_mode);
-		// }
-		//
-		// // Rotate and draw_mode first
-		// inline void cube(const float x, const float y, const float z,
-		// 		const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
-		//
-		// 	this->draw_3d(*this->cube_shape, *this->shader, nullptr, Vector3f(x, y, z), color, rotate, axis, draw_mode);
-		// }
-		//
-		// // Color first
-		// inline void cube(const float x, const float y, const float z,
-		// 		const Color& color, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) {
-		//
-		// 	this->draw_3d(*this->cube_shape, *this->shader, nullptr, Vector3f(x, y, z), color, rotate, axis, draw_mode);
-		// }
+		inline void cube(const Texture* texture, const Vector3f position,
+				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+
+			this->draw_3d(this->cube_shape, *this->shader_texture, texture, position, color, rotate, axis.to_glm(), draw_mode);
+		}
+
+		// Rotate and draw_mode first
+		inline void cube(const Vector3f position,
+				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+
+			this->draw_3d(this->cube_shape, *this->shader, nullptr, position, color, rotate, axis.to_glm(), draw_mode);
+		}
+
+		// Color first
+		inline void cube(const Vector3f position,
+				const Color& color, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) {
+
+			this->draw_3d(this->cube_shape, *this->shader, nullptr, position, color, rotate, axis.to_glm(), draw_mode);
+		}
 
 
 
-		/*
-		* SETTERS */
+		/**
+		 * SETTERS */
 		inline void set_fov(const float fov) {
 			this->fov = fov;
 		}
@@ -106,8 +102,35 @@ class Camera : public Renderer {
 			this->height = height;
 		}
 
+		/**
+		 * GETTERS */
+		inline float get_fov() {
+			return this->fov;
+		}
 
-		// TESTING ONLY //
+		inline float get_near_plane() {
+			return this->near_plane;
+		}
+
+		inline float get_far_plane() {
+			return this->far_plane;
+		}
+
+		inline float get_speed() {
+			return this->speed;
+		}
+
+		inline float get_sensitivity() {
+			return this->sensitivity;
+		}
+
+		inline Vector2i get_viewport() {
+			return { static_cast<int>(this->width), static_cast<int>(this->height) };
+		}
+
+
+		/**
+		 * MOVEMENT */
 		inline void go_foward() {
 			this->position += this->speed * this->orientation;
 		}
@@ -124,7 +147,6 @@ class Camera : public Renderer {
 			this->position += this->speed * glm::normalize(glm::cross(this->orientation, this->up));
 		}
 
-
 		// Fly
 		inline void go_up() {
 			this->position += this->speed * this->up;
@@ -134,58 +156,10 @@ class Camera : public Renderer {
 			this->position += this->speed * -this->up;
 		}
 
-
-		inline void rotate(Window& window, const Mouse& mouse) {
-			if(mouse.down != MouseBTN::LMB) {
-				this->firstclick = false;
-				return;
-			}
-
-			if(this->firstclick) {
-				window.set_cursor_position(this->width / 2, this->height / 2);
-				this->firstclick = false;
-			}
-
-			// get cursor position for this calc
-			
-			float rotation_x = this->sensitivity * ((float)mouse.axis.y - ((float)this->height / 2)) / this->height;
-			float rotation_y = this->sensitivity * ((float)mouse.axis.x - ((float)this->width / 2)) / this->width;
-
-			// Calcs upcoming vertical change in the orientation
-			glm::vec3 new_orientation = glm::rotate(this->orientation, glm::radians(-rotation_x),
-													glm::normalize(glm::cross(this->orientation, this->up)));
-
-			// Check if can move camera
-			if(std::abs(glm::angle(new_orientation, this->up) - glm::radians(90.0f)) <= glm::radians(85.0f)) {
-				this->orientation = new_orientation;
-			}
-
-			// Rotates orientation left and right
-			this->orientation = glm::rotate(this->orientation, glm::radians(-rotation_y), this->up);
-
-			// Set cursor to the middle of the screen
-			window.set_cursor_position(width / 2, height / 2);
-		}
+		void rotate(Window& window, const Mouse& mouse);
 
 
-		bool firstclick = true;
-		// TESTING ONLY //
- 
-		float fov = 45.0f;
-		float near_plane = 0.1f;
-		float far_plane = 100.0f;
-
-		glm::vec3 position = { 0.0f, 0.0f, 2.0f };
-		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
-		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-
-		// Vector3f rotation = { TAU / 4, 0.0f, 0.0f }; // Just testing
-
-		float speed = 0.1f;
-		float sensitivity = 100.0f;
-
-
-/* TODO -- Rotation
+/* TODO -- Test this Rotation
 
  	private Vector3f rotation = new Vector3f((float) Math.TAU / 4, 0.0f, 0.0f);
 	public void moveRotation(double xpos, double ypos) {
@@ -212,8 +186,24 @@ class Camera : public Renderer {
 */
 	private:
 		// Shapes
-		std::unique_ptr<Pyramid> pyramid_shape = std::make_unique<Pyramid>();
-		std::unique_ptr<Cube> cube_shape = std::make_unique<Cube>();
+		Pyramid pyramid_shape = Pyramid();
+		Cube cube_shape = Cube();
+		
+		// Configuration 
+		float fov = 45.0f;
+		float near_plane = 0.1f;
+		float far_plane = 100.0f;
+		float speed = 0.1f;
+		float sensitivity = 100.0f;
+
+		// Movement
+		bool firstclick = true;
+		glm::vec3 position = { 0.0f, 0.0f, 2.0f };
+		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+
+		// Vector3f rotation = { TAU / 4, 0.0f, 0.0f }; // Just testing
+
 
 		const char* vertex_shader = R"(
 			#version 330 core
@@ -279,15 +269,8 @@ class Camera : public Renderer {
 			}
 		)";
 
-
-
 		void draw_3d(const Shape3D& shape, const ShaderProgram& shader,
 			const Texture* texture, Vector3f pos, const Color& color = { 255 },
-			const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) const;
-
-
-		void matrix(const Shape3D& shape, const ShaderProgram& shader,
-				const Texture* texture, const Color& color,
-				const float rotate, const Vector3f axis, const DrawMode draw_mode);
+			const float rotate = 0.0f, const glm::vec3 axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) const;
 };
 

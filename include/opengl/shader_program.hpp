@@ -6,42 +6,37 @@
 #include <glm/ext.hpp>
 #include <glm/mat4x4.hpp>
 
-class ShaderProgram {
-	public:
+struct ShaderProgram {
 		ShaderProgram(const char* vertex_source, const char* fragment_source);
 		~ShaderProgram() {
-			glDeleteProgram(this->programID);
+			glDeleteProgram(this->id);
 		}
 
 		inline void use() const {
-			glUseProgram(this->programID);
+			glUseProgram(this->id);
 		}
 
 		inline void unbind() const {
 			glUseProgram(0);
 		}
 
-		inline GLuint id() const {
-			return this->programID;
-		}
-
 
 		/**
 		 * UNIFORMS */
 		inline void set_matrix4f(const char* unif, const glm::mat4& mat) const {
-			GLuint loc = glGetUniformLocation(this->programID, unif);
+			GLuint loc = glGetUniformLocation(this->id, unif);
 			glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(mat));
 		}
 
 		inline void set_vector4f(const char* unif, const Vector4f& vec) const {
-			GLuint loc = glGetUniformLocation(this->programID, unif);
+			GLuint loc = glGetUniformLocation(this->id, unif);
 			glUniform4f(loc, vec.x, vec.y, vec.z, vec.w);
 		}
 
 		inline void set_int(const char* unif, const int val) const {
-			GLuint loc = glGetUniformLocation(this->programID, unif);
+			GLuint loc = glGetUniformLocation(this->id, unif);
 			glUniform1i(loc, val);
 		}
 	private:
-		GLuint programID;
+		GLuint id;
 };

@@ -31,11 +31,9 @@ enum class Event {
 	QUIT = 256
 };
 
-// Global window so i can acess from anywhere??
-
 class Window {
 	public:
-		Window(const std::string& title, const int width, const int height, const bool vsync = true, const bool debug_info = false);
+		Window(const std::string& title, const unsigned int width, const unsigned int height, const bool vsync = true, const bool debug_info = false);
 		~Window() {
 			// Delete window
 			SDL_Log("Window %d destroyed", SDL_GetWindowID(this->window));
@@ -47,9 +45,6 @@ class Window {
 			SDL_CloseAudio();
 			TTF_Quit();
 			SDL_Quit();
-
-			delete this->keyboard_handler;
-			delete this->mouse_handler;
 		}
 
 		// This method is intended to only run once per frame
@@ -79,9 +74,9 @@ class Window {
 
 		/**
 		 * GETTERS */
-		inline SDL_Window* get_reference() const {
-			return this->window;
-		}
+		// inline SDL_Window* get_reference() const {
+		// 	return this->window;
+		// }
 
 		inline Keyboard* keyboard() const {
 			return this->keyboard_handler;
@@ -119,7 +114,7 @@ class Window {
 			SDL_SetWindowTitle(this->window, title.c_str());
 		}
 
-		// TODO -- Put on mouse struct, but how? how can i avoid circular? wjjjj
+		// TODO -- Put on mouse struct, but how? how can i avoid circular?
 		inline void set_cursor_position(const unsigned int x, const unsigned int y) {
 			if(x > this->width || y > this->height) {
 				return;
@@ -175,8 +170,8 @@ class Window {
 	private:
 		// Window information
 		std::string title;
-		int width;
-		int height;
+		unsigned int width;
+		unsigned int height;
 		bool window_open = true;
 
 		std::vector<uint> frame_events;
@@ -188,13 +183,11 @@ class Window {
 		// FPS
 		unsigned int start_time = SDL_GetTicks();
 		unsigned int last_update = 0;
-		int frame_count = 0;
+		unsigned int frame_count = 0;
 		float FPS = 0.0f;
 
 		// KEYS
-		// Pointers because it has a getter method
+		// Since it has a get for these objects, it need to be pointers, so i can pass as reference to other methods
 		Keyboard* keyboard_handler = new Keyboard();
 		Mouse* mouse_handler = new Mouse(); // To not have the same name as the "mouse" function
-
-		void init_sdl() const;
 };

@@ -18,7 +18,7 @@ struct Mouse {
 	MouseBTN down = MouseBTN::NONE;
 	unsigned int clicks = 0; // Clicks made
 
-	Vector2f direction;
+	Vector2i direction;
 	Vector2i axis;
 
 	void handle_event(const SDL_Event& event);

@@ -1,6 +1,6 @@
 #include "../../include/input/mouse.hpp"
 
-#include <iostream>
+// #include <iostream>
 
 void Mouse::handle_event(const SDL_Event& event) {
 	if(event.type == SDL_MOUSEBUTTONDOWN) {
@@ -24,7 +24,7 @@ void Mouse::handle_event(const SDL_Event& event) {
 
 	if(event.type == SDL_MOUSEMOTION) {
 		SDL_MouseMotionEvent motion = event.motion;
-		std::cout << "Mouse Motion: " << event.motion.x << ":" << event.motion.y << std::endl;
+		// std::cout << "Mouse Motion: " << event.motion.x << ":" << event.motion.y << std::endl;
 		// std::cout << "Mouse dir: " << event.motion.xrel << ":" << event.motion.yrel << std::endl;
 
 		this->axis.set_values(motion.x, motion.y);

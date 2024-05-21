@@ -84,12 +84,11 @@ struct Color {
 	}
 
 
-
-	inline Vector4f vector4f() const {
+	inline Vector4f to_vector4f() const {
 		return Vector4f(this->r, this->g, this->b, this->a);
 	}
 
-	inline SDL_Color sdl_color() const {
+	inline SDL_Color to_sdl_color() const {
 		return { static_cast<uint8_t>(this->r), static_cast<uint8_t>(this->g), static_cast<uint8_t>(this->b), static_cast<uint8_t>(this->a) };
 	}
 
