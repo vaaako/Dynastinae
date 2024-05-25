@@ -9,8 +9,8 @@ struct vec3 {
 	T z = 0;
 
 	vec3() = default;
-	vec3(T num);
-	vec3(T x, T y, T z);
+	vec3(T num) : x(num), y(num), z(num) {}
+	vec3(T x, T y, T z) : x(x), y(y), z(z) {}
 	vec3(const vec3& other) = default; // Copy constructor
 
 	inline void clear() {

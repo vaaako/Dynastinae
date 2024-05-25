@@ -123,7 +123,7 @@ class Camera : public Renderer {
 			return this->sensitivity;
 		}
 
-		inline vec2i get_viewport() const {
+		inline vec2<int> get_viewport() const {
 			return { static_cast<int>(this->width), static_cast<int>(this->height) };
 		}
 

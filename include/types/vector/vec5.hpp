@@ -9,8 +9,8 @@ struct vec5 {
 	T h = 0;
 
 	vec5() = default;
-	vec5(T num);
-	vec5(T x, T y, T z, T w, T h);
+	vec5(T num) : x(num), y(num), z(num), w(num), h(num) {}
+	vec5(T x, T y, T z, T w, T h) : x(x), y(y), z(z), w(w), h(h) {}
 	vec5(const vec5& other) = default; // Copy constructor
 
 	inline void clear() {

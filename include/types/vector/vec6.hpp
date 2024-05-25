@@ -10,8 +10,8 @@ struct vec6 {
 	T w = 0;
 
 	vec6() = default;
-	vec6(T num);
-	vec6(T x, T y, T z, T u, T v, T w);
+	vec6(T num) : x(num), y(num), z(num), u(num), v(num), w(num) {}
+	vec6(T x, T y, T z, T u, T v, T w) : x(x), y(y), z(z), u(u), v(v), w(w) {}
 	vec6(const vec6& other) = default; // Copy constructor
 
 	inline void clear() {

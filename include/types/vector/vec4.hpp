@@ -10,8 +10,8 @@ struct vec4 {
 	T w = 0;
 
 	vec4() = default;
-	vec4(T num);
-	vec4(T x, T y, T z, T w);
+	vec4(T num) : x(num), y(num), z(num), w(num) {}
+	vec4(T x, T y, T z, T w) : x(x), y(y), z(z), w(w) {}
 	vec4(const vec4& other) = default; // Copy constructor
 
 	inline void clear() {
