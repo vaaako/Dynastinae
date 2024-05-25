@@ -33,7 +33,7 @@ struct Pyramid : Shape3D {
 		-1.0f, -1.0f, -1.0f,   0.0f, 0.0f, // Top left vertex
 	};
 
-	const std::vector<unsigned int> indices = {
+	const std::vector<uint32> indices = {
 		0, 1, 2,   // Front face
 		3, 4, 5,   // Right face
 		6, 7, 8,   // Back face
@@ -44,6 +44,5 @@ struct Pyramid : Shape3D {
 	};
 
 	Pyramid();
-	Pyramid(const float x, const float y, const float z, const float rotate = 0.0f);
-	Pyramid(const Vector3f position, const float rotate = 0.0f);
+	Pyramid(const vec3<float>& position, const float rotate = 0.0f);
 };

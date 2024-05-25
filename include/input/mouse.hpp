@@ -2,8 +2,9 @@
 
 // 1 - LMB / 2 - MMB / 3 - RMB
 
-#include "../types/vectors.hpp"
 #include <SDL2/SDL_events.h>
+#include "../types/default.hpp"
+#include "../types/vector/vec2.hpp"
 
 enum class MouseBTN {
 	LMB = 1,
@@ -16,12 +17,12 @@ enum class MouseBTN {
 struct Mouse {
 	MouseBTN up = MouseBTN::NONE; // Last button up
 	MouseBTN down = MouseBTN::NONE;
-	unsigned int clicks = 0; // Clicks made
+	uint32 clicks = 0; // Clicks made
 
-	Vector2i direction;
-	Vector2i axis;
+	vec2<uint32> direction;
+	vec2<uint32> axis;
 
 	void handle_event(const SDL_Event& event);
-	void set_position(const unsigned int x, const unsigned int y);
-	// void set_position(const Window& window, const unsigned int x, const unsigned int y);
+	void set_position(const uint32 x, const uint32 y);
+	// void set_position(const Window& window, const uint32 x, const uint32 y);
 };

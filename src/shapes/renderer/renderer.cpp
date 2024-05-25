@@ -2,4 +2,4 @@
 
 
 Renderer::Renderer(const Window& window) : width(window.get_width()), height(window.get_height()) {}
-Renderer::Renderer(const unsigned int width, const unsigned int height) : width(width), height(height) {}
+Renderer::Renderer(const uint32 width, const uint32 height) : width(width), height(height) {}

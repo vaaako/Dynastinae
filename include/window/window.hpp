@@ -33,7 +33,7 @@ enum class Event {
 
 class Window {
 	public:
-		Window(const std::string& title, const unsigned int width, const unsigned int height, const bool vsync = true, const bool debug_info = false);
+		Window(const std::string& title, const uint32 width, const uint32 height, const bool vsync = true, const bool debug_info = false);
 		~Window() {
 			// Delete window
 			SDL_Log("Window %d destroyed", SDL_GetWindowID(this->window));
@@ -115,7 +115,7 @@ class Window {
 		}
 
 		// TODO -- Put on mouse struct, but how? how can i avoid circular?
-		inline void set_cursor_position(const unsigned int x, const unsigned int y) {
+		inline void set_cursor_position(const uint32 x, const uint32 y) {
 			if(x > this->width || y > this->height) {
 				return;
 			}
@@ -127,7 +127,7 @@ class Window {
 
 		/**
 		 * TIMER */
-		inline unsigned int time() {
+		inline uint32 time() {
 			return SDL_GetTicks();
 		}
 
@@ -137,7 +137,7 @@ class Window {
 		}
 
 		inline float fps() {
-			unsigned int current_time = SDL_GetTicks();
+			uint32 current_time = SDL_GetTicks();
 
 			// Update every second
 			if(current_time - start_time >= 1000) {
@@ -170,8 +170,8 @@ class Window {
 	private:
 		// Window information
 		std::string title;
-		unsigned int width;
-		unsigned int height;
+		uint32 width;
+		uint32 height;
 		bool window_open = true;
 
 		std::vector<uint> frame_events;
@@ -181,9 +181,9 @@ class Window {
 		SDL_GLContext glContext;
 
 		// FPS
-		unsigned int start_time = SDL_GetTicks();
-		unsigned int last_update = 0;
-		unsigned int frame_count = 0;
+		uint32 start_time = SDL_GetTicks();
+		uint32 last_update = 0;
+		uint32 frame_count = 0;
 		float FPS = 0.0f;
 
 		// KEYS

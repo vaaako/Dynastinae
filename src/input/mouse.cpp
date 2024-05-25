@@ -32,11 +32,11 @@ void Mouse::handle_event(const SDL_Event& event) {
 	}
 }
 
-void Mouse::set_position(const unsigned int x, const unsigned int y) {
+void Mouse::set_position(const uint32 x, const uint32 y) {
 	this->axis.set_values(x, y);
 }
 
-// void Mouse::set_position(const Window& window, const unsigned int x, const unsigned int y) {
+// void Mouse::set_position(const Window& window, const uint32 x, const uint32 y) {
 // 	SDL_WarpMouseInWindow(window, x, y);
 // 	this->x = x;
 // 	this->y = y;

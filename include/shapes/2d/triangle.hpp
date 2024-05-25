@@ -12,11 +12,10 @@ struct Triangle : Shape2D {
 		0.5f, 0.0f,   0.5f, 1.0f  // Middle
 	};
 
-	const std::vector<unsigned int> indices = {
+	const std::vector<uint32> indices = {
 		0, 1, 2
 	};
 
 	Triangle();
-	Triangle(const float x, const float y, const float width, const float height, const float rotate = 0.0f);
-	Triangle(const Vector2f position, const Vector2f size, const float rotate = 0.0f);
+	Triangle(const vec2<float>& position, const vec2<float>& size, const float rotate = 0.0f);
 };

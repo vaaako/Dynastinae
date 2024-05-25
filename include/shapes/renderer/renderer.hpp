@@ -11,7 +11,7 @@ enum class DrawMode {
 class Renderer {
 	public:
 		Renderer(const Window& window);
-		Renderer(const unsigned int width, const unsigned int height);
+		Renderer(const uint32 width, const uint32 height);
 		~Renderer() {
 			delete this->shader;
 			delete this->shader_texture;
@@ -22,10 +22,10 @@ class Renderer {
 		const ShaderProgram* shader_texture = nullptr;
 
 		virtual inline void update_viewport(const Window& window) = 0;
-		virtual inline void update_viewport(const unsigned int width, const unsigned int height) = 0;
+		virtual inline void update_viewport(const uint32 width, const uint32 height) = 0;
 	protected:
 		// TODO -- Store as float
-		unsigned int width;
-		unsigned int height;
+		uint32 width;
+		uint32 height;
 };
 

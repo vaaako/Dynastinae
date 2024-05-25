@@ -8,7 +8,7 @@ Camera::Camera(const Window& window) : Renderer(window) {
 	this->shader_texture = new ShaderProgram(this->vertex_shader_texture, this->fragment_shader_texture);
 }
 
-Camera::Camera(const unsigned int width, const unsigned int height) : Renderer(width, height) {
+Camera::Camera(const uint32 width, const uint32 height) : Renderer(width, height) {
 	// Make shaders
 	this->shader = new ShaderProgram(this->vertex_shader, this->fragment_shader);
 	this->shader_texture = new ShaderProgram(this->vertex_shader_texture, this->fragment_shader_texture);
@@ -16,8 +16,8 @@ Camera::Camera(const unsigned int width, const unsigned int height) : Renderer(w
 
 
 void Camera::draw_3d(const Shape3D& shape, const ShaderProgram& shader,
-	const Texture* texture, Vector3f pos, const Color& color,
-	const float rotate, const glm::vec3 axis, const DrawMode draw_mode) const {
+	const Texture* texture, const vec3<float>& pos, const Color& color,
+	const float rotate, const glm::vec3& axis, const DrawMode draw_mode) const {
 
 	glPolygonMode(GL_FRONT_AND_BACK, static_cast<int>(draw_mode));
 

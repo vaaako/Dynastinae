@@ -43,7 +43,7 @@ struct Cube : Shape3D {
 		-1.0f,  1.0f, -1.0f,   0.0f, 1.0f  // 23
 	};
 
-	std::vector<unsigned int> indices = {
+	std::vector<uint32> indices = {
 		// Front face
 		0, 1, 2,
 		0, 2, 3,
@@ -70,6 +70,5 @@ struct Cube : Shape3D {
 	};
 
 	Cube();
-	Cube(const float x, const float y, const float z, const float rotate = 0.0f);
-	Cube(const Vector3f position, const float rotate = 0.0f);
+	Cube(const vec3<float>& position, const float rotate = 0.0f);
 };

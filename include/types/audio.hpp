@@ -2,11 +2,12 @@
 
 #include <string>
 #include <SDL2/SDL_mixer.h>
+#include "../types/default.hpp"
 
 struct Audio {
 	const std::string path;
 	const bool ismusic;
-	unsigned short volume = MIX_MAX_VOLUME;
+	uint8 volume = MIX_MAX_VOLUME;
 
 	Mix_Music* music = nullptr;
 	Mix_Chunk* sound = nullptr;
@@ -23,36 +24,10 @@ struct Audio {
 		Mix_FreeMusic(this->music);
 	}
 
-	void play(const short loops = 0) const;
+	void play(const int8 loops = 0) const;
 
-	inline bool isplaying() const {
-		if(Mix_Playing(-1) != 0) return true;
-		else return false;
-	}
-
-	inline void set_volume(unsigned short volume) {
-		if(volume > MIX_MAX_VOLUME) {
-			volume = MIX_MAX_VOLUME;
-		}
-
-		this->volume = volume;
-
-		if(this->music != nullptr) {
-			Mix_VolumeMusic(volume);
-			return;
-		}
-
-		Mix_Volume(0, volume);
-	}
-
-	inline void set_half_volume() {
-		this->volume = MIX_MAX_VOLUME;
-
-		if(this->music != nullptr) {
-			Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
-			return;
-		}
-
-		Mix_Volume(0, MIX_MAX_VOLUME / 2);
-	}
+	bool isplaying() const;
+	void set_volume(const uint8 volume);
+	void set_half_volume();
+	void set_half_max_volume();
 };

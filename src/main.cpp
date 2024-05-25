@@ -63,7 +63,7 @@ int main() {
 
 
 	float rotation = 0.0f;
-	unsigned int start_time = window.time();
+	uint32 start_time = window.time();
 	while(window.is_open()) {
 		// Clear screen with color
 		window.clear({ 255, 127, 255 });
@@ -96,7 +96,7 @@ int main() {
 
 
 		// Update FPS each seconds
-		unsigned int current_time = window.time();
+		uint32 current_time = window.time();
 		if(current_time - start_time >= 1000) {
 			font.set_text("FPS: " + std::to_string(window.fps()));
 			start_time = window.time();

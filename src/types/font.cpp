@@ -4,7 +4,7 @@
 
 #include <stdexcept>
 
-Font::Font(const char* path, const std::string& text, const unsigned short size, const Color& color, const TextureFilter filter)
+Font::Font(const char* path, const std::string& text, const uint16 size, const Color& color, const TextureFilter filter)
 	: path(path), text(text), size(size), color(color), filter(filter) {
 
 	// Check extension
@@ -61,7 +61,7 @@ void Font::set_color(const Color& color) {
 	this->update_texture();
 }
 
-void Font::set_size(const unsigned short size) {
+void Font::set_size(const uint16 size) {
 	this->size = size;
 	this->update_texture();
 }

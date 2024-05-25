@@ -16,7 +16,7 @@
 class Renderer2D : public Renderer {
 	public:
 		Renderer2D(const Window& window);
-		Renderer2D(const unsigned int width, const unsigned int height);
+		Renderer2D(const uint32 width, const uint32 height);
 
 		// TODO -- Think on a better way of drawing shapes function, because this is getting too much
 
@@ -24,24 +24,24 @@ class Renderer2D : public Renderer {
 		 * TRIANGLE */
 
 		// Texture
-		inline void triangle(const Texture* texture, const Vector2f position, const float size, 
-				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void triangle(const Texture* texture, const vec2<float>& position, const float scale, 
+				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
-			this->draw_2d(this->triangle_shape, *this->shader_texture, GL_TRIANGLES, texture, position, Vector2f(size, size), color, rotate, draw_mode);
+			this->draw_2d(this->triangle_shape, *this->shader_texture, GL_TRIANGLES, texture, position, vec2(scale, scale), color, rotate, draw_mode);
 		}
 
 		// Rotate and draw_mode first
-		inline void triangle(const Vector2f position, const float size, const float rotate = 0.0f,
-				const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void triangle(const vec2<float>& position, const float scale, const float rotate = 0.0f,
+				const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
-			this->draw_2d(this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, Vector2f(size, size), color, rotate, draw_mode);
+			this->draw_2d(this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, vec2(scale, scale), color, rotate, draw_mode);
 		}
 
 		// Color first
-		inline void triangle(const Vector2f position, const float size,
-				const Color& color, const float rotate = 0.0f, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void triangle(const vec2<float>& position, const float scale,
+				const Color& color, const float rotate = 0.0f, const DrawMode draw_mode = DrawMode::FILL) const {
 
-			this->draw_2d(this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, Vector2f(size, size), color, rotate, draw_mode);
+			this->draw_2d(this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, vec2(scale, scale), color, rotate, draw_mode);
 		}
 
 
@@ -49,31 +49,31 @@ class Renderer2D : public Renderer {
 		 * RECTANGLE */
 
 		// Texture
-		inline void rectangle(const Texture* texture, const Vector2f position, const float width, const float height,
-				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void rectangle(const Texture* texture, const vec2<float>& position, const float width, const float height,
+				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
-			this->draw_2d(this->rectangle_shape, *this->shader_texture, GL_TRIANGLES, texture, position, Vector2f(width, height), color, rotate, draw_mode);
+			this->draw_2d(this->rectangle_shape, *this->shader_texture, GL_TRIANGLES, texture, position, vec2(width, height), color, rotate, draw_mode);
 		}
 
 		// Rotate and draw_mode first
-		inline void rectangle(const Vector2f position, const float width, const float height,
-				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void rectangle(const vec2<float>& position, const float width, const float height,
+				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
-			this->draw_2d(this->rectangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, Vector2f(width, height), color, rotate, draw_mode);
+			this->draw_2d(this->rectangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, vec2(width, height), color, rotate, draw_mode);
 		}
 
 		// Color first
-		inline void rectangle(const Vector2f position, const float width, const float height,
-			const Color& color, const float rotate = 0.0f, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void rectangle(const vec2<float>& position, const float width, const float height,
+			const Color& color, const float rotate = 0.0f, const DrawMode draw_mode = DrawMode::FILL) const {
 
-			this->draw_2d(this->rectangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, Vector2f(width, height), color, rotate, draw_mode);
+			this->draw_2d(this->rectangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, vec2(width, height), color, rotate, draw_mode);
 		}
 
 
 
-		inline void draw_font(const Font& font, const Vector2f position) {
+		inline void draw_font(const Font& font, const vec2<float>& position) const {
 			this->draw_2d(this->rectangle_shape, *this->shader_texture, GL_TRIANGLE_FAN,
-				 font.texture, position, Vector2f((float)font.width, (float)font.height), { 255 }, 0.0f, DrawMode::FILL);
+				 font.texture, position, vec2(static_cast<float>(font.width), static_cast<float>(font.height)), { 255 }, 0.0f, DrawMode::FILL);
 		}
 
 
@@ -84,7 +84,7 @@ class Renderer2D : public Renderer {
 			this->update_viewport(window.get_width(), window.get_height());
 		}
 
-		void update_viewport(const unsigned int width, const unsigned int height);
+		void update_viewport(const uint32 width, const uint32 height);
 
 
 	private:
@@ -153,7 +153,7 @@ class Renderer2D : public Renderer {
 
 
 		void draw_2d(const Shape2D& shape, const ShaderProgram& shader, const GLenum draw_type,
-				const Texture* texture, const Vector2f pos, Vector2f size, const Color& color = { 255 },
+				const Texture* texture, const vec2<float>& pos, const vec2<float>& size, const Color& color = { 255 },
 				const float rotate = 0.0f, const DrawMode draw_mode = DrawMode::FILL) const;
 };
 

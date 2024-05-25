@@ -5,6 +5,7 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_keyboard.h>
 #include "keycode.hpp"
+#include "../types/default.hpp"
 
 enum class Keystate {
 	UP,
@@ -17,21 +18,21 @@ struct Keyboard {
 	bool ispressed(const Keycode& key);
 
 	inline bool isdown(const Keycode& key) const {
-		return (this->keystate.at(static_cast<unsigned int>(key)) == Keystate::DOWN);
+		return (this->keystate.at(static_cast<uint32>(key)) == Keystate::DOWN);
 	}
 
 	inline bool isup(const Keycode& key) {
-		return (this->keystate.at(static_cast<unsigned int>(key)) == Keystate::UP);
+		return (this->keystate.at(static_cast<uint32>(key)) == Keystate::UP);
 	}
 
 
 
 	inline void set_keystate(const Keycode& key, const Keystate& state) {
-		this->keystate[static_cast<unsigned int>(key)] = state;
+		this->keystate[static_cast<uint32>(key)] = state;
 	}
 
 	inline Keystate get_keystate(const Keycode& key) {
-		return this->keystate[static_cast<unsigned int>(key)];
+		return this->keystate[static_cast<uint32>(key)];
 	}
 
 	private:

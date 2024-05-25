@@ -7,7 +7,7 @@ VBO::VBO() {
 }
 
 
-void VBO::store_data(const std::vector<float>& data, const unsigned int position, const unsigned int dimension, const unsigned int total_dimensions, const void* offset) {
+void VBO::store_data(const std::vector<float>& data, const uint32 position, const uint32 dimension, const uint32 total_dimensions, const void* offset) {
 	this->bind();
 
 	glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), data.data(), GL_STATIC_DRAW);
@@ -17,7 +17,7 @@ void VBO::store_data(const std::vector<float>& data, const unsigned int position
 	this->unbind();
 }
 
-void VBO::link_attrib(const unsigned int position, const unsigned int dimension, const unsigned int total_dimensions, const void* offset) {
+void VBO::link_attrib(const uint32 position, const uint32 dimension, const uint32 total_dimensions, const void* offset) {
 	this->bind();
 	glVertexAttribPointer(position, dimension, GL_FLOAT, GL_FALSE, total_dimensions * sizeof(float), offset);
 	glEnableVertexAttribArray(position);
@@ -25,7 +25,7 @@ void VBO::link_attrib(const unsigned int position, const unsigned int dimension,
 
 }
 
-void VBO::store_two_fields_data(const std::vector<float>& data, const unsigned int pos_dim, const unsigned int tex_dim, const unsigned int vertex1, const unsigned int vertex2) {
+void VBO::store_two_fields_data(const std::vector<float>& data, const uint32 pos_dim, const uint32 tex_dim, const uint32 vertex1, const uint32 vertex2) {
 	const int dimensions_bytes = (pos_dim + tex_dim) * sizeof(float);
 
 	this->bind();

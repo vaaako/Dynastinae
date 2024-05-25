@@ -2,7 +2,7 @@
 
 
 void Keyboard::handle_event(const SDL_Event& event) {
-	unsigned int scancode = event.key.keysym.scancode;
+	uint32 scancode = event.key.keysym.scancode;
 
 	// If key is in state of pressed, don't change until is released
 	if(event.key.state != 0 && this->keystate[scancode] == Keystate::PRESSED) {
@@ -13,7 +13,7 @@ void Keyboard::handle_event(const SDL_Event& event) {
 }
 
 bool Keyboard::ispressed(const Keycode& key) {
-	unsigned int scancode = static_cast<unsigned int>(key);
+	uint32 scancode = static_cast<uint32>(key);
 
 	// If is down, change state to "pressed"
 	if(this->keystate.at(scancode) == Keystate::DOWN) {

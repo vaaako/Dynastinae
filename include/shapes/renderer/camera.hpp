@@ -2,7 +2,6 @@
 
 #include "../../types/texture.hpp"
 #include "../../types/color.hpp"
-#include "../../types/vectors.hpp"
 #include "../3d/pyramid.hpp"
 #include "../3d/cube.hpp"
 #include "renderer.hpp"
@@ -19,28 +18,28 @@
 class Camera : public Renderer {
 	public:
 		Camera(const Window& window);
-		Camera(const unsigned int width, const unsigned int height);
+		Camera(const uint32 width, const uint32 height);
 
 		/**
 		 * PYRAMID */
 
 		// Texture
-		inline void pyramid(const Texture* texture, const Vector3f position,
-				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void pyramid(const Texture* texture, const vec3<float>& position,
+				const float rotate = 0.0f, const vec3<float>& axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
 			this->draw_3d(this->pyramid_shape, *this->shader_texture, texture, position, color, rotate, axis.to_glm(), draw_mode);
 		}
 
 		// Color first
-		inline void pyramid(const Vector3f position,
-				const Color& color, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void pyramid(const vec3<float>& position,
+				const Color& color, const float rotate = 0.0f, const vec3<float>& axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) const {
 
 			this->draw_3d(this->pyramid_shape, *this->shader, nullptr, position, color, rotate, axis.to_glm(), draw_mode);
 		}
 
 		// Rotate and draw_mode first
-		inline void pyramid(const Vector3f position,
-				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void pyramid(const vec3<float>& position,
+				const float rotate = 0.0f, const vec3<float>& axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
 			this->draw_3d(this->pyramid_shape, *this->shader, nullptr, position, color, rotate, axis.to_glm(), draw_mode);
 		}
@@ -48,22 +47,22 @@ class Camera : public Renderer {
 
 		/**
 		 * CUBE */
-		inline void cube(const Texture* texture, const Vector3f position,
-				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void cube(const Texture* texture, const vec3<float>& position,
+				const float rotate = 0.0f, const vec3<float>& axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
 			this->draw_3d(this->cube_shape, *this->shader_texture, texture, position, color, rotate, axis.to_glm(), draw_mode);
 		}
 
 		// Rotate and draw_mode first
-		inline void cube(const Vector3f position,
-				const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void cube(const vec3<float>& position,
+				const float rotate = 0.0f, const vec3<float>& axis = { 0.0f, 0.0f, 0.0f }, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
 			this->draw_3d(this->cube_shape, *this->shader, nullptr, position, color, rotate, axis.to_glm(), draw_mode);
 		}
 
 		// Color first
-		inline void cube(const Vector3f position,
-				const Color& color, const float rotate = 0.0f, const Vector3f axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) {
+		inline void cube(const vec3<float>& position,
+				const Color& color, const float rotate = 0.0f, const vec3<float>& axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) const {
 
 			this->draw_3d(this->cube_shape, *this->shader, nullptr, position, color, rotate, axis.to_glm(), draw_mode);
 		}
@@ -97,34 +96,34 @@ class Camera : public Renderer {
 			this->height = window.get_height();
 		}
 
-		inline void update_viewport(const unsigned int width, const unsigned int height) {
+		inline void update_viewport(const uint32 width, const uint32 height) {
 			this->width = width;
 			this->height = height;
 		}
 
 		/**
 		 * GETTERS */
-		inline float get_fov() {
+		inline float get_fov() const {
 			return this->fov;
 		}
 
-		inline float get_near_plane() {
+		inline float get_near_plane() const {
 			return this->near_plane;
 		}
 
-		inline float get_far_plane() {
+		inline float get_far_plane() const {
 			return this->far_plane;
 		}
 
-		inline float get_speed() {
+		inline float get_speed() const {
 			return this->speed;
 		}
 
-		inline float get_sensitivity() {
+		inline float get_sensitivity() const {
 			return this->sensitivity;
 		}
 
-		inline Vector2i get_viewport() {
+		inline vec2i get_viewport() const {
 			return { static_cast<int>(this->width), static_cast<int>(this->height) };
 		}
 
@@ -161,7 +160,7 @@ class Camera : public Renderer {
 
 /* TODO -- Test this Rotation
 
- 	private Vector3f rotation = new Vector3f((float) Math.TAU / 4, 0.0f, 0.0f);
+ 	private vec3<float>& rotation = new vec3f((float) Math.TAU / 4, 0.0f, 0.0f);
 	public void moveRotation(double xpos, double ypos) {
 		// rotation.x -= xpos * sensitivity;
 		rotation.x += xpos * sensitivity;
@@ -202,7 +201,7 @@ class Camera : public Renderer {
 		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
 		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-		// Vector3f rotation = { TAU / 4, 0.0f, 0.0f }; // Just testing
+		// vec3f rotation = { TAU / 4, 0.0f, 0.0f }; // Just testing
 
 
 		const char* vertex_shader = R"(
@@ -270,7 +269,7 @@ class Camera : public Renderer {
 		)";
 
 		void draw_3d(const Shape3D& shape, const ShaderProgram& shader,
-			const Texture* texture, Vector3f pos, const Color& color = { 255 },
-			const float rotate = 0.0f, const glm::vec3 axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) const;
+			const Texture* texture, const vec3<float>& pos, const Color& color = { 255 },
+			const float rotate = 0.0f, const glm::vec3& axis = { 0.0f, 0.0f, 0.0f }, const DrawMode draw_mode = DrawMode::FILL) const;
 };
 

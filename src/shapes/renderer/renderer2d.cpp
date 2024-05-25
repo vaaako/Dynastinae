@@ -5,12 +5,12 @@ Renderer2D::Renderer2D(const Window& window) : Renderer(window) {
 	this->update_viewport(window);
 }
 
-Renderer2D::Renderer2D(const unsigned int width, const unsigned int height) : Renderer(width, height) {
+Renderer2D::Renderer2D(const uint32 width, const uint32 height) : Renderer(width, height) {
 	this->update_viewport(width, height);
 }
 
 
-void Renderer2D::update_viewport(const unsigned int width, const unsigned int height) {
+void Renderer2D::update_viewport(const uint32 width, const uint32 height) {
 	this->width = width;
 	this->height = height;
 
@@ -33,7 +33,7 @@ void Renderer2D::update_viewport(const unsigned int width, const unsigned int he
 
 
 void Renderer2D::draw_2d(const Shape2D& shape, const ShaderProgram& shader, const GLenum draw_type,
-		const Texture* texture, const Vector2f pos, Vector2f size, const Color& color,
+		const Texture* texture, const vec2<float>& pos, const vec2<float>& size, const Color& color,
 		const float rotate, const DrawMode draw_mode) const {
 
 	glPolygonMode(GL_FRONT_AND_BACK, static_cast<int>(draw_mode));
@@ -51,7 +51,7 @@ void Renderer2D::draw_2d(const Shape2D& shape, const ShaderProgram& shader, cons
 
 	// Apply changes
 	shader.set_matrix4f("model", model);
-	shader.set_vector4f("shapeColor", Vector4f(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f));
+	shader.set_vector4f("shapeColor", vec4(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f));
 
 	// TODO -- Think on a way of avoiding "if"
 	//         + Think on something to add on shader

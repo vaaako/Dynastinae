@@ -6,7 +6,7 @@
 
 #include <stdexcept>
 
-Window::Window(const std::string& title, const unsigned int width, const unsigned int height, const bool vsync, const bool debug_info)
+Window::Window(const std::string& title, const uint32 width, const uint32 height, const bool vsync, const bool debug_info)
 	: title(title), width(width), height(height) {
 
 	/**

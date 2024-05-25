@@ -2,11 +2,12 @@
 
 #include <GL/glew.h>
 #include <vector>
+#include "../types/default.hpp"
 
 class EBO {
 	public:
-		EBO(const std::vector<unsigned int>& indices);
-		EBO(const std::vector<unsigned int>& indices, const std::vector<unsigned int>& indices2);
+		EBO(const std::vector<uint32>& indices);
+		EBO(const std::vector<uint32>& indices, const std::vector<uint32>& indices2);
 		~EBO() {
 			glDeleteBuffers(1, &this->id);
 		}

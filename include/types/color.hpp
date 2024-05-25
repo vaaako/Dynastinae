@@ -1,27 +1,23 @@
 #pragma once
 
-#include "vectors.hpp"
 #include <SDL2/SDL_pixels.h>
-
-// Fill more
-enum ColorsEnum {
-	RED = 0xff0000,
-	BLUE = 0x00ff00,
-	GREEN = 0x0000ff
-};
+#include "default.hpp"
+#include "../types/vector/vec3.hpp"
+#include "../types/vector/vec4.hpp"
 
 struct Color {
-	unsigned char r = 255;
-	unsigned char g = 255;
-	unsigned char b = 255;
-	unsigned char a = 255;
+	uint8 r = 255;
+	uint8 g = 255;
+	uint8 b = 255;
+	uint8 a = 255;
 
 	// TODO -- Constructor with Colors enum
 	Color() = default;
-	Color(const unsigned char r, const unsigned char g, const unsigned char b, const unsigned char a = 255)
-		: r(r), g(g), b(b), a(a) {}
+	Color(vec3<uint8>& color);
+	Color(vec4<uint8>& color);
+	Color(const uint8 r, const uint8 g, const uint8 b, const uint8 a = 255);
 
-	Color(unsigned char color, const unsigned char alpha = 255) {
+	Color(uint8 color, const uint8 alpha = 255) {
 		this->r = color;
 		this->g = color;
 		this->b = color;
@@ -33,6 +29,17 @@ struct Color {
 		this->g = other.g;
 		this->b = other.b;
 		this->a = other.a;
+	}
+
+	bool operator==(const Color& other) {
+		return (this->r == other.r)
+				&& (this->g == other.g)
+				&& (this->b == other.b)
+				&& (this->a == other.a);
+	}
+
+	bool operator!=(const Color& other) {
+		return !(*this == other);
 	}
 
 	Color& operator=(const Color& other) {
@@ -47,32 +54,8 @@ struct Color {
 	}
 
 
-	Color operator+(const Color& other) {
-		return Color(this->r + other.r, this->g + other.g, this->b + other.b);
-	}
 
-	Color operator-(const Color& other) {
-		return Color(this->r - other.r, this->g - other.g, this->b - other.b);
-	}
-
-	Color operator*(const Color& other) {
-		return Color(this->r * other.r, this->g * other.g, this->b * other.b);
-	}
-
-	Color operator/(const Color& other) {
-		return Color(this->r / other.r, this->g / other.g, this->b / other.b);
-	}
-
-	bool operator==(const Color& other) {
-		return (this->r == other.r)
-				&& (this->g == other.g)
-				&& (this->b == other.b)
-				&& (this->a == other.a);
-	}
-
-
-
-	inline void reset(const unsigned char value = 255) {
+	inline void reset(const uint8 value = 255) {
 		this->r = value;
 		this->g = value;
 		this->b = value;
@@ -84,19 +67,19 @@ struct Color {
 	}
 
 
-	inline Vector4f to_vector4f() const {
-		return Vector4f(this->r, this->g, this->b, this->a);
+	inline vec4<uint8> to_vec4() const {
+		return vec4(this->r, this->g, this->b, this->a);
 	}
 
 	inline SDL_Color to_sdl_color() const {
-		return { static_cast<uint8_t>(this->r), static_cast<uint8_t>(this->g), static_cast<uint8_t>(this->b), static_cast<uint8_t>(this->a) };
+		return { static_cast<uint8>(this->r), static_cast<uint8>(this->g), static_cast<uint8>(this->b), static_cast<uint8_t>(this->a) };
 	}
 
-	static Color from_hex(const int hex_value, const unsigned char alpha = 255) {
+	static Color from_hex(const int hex_value, const uint8 alpha = 255) {
 		const int rr = ((hex_value >> 16) & 0xFF);
 		const int gg = ((hex_value >> 8) & 0xFF);
 		const int bb = (hex_value & 0xFF);
 
-		return Color(static_cast<unsigned char>(rr), static_cast<unsigned char>(gg), static_cast<unsigned char>(bb), alpha);
+		return Color(static_cast<uint8>(rr), static_cast<uint8>(gg), static_cast<uint8>(bb), alpha);
 	}
 };
