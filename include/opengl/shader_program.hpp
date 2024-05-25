@@ -32,7 +32,7 @@ struct ShaderProgram {
 			glUniform4f(loc, vec.x, vec.y, vec.z, vec.w);
 		}
 
-		inline void set_int(const char* unif, const int val) const {
+		inline void set_int(const char* unif, const GLuint val) const {
 			GLuint loc = glGetUniformLocation(this->id, unif);
 			glUniform1i(loc, val);
 		}

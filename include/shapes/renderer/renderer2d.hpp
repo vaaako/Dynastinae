@@ -27,21 +27,21 @@ class Renderer2D : public Renderer {
 		inline void triangle(const Texture* texture, const vec2<float>& position, const float scale, 
 				const float rotate = 0.0f, const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
-			this->draw_2d(this->triangle_shape, *this->shader_texture, GL_TRIANGLES, texture, position, vec2(scale, scale), color, rotate, draw_mode);
+			this->draw_2d(this->triangle_shape, *this->shader_texture, GL_TRIANGLES, texture, position, vec2(scale), color, rotate, draw_mode);
 		}
 
 		// Rotate and draw_mode first
 		inline void triangle(const vec2<float>& position, const float scale, const float rotate = 0.0f,
 				const Color& color = { 255 }, const DrawMode draw_mode = DrawMode::FILL) const {
 
-			this->draw_2d(this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, vec2(scale, scale), color, rotate, draw_mode);
+			this->draw_2d(this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, vec2(scale), color, rotate, draw_mode);
 		}
 
 		// Color first
 		inline void triangle(const vec2<float>& position, const float scale,
 				const Color& color, const float rotate = 0.0f, const DrawMode draw_mode = DrawMode::FILL) const {
 
-			this->draw_2d(this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, vec2(scale, scale), color, rotate, draw_mode);
+			this->draw_2d(this->triangle_shape, *this->shader, GL_TRIANGLES, nullptr, position, vec2(scale), color, rotate, draw_mode);
 		}
 
 

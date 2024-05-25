@@ -21,6 +21,7 @@
 - [ ] Camera best mouse movement
 - [ ] Camera draw with custom position support
 - [ ] Mouse handle click and motion at the same time
+- [ ] Add `template struct vec<>` for vectors?
 
 - [Camera Movement](https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/main/Game.java#L121)
 

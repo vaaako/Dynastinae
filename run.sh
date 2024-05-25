@@ -26,7 +26,7 @@ fi
 
 
 if [ "$1" == "-m" ]; then
-	CMD="clang++ -std=c++20 -O2 -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf src/main.cpp src/*/*.cpp src/types/vector/*.cpp -o $TARGET"
+	CMD="clang++ -std=c++20 -O2 -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf src/main.cpp src/*/*.cpp -o $TARGET"
 	echo "$CMD"
 	$CMD
 

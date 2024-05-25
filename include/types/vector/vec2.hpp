@@ -10,7 +10,7 @@ struct vec2 {
 	// The constructors NEED to be on header file
 	vec2() = default;
 	vec2(T num) : x(num), y(num) {}
-	vec2(T x, T y, T z) : x(x), y(y) {}
+	vec2(T x, T y) : x(x), y(y) {}
 	vec2(const vec2& other) = default; // Copy constructor
 
 	inline void clear() {

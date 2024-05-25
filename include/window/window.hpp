@@ -90,11 +90,11 @@ class Window {
 			return this->title;
 		}
 
-		inline int get_width() const {
+		inline uint32 get_width() const {
 			return this->width;
 		}
 
-		inline int get_height() const {
+		inline uint32 get_height() const {
 			return this->height;
 		}
 
