@@ -20,6 +20,8 @@ TARGET_LIB = libdynastinae.so
 # $@ - Target of the rule (Function name)
 # $^ - Represents all the prerequisites of the rule (Each from `: HERE`)
 # $< - Only the first prerequisite, if have multiples, this represents only the first one
+# @cmd - Supress echo. e.g. "@mkdir ..." will not appear on terminal when this command is executed
+#
 #
 # - FLAGS REFERENCE -
 # -shared - Creates a shared library.
@@ -37,11 +39,34 @@ $(BUILD_DIR)/%.o: src/%.cpp
 	@mkdir -p $(@D) # Make dir for each .cpp
 	$(CXX) $(CXXFLAGS) -fPIC -c -o $@ $<
 
-static: $(TARGET_LIB) $(OBJS)
-	$(CXX) -shared -o src/$@ $^ -Wl,--no-as-needed $(LIBS) -static
+static: $(TARGET_LIB)
+	# $(AR) - used to create static libraries
+	# r - insert the files into the archive
+	# c - create the archive
+	# s - create an archive index
+	# ranlib - generates an index to speed up acess to the symbols in the static library
+
+	# $(CXX) -static -o src/$@ $^ -Wl,--no-as-needed $(LIBS)
+	$(AR) rcs lib/static_$(TARGET_LIB) $(OBJS)
+	ranlib lib/static_$(TARGET_LIB)
+
+install: $(TARGET_LIB)
+	# Move to /usr/include
+	cp -r include/ /usr/include/$(TARGET)
+
+	# Move library to /usr/lib
+	cp lib/$(TARGET_LIB) /usr/lib
+
+uninstall:
+	# Move to /usr/include
+	rm -rf /usr/include/$(TARGET)
+
+	# Move library to /usr/lib
+	rm -f /usr/lib/$(TARGET_LIB)
+
 
 clean:
-	rm $(TARGET)
+	rm -f $(TARGET)
 	rm -rf build/*/*.o build/$(TARGET_LIB)
 
 rebuild: clean $(TARGET_LIB)
@@ -51,4 +76,4 @@ exec:
 
 
 # This avoid conflicts if some directory has the same name
-.PHONY: static clean rebuild exec
+.PHONY: install uninstall static clean rebuild exec
