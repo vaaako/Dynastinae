@@ -6,16 +6,16 @@ lib/
 libs/
 *.o
 
-# Stuff
-*.a
-vgcore*
-
-
 # Workspaces
 *.sublime-*
 *.vim
 
-# Test folders
+# Debug
+valgrind.txt
+*.a
+vgcore*
+
+# Tests
 baks/
 tests/
 examples/
