@@ -13,7 +13,7 @@ namespace SDLUtils {
 		uint8_t* temp = new uint8_t[pitch]; // Temp buffer to hold a single row
 		uint8_t* pixels = static_cast<uint8_t*>(surface->pixels);
 
-		for(uint32 i = 0; i < surface->h / 2; i++) {
+		for(int i = 0; i < surface->h / 2; i++) {
 			// Get pointers to the two rows to swap
 			uint8_t* top_row = pixels + i * pitch;
 			uint8_t* bottom_row = pixels + (surface->h - i - 1) * pitch;
@@ -79,7 +79,7 @@ namespace SDLUtils {
 		uint32 h = SDLUtils::power_two_floor(surface->h) * 2;
 
 		// SDL_Surface * s = SDL_CreateRGBSurface(0, surface->w, h, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
-		SDL_Surface * s = SDL_CreateRGBSurface(0, w, h, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
+		SDL_Surface* s = SDL_CreateRGBSurface(0, w, h, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 		SDL_BlitSurface(surface, NULL, s, NULL); // Swap
 		return s;
 	}
