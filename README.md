@@ -37,8 +37,9 @@
 
 # Running
 ## Dependencies
-- SDL: [`SDL2`](https://www.libsdl.org/), [`SDL2 Image`](https://wiki.libsdl.org/SDL2_image/FrontPage), [`SDL2 Mixer`](https://www.libsdl.org/projects/mixer/) and [`SDL2 TTF`](https://wiki.libsdl.org/SDL2_ttf/FrontPage)
+- SDL: [`SDL2`](https://www.libsdl.org/), [`SDL2_image`](https://wiki.libsdl.org/SDL2_image/FrontPage), [`SDL2_mixer`](https://www.libsdl.org/projects/mixer/) and [`SDL2_ttf`](https://wiki.libsdl.org/SDL2_ttf/FrontPage)
 - OpenGL: [`GLEW`](https://glew.sourceforge.net/)
+- Math: [`glm`](https://github.com/g-truc/glm)
 
 *(If you are on Linux is probably all avaiable on your package manager)*,
 
@@ -99,6 +100,6 @@ clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -ldynas
 
 # Credits
 ### Libraries
-[`SDL2`](https://www.libsdl.org/) ・ [`SDL2 Image`](https://wiki.libsdl.org/SDL2_image/FrontPage) ・ [`SDL2 Mixer`](https://www.libsdl.org/projects/mixer/) ・ [`SDL2 TTF`](https://wiki.libsdl.org/SDL2_ttf/FrontPage) ・[`GLEW`](https://glew.sourceforge.net/)
+[`SDL2`](https://www.libsdl.org/) ・ [`SDL2_image`](https://wiki.libsdl.org/SDL2_image/FrontPage) ・ [`SDL2_mixer`](https://www.libsdl.org/projects/mixer/) ・ [`SDL2_ttf`](https://wiki.libsdl.org/SDL2_ttf/FrontPage) ・[`GLEW`](https://glew.sourceforge.net/) ・ [`glm`](https://github.com/g-truc/glm)
 
 and me 🦇 
