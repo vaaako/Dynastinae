@@ -2,6 +2,7 @@
 #include "../../include/utils/string.hpp"
 #include "../../include/utils/sdl.hpp"
 
+#include <SDL2/SDL_ttf.h>
 #include <stdexcept>
 
 Font::Font(const char* path, const std::string& text, const uint16 size, const Color& color, const TextureFilter filter)
@@ -30,6 +31,9 @@ Font::Font(const char* path, const std::string& text, const uint16 size, const C
 }
 
 void Font::update_texture() {
+	// Delete old sdl font
+	TTF_CloseFont(this->sdl_font);
+
 	this->sdl_font = TTF_OpenFont(this->path, this->size);
 	SDL_Surface* ttf_surface = TTF_RenderText_Blended(this->sdl_font, this->text.c_str(), this->color.to_sdl_color());
 
@@ -41,18 +45,19 @@ void Font::update_texture() {
 	this->width = surface->w;
 	this->height = surface->h;
 
-	delete this->texture; // Delete old texture to avoid memory leak
+	// Delete old texture to avoid memory leak
+	delete this->texture;
 	this->texture = new Texture(surface, this->filter);
 
+	// Free surfaces
 	SDL_FreeSurface(ttf_surface);
 	SDL_FreeSurface(surface);
-	// Don't closw "this->sdl_font" here
 }
 
 
 
 void Font::set_text(const std::string& text) {
-	this->text = text.c_str();
+	this->text = text;
 	this->update_texture();
 }
 

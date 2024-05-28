@@ -5,7 +5,6 @@
 
 #include <SDL2/SDL_ttf.h>
 #include <GL/glew.h>
-#include <string>
 
 struct Font {
 	// Necessary to draw
@@ -25,11 +24,12 @@ struct Font {
 	void set_size(const uint16 size);
 
 	private:
-		const char* path; // NOTE -- If font changes any element, frame-by-frame it loads from path, if it was a std::string a conversion would be done each frame
-		std::string text;
+		const char* path; // Avoid conversion each frame, since path would be used each frame using std::string would lead me converting it to char* each frame
+		std::string text; // This is not char* because of convenience
 		uint16 size;
 		Color color;
 		TextureFilter filter;
 
-		TTF_Font* sdl_font;
+		TTF_Font* sdl_font = TTF_OpenFont("", 0); // Init nothing so it can free the first time without using a if-check
+		// TTF_Font* sdl_font;
 };

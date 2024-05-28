@@ -65,7 +65,7 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 
 	// Free surface
 	SDL_FreeSurface(surface);
-	// IMG_Quit();
+	IMG_Quit();
 
 	glBindTexture(GL_TEXTURE_2D, 0); // Unbind
 }

@@ -22,6 +22,7 @@
 - [ ] Camera draw with custom position support
 - [ ] Mouse handle click and motion at the same time
 - [ ] Add `template struct vec<>` for vectors?
+- [ ] Memory leak somewhere
 
 - [Camera Movement](https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/main/Game.java#L121)
 

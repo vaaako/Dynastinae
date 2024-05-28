@@ -35,6 +35,10 @@ class Window {
 	public:
 		Window(const std::string& title, const uint32 width, const uint32 height, const bool vsync = true, const bool debug_info = false);
 		~Window() {
+			// Delete objs
+			delete this->keyboard_handler;
+			delete this->mouse_handler;
+
 			// Delete window
 			SDL_Log("Window %d destroyed", SDL_GetWindowID(this->window));
 			SDL_GL_DeleteContext(this->glContext);

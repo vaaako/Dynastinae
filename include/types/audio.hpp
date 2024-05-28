@@ -12,6 +12,7 @@ struct Audio {
 	Mix_Music* music = nullptr;
 	Mix_Chunk* sound = nullptr;
 
+	// WARNING -- Possible memory leak?
 	Audio(const std::string& path, const bool ismusic = false);
 	~Audio() {
 		// if(sound != nullptr) {
