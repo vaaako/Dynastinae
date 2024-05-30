@@ -1,6 +1,6 @@
 #include "Dynastinae/window/window.hpp"
-#include "Dynastinae/shapes/renderer/renderer2d.hpp"
-#include "Dynastinae/shapes/renderer/camera.hpp"
+#include "Dynastinae/renderers/renderer2d.hpp"
+#include "Dynastinae/renderers/camera.hpp"
 #include "Dynastinae/types/audio.hpp"
 #include "Dynastinae/types/font.hpp"
 
