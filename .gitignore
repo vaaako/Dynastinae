@@ -18,8 +18,10 @@ vgcore*
 # clangd
 .cache/
 
-# Tests
-*.bak
+# Backups
 baks/
+*.bak
+
+# Not read yet
 tests/
 examples/
