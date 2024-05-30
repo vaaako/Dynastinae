@@ -1,10 +1,24 @@
-#include "../include/window/window.hpp"
-#include "../include/shapes/renderer/renderer2d.hpp"
-#include "../include/shapes/renderer/camera.hpp"
-#include "../include/types/audio.hpp"
-#include "../include/types/font.hpp"
+#include "Dynastinae/window/window.hpp"
+#include "Dynastinae/shapes/renderer/renderer2d.hpp"
+#include "Dynastinae/shapes/renderer/camera.hpp"
+#include "Dynastinae/types/audio.hpp"
+#include "Dynastinae/types/font.hpp"
 
 #include <iostream>
+
+
+/*
+ * TODO -- ADD ABSOLUTE PATH
+ *   
+ * - move all include to include/Dynastinae
+ * - FLAG: -I../include
+ *   
+ * - Do tests to see if still works:
+ *   - Remove config from "clangd.lua"
+ *   - Remove config from cmake (line 10)
+ *   - Remove (compile_commands.json)
+ *
+ * */
 
 
 // https://wiki.libsdl.org/SDL2/SDL_Scancode
@@ -43,6 +57,15 @@ void move_camera(Keyboard& keyboard, Camera& camera) {
  * - Make own events enums like i did with keyboard
  * */
 
+/** WARNING -- Possible memory leaks
+ *    
+ * - Window
+ * - Texture
+ * - Audio
+ * - Font (High)
+ * - Renderer2D
+ * - Camera
+ * */
 int main() {
 	Window window = Window("Hello Dynastinae", 800, 600, true, true);
 

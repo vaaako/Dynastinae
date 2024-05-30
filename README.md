@@ -35,7 +35,11 @@
 - [ ] Gif texture?
 - [ ] Stuff I didn't think of
 
+
 # Running
+## LSP
+This code uses `compile_commands.json` on `build/` and **absolute path**, maybe you will need to configure this on your `LSP` *(probrably `clangd`)*, by adding the flag `--compile-commands-dir=build`
+
 ## Dependencies
 - SDL: [`SDL2`](https://www.libsdl.org/), [`SDL2_image`](https://wiki.libsdl.org/SDL2_image/FrontPage), [`SDL2_mixer`](https://www.libsdl.org/projects/mixer/) and [`SDL2_ttf`](https://wiki.libsdl.org/SDL2_ttf/FrontPage)
 - OpenGL: [`GLEW`](https://glew.sourceforge.net/)

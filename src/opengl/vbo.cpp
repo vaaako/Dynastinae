@@ -1,4 +1,4 @@
-#include "../../include/opengl/vbo.hpp"
+#include "Dynastinae/opengl/vbo.hpp"
 
 #define INT2VOID(v) (void*)(uintptr_t)(v)
 

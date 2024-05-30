@@ -4,11 +4,14 @@ project(Dynastinae VERSION 0.0.1)
 # Set compiler
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -g -fdiagnostics-color=always -Wextra -Wall -Wuninitialized -Winit-self -Wfloat-equal -Wundef -Wpointer-arith -Wcast-align -Wstrict-overflow=5 -Wwrite-strings -Wcast-qual -Wswitch-default -Wconversion -Wunreachable-code")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Link files
+# Include directories
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include) # Get headers
+
+# Link files/home/vako/Documents/cpp/sdl2/Dynastinae/build/compile_commands.json
 file(GLOB_RECURSE SOURCE_FILES src/*.cpp src/*/*.cpp) # Get source files
 add_executable(dynastinae ${SOURCE_FILES}) # Link sources files
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include) # Get headers
 
 
 # Libs

@@ -1,4 +1,4 @@
-#include "../../../include/shapes/3d/cube.hpp"
+#include "Dynastinae/shapes/3d/cube.hpp"
 
 
 Cube::Cube() {

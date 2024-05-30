@@ -1,4 +1,4 @@
-#include "../../include/input/mouse.hpp"
+#include "Dynastinae/input/mouse.hpp"
 
 // #include <iostream>
 
@@ -32,7 +32,7 @@ void Mouse::handle_event(const SDL_Event& event) {
 	}
 }
 
-void Mouse::set_position(const uint32 x, const uint32 y) {
+void Mouse::set_position(const int x, const int y) {
 	this->axis.set_values(x, y);
 }
 

@@ -1,4 +1,4 @@
-#include "../../include/opengl/ebo.hpp"
+#include "Dynastinae/opengl/ebo.hpp"
 
 EBO::EBO(const std::vector<uint32>& indices) {
 	glGenBuffers(1, &this->id);

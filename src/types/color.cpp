@@ -1,4 +1,4 @@
-#include "../../include/types/color.hpp"
+#include "Dynastinae/types/color.hpp"
 
 Color::Color(vec3<uint8>& color) : r(color.x), g(color.y), b(color.z), a(255) {}
 Color::Color(vec4<uint8>& color) : r(color.x), g(color.y), b(color.z), a(color.w) {}

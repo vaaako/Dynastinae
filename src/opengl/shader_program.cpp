@@ -1,4 +1,4 @@
-#include "../../include/opengl/shader_program.hpp"
+#include "Dynastinae/opengl/shader_program.hpp"
 #include <SDL2/SDL_log.h>
 #include <cstddef>
 

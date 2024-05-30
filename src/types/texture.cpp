@@ -1,5 +1,5 @@
-#include "../../include/types/texture.hpp"
-#include "../../include/utils/sdl.hpp"
+#include "Dynastinae/types/texture.hpp"
+#include "Dynastinae/utils/sdl.hpp"
 
 #include <SDL2/SDL_render.h>
 #include <iostream> // TODO -- Remove later

@@ -1,4 +1,4 @@
-#include "../../../include/shapes/2d/rectangle.hpp"
+#include "Dynastinae/shapes/2d/rectangle.hpp"
 
 Rectangle::Rectangle() {
 	this->set_vbo_and_ebo(this->vertices, this->indices);

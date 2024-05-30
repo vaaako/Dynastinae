@@ -1,5 +1,5 @@
-#include "../../include/types/audio.hpp"
-#include "../../include/utils/string.hpp"
+#include "Dynastinae/types/audio.hpp"
+#include "Dynastinae/utils/string.hpp"
 
 #include <SDL2/SDL.h>
 #include <stdexcept>

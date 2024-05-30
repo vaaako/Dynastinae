@@ -1,4 +1,4 @@
-#include "../../../include/shapes/3d/pyramid.hpp"
+#include "Dynastinae/shapes/3d/pyramid.hpp"
 
 
 Pyramid::Pyramid() {

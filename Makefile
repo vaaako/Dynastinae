@@ -1,18 +1,20 @@
 # COMPILER
 CXX = clang++
-CXXFLAGS = -std=c++20 -O2
+CXXFLAGS = -std=c++20 -O2 -I../include
 DEV_FLAGS = -g -fdiagnostics-color=always -Wextra -Wall -Wuninitialized -Winit-self -Wfloat-equal -Wundef -Wpointer-arith -Wcast-align -Wstrict-overflow=5 -Wwrite-strings -Wcast-qual -Wswitch-default -Wconversion -Wunreachable-code
 
 # LIBS
 LIBS = -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 # DIRECTORIES
+BUILD_DIR = lib
 SRC_FILES = $(wildcard src/*.cpp src/*/*.cpp src/*/*/*.cpp) # Only the files inside folders
-OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRC_FILES)) # Derive object file names from source files
+OBJS = $(patsubst src/%.cpp, $(BUILD_DIR)/%.o, $(SRC_FILES)) # Derive object file names from source files
 
 # TARGET
 TARGET = dynastinae
-TARGET_LIB = libdynastinae.so
+TARGET_LIB = lib$(TARGET).so
+TARGET_STATIC = lib$(TARGET).a
 
 # Quick tutorial:
 # - MAKEFILE REFERENCE -
@@ -30,25 +32,27 @@ TARGET_LIB = libdynastinae.so
 # -c - Compiles source files without linking
 # -static - Static linking of libraries
 
-
 $(TARGET_LIB): $(OBJS)
-	$(CXX) -shared -o src/$@ $^ -Wl,--no-as-needed $(LIBS)
+	$(CXX) -shared -o $(BUILD_DIR)/$@ $^ -Wl,--no-as-needed $(LIBS)
 
 # Build object files of each .cpp
 $(BUILD_DIR)/%.o: src/%.cpp
 	@mkdir -p $(@D) # Make dir for each .cpp
 	$(CXX) $(CXXFLAGS) -fPIC -c -o $@ $<
 
-static: $(TARGET_LIB)
-	# $(AR) - used to create static libraries
-	# r - insert the files into the archive
-	# c - create the archive
-	# s - create an archive index
-	# ranlib - generates an index to speed up acess to the symbols in the static library
 
-	# $(CXX) -static -o src/$@ $^ -Wl,--no-as-needed $(LIBS)
-	$(AR) rcs lib/static_$(TARGET_LIB) $(OBJS)
-	ranlib lib/static_$(TARGET_LIB)
+# - MAKE STATIC LIBRARY -
+# $(AR) - used to create static libraries
+# r - insert the files into the archive
+# c - create the archive
+# s - create an archive index
+# ranlib - generates an index to speed up acess to the symbols in the static library
+static: $(OBJS)
+	ar rcs lib/$(TARGET_STATIC) $^
+	ranlib lib/$(TARGET_STATIC)
+
+
+
 
 install: $(TARGET_LIB)
 	# Move to /usr/include
@@ -65,9 +69,12 @@ uninstall:
 	rm -f /usr/lib/$(TARGET_LIB)
 
 
+
+
 clean:
+	rm $(BUILD_DIR) $(TARGET_LIB)
 	rm -f $(TARGET)
-	rm -rf build/*/*.o build/$(TARGET_LIB)
+	# rm -rf build/*/*.o build/$(TARGET_LIB)
 
 rebuild: clean $(TARGET_LIB)
 

@@ -1,4 +1,4 @@
-#include "../../include/window/window.hpp"
+#include "Dynastinae/window/window.hpp"
 
 #include <SDL2/SDL_error.h>
 #include <SDL2/SDL_events.h>
@@ -42,7 +42,7 @@ Window::Window(const std::string& title, const uint32 width, const uint32 height
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
 
-		width, height,
+		static_cast<int>(width), static_cast<int>(height),
 
 		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
 	);

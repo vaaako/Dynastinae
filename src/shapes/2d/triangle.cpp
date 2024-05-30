@@ -1,4 +1,4 @@
-#include "../../../include/shapes/2d/triangle.hpp"
+#include "Dynastinae/shapes/2d/triangle.hpp"
 
 Triangle::Triangle() {
 	this->set_vbo_and_ebo(this->vertices, this->indices);

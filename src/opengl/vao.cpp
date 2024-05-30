@@ -1,4 +1,4 @@
-#include "../../include/opengl/vao.hpp"
+#include "Dynastinae/opengl/vao.hpp"
 
 VAO::VAO() {
 	glGenVertexArrays(1, &this->id);

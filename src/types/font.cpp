@@ -1,6 +1,6 @@
-#include "../../include/types/font.hpp"
-#include "../../include/utils/string.hpp"
-#include "../../include/utils/sdl.hpp"
+#include "Dynastinae/types/font.hpp"
+#include "Dynastinae/utils/string.hpp"
+#include "Dynastinae/utils/sdl.hpp"
 
 #include <SDL2/SDL_ttf.h>
 #include <stdexcept>

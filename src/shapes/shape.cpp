@@ -1,5 +1,4 @@
-#include "../../include/shapes/shape.hpp"
-#include <stdexcept>
+#include "Dynastinae/shapes/shape.hpp"
 
 Shape::Shape(const vec3<float>& position, const vec2<float>& size, const float rotate)
 	: position(position), size(size), rotate(rotate) {}

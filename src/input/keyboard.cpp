@@ -1,4 +1,4 @@
-#include "../../include/input/keyboard.hpp"
+#include "Dynastinae/input/keyboard.hpp"
 
 
 void Keyboard::handle_event(const SDL_Event& event) {

@@ -15,7 +15,11 @@ valgrind.txt
 *.a
 vgcore*
 
+# clangd
+.cache/
+
 # Tests
+*.bak
 baks/
 tests/
 examples/
