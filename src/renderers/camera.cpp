@@ -19,7 +19,7 @@ void Camera::draw_3d(const Shape3D& shape, const ShaderProgram& shader,
 	const Texture* texture, const vec3<float>& pos, const Color& color,
 	const float rotate, const glm::vec3& axis, const DrawMode draw_mode) const {
 
-	glPolygonMode(GL_FRONT_AND_BACK, static_cast<int>(draw_mode));
+	glPolygonMode(GL_FRONT_AND_BACK, static_cast<GLenum>(draw_mode));
 
 	shader.use();
 

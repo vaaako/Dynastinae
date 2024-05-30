@@ -36,7 +36,7 @@ void Renderer2D::draw_2d(const Shape2D& shape, const ShaderProgram& shader, cons
 		const Texture* texture, const vec2<float>& pos, const vec2<float>& size, const Color& color,
 		const float rotate, const DrawMode draw_mode) const {
 
-	glPolygonMode(GL_FRONT_AND_BACK, static_cast<int>(draw_mode));
+	glPolygonMode(GL_FRONT_AND_BACK, static_cast<GLenum>(draw_mode));
 
 	shader.use();
 
