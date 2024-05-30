@@ -11,7 +11,8 @@ namespace SDLUtils {
 
 		int pitch = surface->pitch; // Row size
 
-		uint8_t* temp = new uint8_t[static_cast<uint8_t>(pitch)]; // Temp buffer to hold a single row
+		// NOTE -- Explicit conversion here (pitch is int) cause a memory leak, i don't know why
+		uint8_t* temp = new uint8_t[pitch]; // Temp buffer to hold a single row
 		uint8_t* pixels = static_cast<uint8_t*>(surface->pixels);
 
 		for(int i = 0; i < surface->h / 2; i++) {
@@ -34,7 +35,7 @@ namespace SDLUtils {
 
 		int pitch = surface->pitch; // Row size
 
-		uint8_t* temp = new uint8_t[static_cast<uint8_t>(pitch)]; // Temp buffer to hold a single row
+		uint8_t* temp = new uint8_t[pitch]; // Temp buffer to hold a single row
 		uint8_t* pixels = static_cast<uint8_t*>(surface->pixels);
 
 		int pixel_size = surface->format->BytesPerPixel;
