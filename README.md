@@ -2,12 +2,13 @@
 # About
 **Dynastinae** is a very basic game framework I am developing to code some simple games
 
+# Current Stage
+**Dynastinae** is in very early stages. Is a bit usable for 2D games and is not yet usable for 3D games
+
 ![demo](media/demo.gif)
 <!-- ![demo2](media/demo2.png) -->
 <!-- ![demo3](media/demo3.png) -->
 
-# Current Stage
-**Dynastinae** is in very early stages, check `src/main.cpp`
 
 ## Objectives
 These are the main objectives *at the moment*
@@ -36,7 +37,7 @@ These are the main objectives *at the moment*
 - [ ] **[?]** Gif texture
 - [ ] **[?]** Texture overlay
 
-See `todo.md` to more objectives
+See [`todo.md`](todo.md) for more objectives
 
 # Running
 ## LSP
