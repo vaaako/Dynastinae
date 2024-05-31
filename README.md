@@ -10,31 +10,33 @@
 **Dynastinae** is in very early stages, check `src/main.cpp`
 
 ## Objectives
+These are the main objectives *at the moment*
 - [X] Window creation
 - [X] Events
-    + Not all, but I can add more if I need
-- [X] 2D shapes
-    + [X] Draw
-    + [X] Colors
-    + [X] Texture
-    + [X] Position
-    + [ ] Line
-    + [ ] Better triangle
-    + [ ] Circle
-- [X] 3D shapes
-    + [X] Draw
-    + [X] Colors
-    + [X] Texture
-    + [ ] Position
-    + [ ] 3D shapes size?
-    + [ ] Skybox
-    + [ ] Import `.obj`
+	+ Not all, but I can add more if I need
+- [ ] 2D shapes
+	+ [X] Draw
+	+ [X] Colors
+	+ [X] Texture
+	+ [X] Position
+	+ [ ] Line
+	+ [ ] Better triangle
+	+ [ ] Circle
+- [ ] 3D shapes
+	+ [X] Draw
+	+ [X] Colors
+	+ [X] Texture
+	+ [ ] Position
+	+ [ ] 3D shapes size?
+	+ [ ] Skybox
+	+ [ ] Import `.obj`
 - [X] Movement
 - [X] Audio
 - [X] Fonts
-- [ ] Gif texture?
-- [ ] Stuff I didn't think of
+- [ ] **[?]** Gif texture
+- [ ] **[?]** Texture overlay
 
+See `todo.md` to more objectives
 
 # Running
 ## LSP
@@ -47,11 +49,8 @@ This code uses `compile_commands.json` on `build/` and **absolute path**, maybe 
 
 *(If you are on Linux is probably all avaiable on your package manager)*,
 
-## Compiling
-- If you want to compile as a `lib` file and use in any project, you will need `Make`
-- If you just want to test and use `main.cpp` *(inside `src/`)*, you will need `CMake`
-
 ## CMake
+Use `CMake` in case you just want to test the library, using the file inside `tests/`
 ```sh
 cmake -S . -B build # Config
 cmake --build build # Compile
@@ -59,6 +58,7 @@ cmake --build build # Compile
 ```
 
 ## Make
+Use `Make` if you want to build the library and use anywhere
 ```sh
 make
 sudo make install
