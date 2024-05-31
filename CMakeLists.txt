@@ -9,8 +9,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Include directories
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include) # Get headers
 
-# Link files/home/vako/Documents/cpp/sdl2/Dynastinae/build/compile_commands.json
-file(GLOB_RECURSE SOURCE_FILES src/*.cpp src/*/*.cpp) # Get source files
+# Link files
+file(GLOB_RECURSE SOURCE_FILES tests/main.cpp src/*/*.cpp) # Get source files
 add_executable(dynastinae ${SOURCE_FILES}) # Link sources files
 
 

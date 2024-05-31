@@ -23,5 +23,5 @@ baks/
 *.bak
 
 # Not read yet
-tests/
+features.md
 examples/
