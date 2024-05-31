@@ -26,10 +26,7 @@ fi
 
 
 if [ "$1" == "-m" ]; then
-	CMD="clang++ -std=c++20 -O2 -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf src/main.cpp src/*/*.cpp -o $TARGET"
-	echo "$CMD"
-	$CMD
-
+	make exec
 
 	# Error on compiling
 	if [ ! -f $TARGET ]; then
@@ -38,9 +35,6 @@ if [ "$1" == "-m" ]; then
 	fi
 
 	# Run
-	./build/$TARGET
+	./$TARGET
 fi
 
-if [ "$1" == "-d" ]; then
-	gdb build/$TARGET
-fi

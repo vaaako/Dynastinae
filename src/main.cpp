@@ -6,21 +6,6 @@
 
 #include <iostream>
 
-
-/*
- * TODO -- ADD ABSOLUTE PATH
- *   
- * - move all include to include/Dynastinae
- * - FLAG: -I../include
- *   
- * - Do tests to see if still works:
- *   - Remove config from "clangd.lua"
- *   - Remove config from cmake (line 10)
- *   - Remove (compile_commands.json)
- *
- * */
-
-
 // https://wiki.libsdl.org/SDL2/SDL_Scancode
 // Handle keyboard
 void process_keyboard(Window& window, Keyboard& keyboard) {
@@ -54,17 +39,13 @@ void move_camera(Keyboard& keyboard, Camera& camera) {
 
 
 /** INFO CURRENTLY WORKING ON
+ * - Fix Makefile: "make" builds all to "build" - static libs to build/libs - all objects to the same folder or put all as it is but in a sub-folder inside build
  * - Make own events enums like i did with keyboard
  * */
 
-/** WARNING -- Possible memory leaks
- *    
- * - Window
- * - Texture
- * - Audio
- * - Font (High)
- * - Renderer2D
- * - Camera
+/** WARNING -- There is a small memory leak in font, but i don't know if is because of SDL_ttf or i am doing something wrong
+ * - Font, i don't know if is my fault or not
+ * - Texture may be causing this?
  * */
 int main() {
 	Window window = Window("Hello Dynastinae", 800, 600, true, true);

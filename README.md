@@ -60,47 +60,19 @@ cmake --build build # Compile
 
 ## Make
 ```sh
+make
 sudo make install
 ```
-This will create a `lib/` folder, inside it you should have a file called `libdynastinae.so`, if you want to use this file. This will also install the lib to `/usr/include` and `/usr/lib`
+This will create a `build/` folder, inside it you should have a file called `libDynastinae.so`, if you want to use this file standalone. This will also install the lib to `/usr/include` and `/usr/lib`
 
-## Linking to your program
-<!--
-### Locally
-Move `include` folder to your project
-
-Let's say you have a file called `main.cpp` importing **dynastinae**, you should include with `""`:
-```cpp
-#include "include/dynastinae/window/window.hpp"
-```
-
-To run the program with `dynastinae` linked, you should run the following command:
+## Run
+To run a file of yours, including `Dynastinae`, you need to also include the required libraries
 ```sh
-clang++ main.cpp -lSDL2 -lSDL2_image -lGL -lGLEW -L. -ldynastinae -o game
+clang++ main.cpp -lDynastinae -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -o main
+./maine
 ```
 
-### Globally
-Alternativally, to not have to use `-L.` flag, you can move `libdynastinae.so` to `/usr/lib` and **Dynastinae**'s include folder to `/usr/include`,
- this way you don't need to move `libdynastinae.so` to every project you want to use it
--->
-
-If you just executed `make` without `install`, you have to move some files
-```
-sudo cp lib/libdynastinae.so /usr/lib/
-sudo cp -r include/ /usr/include/dynastinae
-```
-
-Then you can include properly
-```cpp
-#include <Dynastinae/window/window.hpp>
-```
-
-And now you can run
-```sh
-clang++ main.cpp -lGL -lGLEW -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -ldynastinae -o game
-```
-
->Sooner linking all the required libraries will not be necessary anymore
+>Sooner linking all the required libraries will not be necessary anymore... or not
 
 # Credits
 ### Libraries
