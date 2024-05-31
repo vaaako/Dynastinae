@@ -48,7 +48,7 @@ This code uses `compile_commands.json` on `build/` and **absolute path**, maybe 
 - OpenGL: [`GLEW`](https://glew.sourceforge.net/)
 - Math: [`glm`](https://github.com/g-truc/glm)
 
-*(If you are on Linux is probably all avaiable on your package manager)*,
+If you are on Linux is probably all avaiable on your package manager, so you can use the script [`install_libs.sh`](install_libs.sh)
 
 ## CMake
 Use `CMake` in case you just want to test the library, using the file inside `tests/`
