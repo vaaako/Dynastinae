@@ -9,7 +9,6 @@ Renderer2D::Renderer2D(const uint32 width, const uint32 height) : Renderer(width
 	this->update_viewport(width, height);
 }
 
-
 void Renderer2D::update_viewport(const uint32 width, const uint32 height) {
 	this->width = width;
 	this->height = height;

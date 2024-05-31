@@ -76,7 +76,7 @@ int main() {
 		window.process_events();
 
 		// If click to close window
-		if(window.trigger_event(SDL_QUIT)) {
+		if(window.trigger_event(Event::QUIT)) {
 			window.close();
 		}
 
@@ -99,7 +99,7 @@ int main() {
 		// camera.cube(&kuromi, { 1.0f, 1.0f, -8.0f }, rotation, { 1.0f, 1.0f, 1.0f });
 
 
-		// Update FPS each seconds
+		// Update FPS each second
 		uint32 current_time = window.time();
 		if(current_time - start_time >= 1000) {
 			font.set_text("FPS: " + std::to_string(window.fps()));
@@ -116,7 +116,7 @@ int main() {
 		}
 
 		// Swap buffers and all updates needed on frame end
-		window.swap();
+		window.swap_buffers();
 	}
 
 	// Check for any OpenGL error

@@ -79,7 +79,7 @@ Window::Window(const std::string& title, const uint32 width, const uint32 height
 	 * CONFIGURE OPENGL */
 
 	// Init Viewport
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, static_cast<int>(width), static_cast<int>(height));
 
 	// Enable transparency
 	glEnable(GL_BLEND);
@@ -98,13 +98,39 @@ Window::Window(const std::string& title, const uint32 width, const uint32 height
 	}
 }
 
+float Window::fps() {
+	uint32 current_time = SDL_GetTicks();
 
+	// Update every second
+	if(current_time - start_time >= 1000) {
+		// Calc FPS
+		this->FPS = static_cast<float>(frame_count) / (static_cast<float>(current_time - start_time) / 1000.0f);
+
+		// Reset
+		this->frame_count = 0;
+		this->start_time = current_time; // Update timer
+	}
+
+	return this->FPS;
+}
+
+void Window::set_cursor_position(const int x, const int y) {
+	if(x > static_cast<int>(this->width) || y > static_cast<int>(this->height)) {
+		return;
+	}
+
+	SDL_WarpMouseInWindow(this->window, x, y);
+	this->mouse_handler->set_position(x, y);
+}
 
 void Window::process_events() {
+	this->last_update = SDL_GetTicks();
+	this->frame_count++;
+
 	SDL_Event event;
 	while(SDL_PollEvent(&event)) {
 		// Store all events in this frame
-		this->frame_events.emplace_back(event.type);
+		this->frame_events.emplace_back(static_cast<uint32>(event.type));
 
 		// Handle events necessary to the engine working
 		switch (event.type) {

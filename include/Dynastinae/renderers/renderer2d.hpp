@@ -81,6 +81,7 @@ class Renderer2D : public Renderer {
 
 		/**
 		* UPDATE VIEWPORT */
+		// TODO -- not sure if i have to change glViewport too
 		inline void update_viewport(const Window& window) {
 			this->update_viewport(window.get_width(), window.get_height());
 		}

@@ -91,9 +91,9 @@ class Camera : public Renderer {
 			this->sensitivity = sensitivity;
 		}
 
+		// TODO -- not sure if i have to change glViewPort too
 		inline void update_viewport(const Window& window) {
-			this->width = window.get_width();
-			this->height = window.get_height();
+			this->update_viewport(window.get_width(), window.get_height());
 		}
 
 		inline void update_viewport(const uint32 width, const uint32 height) {

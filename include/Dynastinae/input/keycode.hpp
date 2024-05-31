@@ -10,8 +10,7 @@
   including commercial applications, and to alter it and redistribute it
   freely, subject to the following restrictions:
 
-  1. The origin of this software must not be misrepresented; you must not
-	 claim that you wrote the original software. If you use this software
+  1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software
 	 in a product, an acknowledgment in the product documentation would be
 	 appreciated but is not required.
   2. Altered source versions must be plainly marked as such, and must not be
@@ -20,13 +19,11 @@
 */
 
 
-/*
- * WARNING -- This code is from SDL/SDL_scancode.h 
- * I just changed the ENUM names
- * */
+// WARNING -- This code is from https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_scancode.h
+// I just changed the names
+
 
 #pragma once
-
 enum class Keycode {
 	UNKNOWN = 0,
 

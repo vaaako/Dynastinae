@@ -19,16 +19,7 @@
 #include "Dynastinae/types/color.hpp"
 #include "Dynastinae/input/keyboard.hpp"
 #include "Dynastinae/input/mouse.hpp"
-
-enum class Event {
-	NOTHING = 0,
-	KEYDOWN = 768,
-	KEYUP = 769,
-	MOUSEDOWN = 1025,
-	MOUSEUP = 1026,
-	MOUSEMOTION = 1024,
-	QUIT = 256
-};
+#include "Dynastinae/window/events.hpp"
 
 class Window {
 	public:
@@ -50,25 +41,32 @@ class Window {
 			SDL_Quit();
 		}
 
-		// This method is intended to only run once per frame
+		/*
+		 * Runs in the frame beggining
+		 *
+		 * This method should run on once per frame
+		 */
 		void process_events();
 
 		/**
 		 * WINDOW PROCESS */
-		// Runs in the frame beggining
-		inline bool is_open() {
-			this->last_update = SDL_GetTicks();
-			this->frame_count++;
 
+		// True while the window is open
+		inline bool is_open() {
 			return this->window_open;
 		}
 
-		// Runs in the frame ending
-		inline void swap() {
+		/*
+		 * Runs in the frame ending
+		 *
+		 * Swap buffers between frames, so the screen updates
+		 */
+		inline void swap_buffers() {
 			this->frame_events.clear(); // Clear events
 			SDL_GL_SwapWindow(this->window);
 		}
 
+		// Clear the screen with some color
 		inline void clear(const Color& color) {
 			glClearColor(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -102,8 +100,9 @@ class Window {
 		}
 
 		// Check if event in array is not 0, if not, event is activated
-		inline bool trigger_event(SDL_EventType event) {
-			return std::find(this->frame_events.begin(), this->frame_events.end(), event) != this->frame_events.end();
+		inline bool trigger_event(Event event) {
+			return std::find(this->frame_events.begin(), this->frame_events.end(),
+					static_cast<uint32>(event)) != this->frame_events.end();
 		}
 
 		/**
@@ -118,43 +117,29 @@ class Window {
 		}
 
 		// TODO -- Put on mouse struct, but how? how can i avoid circular?
-		inline void set_cursor_position(const uint32 x, const uint32 y) {
-			if(x > this->width || y > this->height) {
-				return;
-			}
-
-			SDL_WarpMouseInWindow(this->window, x, y);
-			this->mouse_handler->set_position(x, y);
-		}
+		void set_cursor_position(const int x, const int y);
 
 
 		/**
 		 * TIMER */
+
+		// Automatically calculates FPS
+		float fps();
+
+		/*
+		 * Get the number of milliseconds since SDL library initialization.
+		 *
+		 * This value wraps if the program runs for more than ~49 days.
+		 */
 		inline uint32 time() {
 			return SDL_GetTicks();
 		}
 
+		// Get the time elapsed between frames
 		inline double dt(const float time = 1000.0f) const {
 			// CURRENT - LAST to seconds
 			return static_cast<double>(SDL_GetTicks() - this->last_update) / time;
 		}
-
-		inline float fps() {
-			uint32 current_time = SDL_GetTicks();
-
-			// Update every second
-			if(current_time - start_time >= 1000) {
-				// Calc FPS
-				this->FPS = static_cast<float>(frame_count) / (static_cast<float>(current_time - start_time) / 1000.0f);
-
-				// Reset
-				this->frame_count = 0;
-				this->start_time = current_time; // Update timer
-			}
-
-			return this->FPS;
-		}
-
 
 		/**
 		* STATIC */
@@ -177,7 +162,7 @@ class Window {
 		uint32 height;
 		bool window_open = true;
 
-		std::vector<uint> frame_events;
+		std::vector<uint32> frame_events;
 
 		// SDL2
 		SDL_Window* window;
