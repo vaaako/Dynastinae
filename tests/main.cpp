@@ -56,8 +56,8 @@ int main() {
 
 	// MUSIC - Play only one at the channel
 	// SOUND - Can play multple at the same channel
-	Audio mp3 = Audio("tests/assets/sounds/sound.mp3", false); // Path, is music
-	Audio wav = Audio("tests/assets/sounds/sound2.wav", true);
+	Audio mp3 = Audio("tests/assets/sounds/sound.mp3", AudioType::SOUND);
+	Audio wav = Audio("tests/assets/sounds/sound2.wav", AudioType::MUSIC);
 
 	Font font = Font("tests/assets/fonts/msgothic.ttf", "FPS: 0", 24, { 255 }); // Path, Text, Size, Color
 

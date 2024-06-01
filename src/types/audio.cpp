@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <stdexcept>
 
-Audio::Audio(const std::string& path, const bool ismusic) : path(path), ismusic(ismusic) {
+Audio::Audio(const std::string& path, const AudioType type ) : path(path), type(type) {
 	const std::string extension = StringHelper::file_extension(path);
 	if(!(extension == "wav" || extension == "ogg" || extension == "flac" || extension == "mp3")) {
 		Mix_CloseAudio();
@@ -20,7 +20,7 @@ Audio::Audio(const std::string& path, const bool ismusic) : path(path), ismusic(
 	}
 
 
-	if(ismusic) {
+	if(type == AudioType::MUSIC) {
 		this->music = Mix_LoadMUS(path.c_str());
 	} else {
 		this->sound = Mix_LoadWAV(path.c_str());

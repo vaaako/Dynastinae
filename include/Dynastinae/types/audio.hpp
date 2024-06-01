@@ -4,16 +4,21 @@
 #include <SDL2/SDL_mixer.h>
 #include "Dynastinae/types.hpp"
 
+enum class AudioType {
+	SOUND,
+	MUSIC
+};
+
 struct Audio {
 	const std::string path;
-	const bool ismusic;
+	const AudioType type;
 	uint8 volume = MIX_MAX_VOLUME;
 
 	Mix_Music* music = nullptr;
 	Mix_Chunk* sound = nullptr;
 
 	// WARNING -- Possible memory leak?
-	Audio(const std::string& path, const bool ismusic = false);
+	Audio(const std::string& path, const AudioType type = AudioType::SOUND);
 	~Audio() {
 		// if(sound != nullptr) {
 		// 	Mix_FreeChunk(this->sound);
