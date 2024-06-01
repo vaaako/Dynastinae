@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL_video.h>
-#include "Dynastinae/types/default.hpp"
+#include "Dynastinae/types.hpp"
 
 // TODO -- Unify flip vertically and horizontally?
 namespace SDLHelper {
@@ -10,6 +10,7 @@ namespace SDLHelper {
 	void flip_horizontally(SDL_Surface* surface);
 
 	// Original code: https://stackoverflow.com/questions/30016083/sdl2-opengl-sdl2-ttf-displaying-text
+	//
 	// "So OpenGL requires that all textures have dimensions of Base2 on my system (2,4,16,32,64...)"
 	uint32 power_two_floor(uint32 val);
 

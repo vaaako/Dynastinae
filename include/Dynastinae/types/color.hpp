@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SDL2/SDL_pixels.h>
+#include "Dynastinae/types.hpp"
 #include "Dynastinae/types/vector/vec3.hpp"
 #include "Dynastinae/types/vector/vec4.hpp"
-#include "Dynastinae/types/default.hpp"
 
 struct Color {
 	uint8 r = 255;

@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 #include <vector>
-#include "Dynastinae/types/default.hpp"
+#include "Dynastinae/types.hpp"
 
 class VBO {
 	public:

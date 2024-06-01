@@ -3,7 +3,7 @@
 // 1 - LMB / 2 - MMB / 3 - RMB
 
 #include <SDL2/SDL_events.h>
-#include "Dynastinae/types/default.hpp"
+#include "Dynastinae/types.hpp"
 #include "Dynastinae/types/vector/vec2.hpp"
 
 enum class MouseBTN {

@@ -71,7 +71,7 @@ class Renderer2D : public Renderer {
 		}
 
 
-
+		// TODO -- Add rotation
 		inline void draw_font(const Font& font, const vec2<float>& position) const {
 			this->draw_2d(this->rectangle_shape, *this->shader_texture, GL_TRIANGLE_FAN,
 				 font.texture, position, vec2(static_cast<float>(font.width), static_cast<float>(font.height)), { 255 }, 0.0f, DrawMode::FILL);

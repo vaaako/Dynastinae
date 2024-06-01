@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_keyboard.h>
-#include "Dynastinae/types/default.hpp"
+#include "Dynastinae/types.hpp"
 #include "keycode.hpp"
 
 enum class Keystate {
@@ -14,6 +14,7 @@ enum class Keystate {
 };
 
 struct Keyboard {
+	// Handle events from window
 	void handle_event(const SDL_Event& event);
 	bool ispressed(const Keycode& key);
 

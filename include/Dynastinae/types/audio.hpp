@@ -2,7 +2,7 @@
 
 #include <string>
 #include <SDL2/SDL_mixer.h>
-#include "Dynastinae/types/default.hpp"
+#include "Dynastinae/types.hpp"
 
 struct Audio {
 	const std::string path;
