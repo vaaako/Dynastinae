@@ -35,21 +35,21 @@ void move_camera(Keyboard& keyboard, Camera& camera) {
 	}
 }
 
+/*
+ * TODO -- Currently Working On
+ * - [ ] Better camera movement
+ * - [ ] Shape 3D position
+ */
 
-
-
-/** INFO CURRENTLY WORKING ON
- * - Make own events enums like i did with keyboard
- * */
-
-/** WARNING -- There is a small memory leak in font, but i don't know if is because of SDL_ttf or i am doing something wrong
+/*
+ * WARNING -- There is a small memory leak in font, but i don't know if is because of SDL_ttf or i am doing something wrong
  * - Font, i don't know if is my fault or not
  * - Texture may be causing this?
- * */
+ */
 int main() {
 	Window window = Window("Hello Dynastinae", 800, 600, true, true);
 
-	// NOTE -- Path is relative from where you run the executable
+	// NOTE -- Path is relative from where you run the executable (not where the executable is)
 	Texture texture = Texture("tests/assets/images/texture.jpg", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 	Texture kuromi = Texture("tests/assets/images/kuromi.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 	Texture brick = Texture("tests/assets/images/brick.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);

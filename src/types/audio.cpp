@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 Audio::Audio(const std::string& path, const bool ismusic) : path(path), ismusic(ismusic) {
-	const std::string extension = String::file_extension(path);
+	const std::string extension = StringHelper::file_extension(path);
 	if(!(extension == "wav" || extension == "ogg" || extension == "flac" || extension == "mp3")) {
 		Mix_CloseAudio();
 		SDL_Quit();

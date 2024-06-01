@@ -4,11 +4,11 @@
 	+ I don't think this is possible
 - [X] Custom keyboard enums
 - [ ] Window Events
-	+ [ ] Mouse handle click and motion at the same time
-	+ [ ] Custom event enums
-	+ [ ] More window events
-	+ [ ] Resizing support
+	+ [X] Custom event enums
 	+ [X] Multiple events support
+	+ [ ] Resizing support
+	+ [ ] Mouse handle click and motion at the same time
+	+ [ ] More window events
 - [X] Structs to `.cpp`
 - [ ] Avoid circular import for `set_cursor_position` in `window.hpp`
 - [X] BUG: If font is not a pointer, the window has a error when trying to close and the program has a segfaut
@@ -19,11 +19,11 @@
 	+ [Camera Movement](https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/main/Game.java#L121)
 	+ [ ] Best mouse movement
 	+ [ ] Custom position for shapes
-- [ ] **[?]** Add `template struct vec<>` for vectors
+- [X] **[DISCARTED]** Add `template struct vec<>` for vectors
 - [ ] Memory leak somewhere (i don't know if is on my `font.hpp` or SDL2 one)
 - [X] Split `shapes/` and `renderers/`
 	+ I don't know if `renderes/` is the correct name
-- [ ] View `Raylib` source code
+- [X] View `Raylib` source code
 
 # Notes
 - **[?]** Custom vertex colors for 2D

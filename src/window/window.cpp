@@ -115,7 +115,7 @@ float Window::fps() {
 }
 
 void Window::set_cursor_position(const int x, const int y) {
-	if(x > static_cast<int>(this->width) || y > static_cast<int>(this->height)) {
+	if(x > (int)(this->width) || y > (int)(this->height)) {
 		return;
 	}
 

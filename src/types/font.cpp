@@ -9,7 +9,7 @@ Font::Font(const char* path, const std::string& text, const uint16 size, const C
 	: path(path), text(text), size(size), color(color), filter(filter) {
 
 	// Check extension
-	const std::string extension = String::file_extension(std::string(path));
+	const std::string extension = StringHelper::file_extension(std::string(path));
 	if(extension != "ttf") {
 		TTF_Quit();
 		SDL_Quit();
@@ -38,9 +38,9 @@ void Font::update_texture() {
 	SDL_Surface* ttf_surface = TTF_RenderText_Blended(this->sdl_font, this->text.c_str(), this->color.to_sdl_color());
 
 	// Create a surface to the correct size in RGB format, and copy the old image
-	SDL_Surface* surface = SDLUtils::base2_surface(ttf_surface);
-	SDLUtils::flip_vertically(surface);
-	SDLUtils::flip_horizontally(surface);
+	SDL_Surface* surface = SDLHelper::base2_surface(ttf_surface);
+	SDLHelper::flip_vertically(surface);
+	SDLHelper::flip_horizontally(surface);
 
 	this->width = surface->w;
 	this->height = surface->h;

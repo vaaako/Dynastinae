@@ -14,7 +14,7 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 	}
 
 	std::cout << "Texture loaded successfully! Width: " << surface->w << ", Height: " << surface->h << ", Format: " << surface->format->BytesPerPixel << " bytes per pixel" << std::endl;
-	SDLUtils::flip_vertically(surface); // OpenGL draws image fliped, so flip before
+	SDLHelper::flip_vertically(surface); // OpenGL draws image fliped, so flip before
 
 	glGenTextures(1, &this->id); // num of textures, pointer
 	glBindTexture(this->tex_type, this->id);
