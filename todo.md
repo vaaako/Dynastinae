@@ -19,9 +19,10 @@
 	+ **SOLUTION:** I was closing `TTF_Font` when i shoudn't, in `font.cpp`
 - [ ] Rotation of 3D shape not working
 - [ ] Camera
-	+ [Camera Movement](https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/main/Game.java#L121)
-	+ [ ] Best mouse movement
-	+ [ ] Custom position for shapes
+	+ [X] **[DISCARTED]** [Camera Movement](https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/main/Game.java#L121)
+	+ [X] Best mouse movement
+	+ [X] Custom position for shapes
+	+ [ ] Shapes custom size
 - [X] **[DISCARTED]** Add `template struct vec<>` for vectors
 - [ ] Memory leak somewhere (i don't know if is on my `font.hpp` or SDL2 one)
 - [X] Split `shapes/` and `renderers/`

@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL_error.h>
 #include <SDL2/SDL_events.h>
+#include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_video.h>
 
 #include <stdexcept>
@@ -98,6 +99,16 @@ Window::Window(const std::string& title, const uint32 width, const uint32 height
 	}
 }
 
+
+void Window::set_cursor_position(const int x, const int y) {
+	if(x > (int)(this->width) || y > (int)(this->height)) {
+		return;
+	}
+
+	SDL_WarpMouseInWindow(this->window, x, y);
+	this->mouse_handler->set_position(x, y);
+}
+
 float Window::fps() {
 	uint32 current_time = SDL_GetTicks();
 
@@ -114,14 +125,6 @@ float Window::fps() {
 	return this->FPS;
 }
 
-void Window::set_cursor_position(const int x, const int y) {
-	if(x > (int)(this->width) || y > (int)(this->height)) {
-		return;
-	}
-
-	SDL_WarpMouseInWindow(this->window, x, y);
-	this->mouse_handler->set_position(x, y);
-}
 
 void Window::process_events() {
 	this->last_update = SDL_GetTicks();
@@ -146,6 +149,7 @@ void Window::process_events() {
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
 			case SDL_MOUSEMOTION:
+			case SDL_MOUSEWHEEL:
 				this->mouse_handler->handle_event(event);
 				break;
 

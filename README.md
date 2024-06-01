@@ -6,8 +6,7 @@
 **Dynastinae** is in very early stages. Is a bit usable for 2D games and is not yet usable for 3D games
 
 ![demo](media/demo.gif)
-<!-- ![demo2](media/demo2.png) -->
-<!-- ![demo3](media/demo3.png) -->
+![demo](media/demo3d.gif)
 
 
 ## Objectives
@@ -27,10 +26,11 @@ These are the main objectives *at the moment*
 	+ [X] Draw
 	+ [X] Colors
 	+ [X] Texture
-	+ [ ] Position
-	+ [ ] 3D shapes size?
+	+ [X] Position
+	+ [ ] 3D shape scale
 	+ [ ] Skybox
 	+ [ ] Import `.obj`
+	+ [ ] Sphere
 - [X] Movement
 - [X] Audio
 - [X] Fonts

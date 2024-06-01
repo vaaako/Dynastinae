@@ -1,3 +1,4 @@
+#include "Dynastinae/input/keycode.hpp"
 #include "Dynastinae/window/window.hpp"
 #include "Dynastinae/renderers/renderer2d.hpp"
 #include "Dynastinae/renderers/camera.hpp"
@@ -6,40 +7,70 @@
 
 #include <iostream>
 
-// https://wiki.libsdl.org/SDL2/SDL_Scancode
 // Handle keyboard
 void process_keyboard(Window& window, Keyboard& keyboard) {
-	if(keyboard.isdown(Keycode::ESCAPE)) {
+	if(keyboard.ispressed(Keycode::ESCAPE)) {
 		window.close();
 	}
 }
 
-// Move camera
-void move_camera(Keyboard& keyboard, Camera& camera) {
+void process_camera(Window& window, Keyboard& keyboard, const Mouse& mouse, Camera& camera, bool& can_move) {
+	// ROTATION //
+	// Only rotate when click on screen
+	if(mouse.isclick(MouseBTN::LMB) && !can_move) {
+		can_move = true;
+		window.set_cursor_position(window.get_width() / 2, window.get_height() / 2); // Prevent cursor from exiting the screen
+		window.hide_cursor(true);
+		return; // Prevent camera from look where the cursor clicked
+	}
+
+	// Rotate camera
+	if(can_move) {
+		camera.rotate(mouse);
+		window.set_cursor_position(window.get_width() / 2, window.get_height() / 2); // Prevent cursor from exiting the screen
+	}
+
+	// Press TAB to not rotate anymore
+	if(keyboard.ispressed(Keycode::TAB)) {
+		can_move = false;
+		window.hide_cursor(false);
+	}
+
+
+
+	// MOVEMENT //
 	if(keyboard.isdown(Keycode::W)) {
-		camera.go_foward();
+		camera.move_foward();
 	} else if(keyboard.isdown(Keycode::S)) {
-		camera.go_back();
+		camera.move_backward();
 	}
 
 	if(keyboard.isdown(Keycode::A)) {
-		camera.go_left();
+		camera.move_left();
 	} else if(keyboard.isdown(Keycode::D)) {
-		camera.go_right();
+		camera.move_right();
 	}
 
 	if(keyboard.isdown(Keycode::LSHIFT)) {
-		camera.go_up();
-	} else if(keyboard.isdown(Keycode::LCTRL)) {
-		camera.go_down();
+		camera.move_down();
+	} else if(keyboard.isdown(Keycode::SPACE)) {
+		camera.move_up();
+	}
+
+
+	// ZOOM //
+	if(mouse.scroll == Scroll::UP) {
+		camera.zoom_in(5.0f);
+	} else if(mouse.scroll == Scroll::DOWN) {
+		camera.zoom_out(5.0f);
 	}
 }
 
-/*
- * TODO -- Currently Working On
- * - [ ] Better camera movement
- * - [ ] Shape 3D position
+/* TODO -- Currently
+ * - [ ] 3D shapes custom size
+ * - [ ] Make a render3D and put all render methods in there (take camera as argument)
  */
+
 
 /*
  * WARNING -- There is a small memory leak in font, but i don't know if is because of SDL_ttf or i am doing something wrong
@@ -50,7 +81,7 @@ int main() {
 	Window window = Window("Hello Dynastinae", 800, 600, true, true);
 
 	// NOTE -- Path is relative from where you run the executable (not where the executable is)
-	Texture texture = Texture("tests/assets/images/texture.jpg", TextureFilter::NEAREST, TextureWrap::MIRRORED);
+	Texture hideri = Texture("tests/assets/images/hideri.jpg", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 	Texture kuromi = Texture("tests/assets/images/kuromi.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 	Texture brick = Texture("tests/assets/images/brick.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 
@@ -63,8 +94,8 @@ int main() {
 
 	// Renders
 	Renderer2D renderer = Renderer2D(window);
-	Camera camera = Camera(window); // 3D environment
-
+	Camera camera = Camera(window, 90.0f, 100.0f); // 3D environment
+	bool can_move = false;
 
 	float rotation = 0.0f;
 	uint32 start_time = window.time();
@@ -82,9 +113,7 @@ int main() {
 
 		// Handle some events
 		process_keyboard(window, *window.keyboard());
-		move_camera(*window.keyboard(), camera);
-		camera.rotate(window, *window.mouse());
-
+		process_camera(window, *window.keyboard(), *window.mouse(), camera, can_move);
 
 		// Draw 2D Shapes
 		// renderer.triangle(brick, { 100.0f, 100.0f }, 100.0f, 50.0f, Color(0, 255, 0));
@@ -93,11 +122,12 @@ int main() {
 		// renderer.triangle({ 550.0f, 350.0f }, 100.0f, rotation);
 		// renderer.rectangle({ 500.0f, 370.0f }, 200.0f, 200.0f, Color::from_hex(0xCA1773));
 
-
 		// Don't worry about draw order with 2D, 2D shapes are always above 3D shapes
-		camera.pyramid(&texture, { -1.0f, -1.0f, -7.0f }, rotation, { 0, 1.0f, 0 });
-		// camera.cube(&kuromi, { 1.0f, 1.0f, -8.0f }, rotation, { 1.0f, 1.0f, 1.0f });
 
+		camera.pyramid(&hideri, { 0.0f, 0.0f, -2.0f }, rotation, { 0, 1.0f, 0 });
+		camera.cube(&kuromi, { 3.0f, 2.0f, 1.0f }, rotation, { 1.0f, 1.0f, 1.0f });
+
+		camera.cube(&brick, { 5.0f, -2.0f, 4.0f }, rotation, { 1.0f, 1.0f, 1.0f });
 
 		// Update FPS each second
 		uint32 current_time = window.time();

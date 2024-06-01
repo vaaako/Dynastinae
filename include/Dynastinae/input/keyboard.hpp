@@ -22,7 +22,7 @@ struct Keyboard {
 		return (this->keystate.at(static_cast<uint32>(key)) == Keystate::DOWN);
 	}
 
-	inline bool isup(const Keycode& key) {
+	inline bool isup(const Keycode& key) const {
 		return (this->keystate.at(static_cast<uint32>(key)) == Keystate::UP);
 	}
 
@@ -32,7 +32,7 @@ struct Keyboard {
 		this->keystate[static_cast<uint32>(key)] = state;
 	}
 
-	inline Keystate get_keystate(const Keycode& key) {
+	inline Keystate get_keystate(const Keycode& key) const {
 		return this->keystate[static_cast<uint32>(key)];
 	}
 

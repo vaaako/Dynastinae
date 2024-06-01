@@ -3,6 +3,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_log.h>
+#include <SDL2/SDL_mouse.h>
+#include <SDL2/SDL_stdinc.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_video.h>
 
@@ -116,12 +118,22 @@ class Window {
 			SDL_SetWindowTitle(this->window, title.c_str());
 		}
 
+		inline void grab_cursor(const bool grab) {
+			SDL_SetRelativeMouseMode(static_cast<SDL_bool>(grab));
+		}
+
+		inline void hide_cursor(const bool hide) {
+			SDL_ShowCursor(!hide);
+		}
+
 		// TODO -- Put on mouse struct, but how? how can i avoid circular?
 		void set_cursor_position(const int x, const int y);
 
 
+
 		/**
-		 * TIMER */
+		 * TIMER
+		 **/
 
 		// Automatically calculates FPS
 		float fps();
