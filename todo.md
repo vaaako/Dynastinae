@@ -2,6 +2,9 @@
 - [X] Use Vector2f and Vector3f instead of glm versions
 - [ ] Unify shader and `shader_texture` somehow
 	+ I don't think this is possible
+- [ ] **[?]** Texture overlay
+	+ Texture atlas support
+	+ Opacity
 - [X] Custom keyboard enums
 - [ ] Window Events
 	+ [X] Custom event enums

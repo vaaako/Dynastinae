@@ -22,12 +22,12 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 
 	// Set filter parameters
 	// Nearest: Pixelate / Linear: Blur
-	glTexParameteri(this->tex_type, GL_TEXTURE_MIN_FILTER, (int)filter);
-	glTexParameteri(this->tex_type, GL_TEXTURE_MAG_FILTER, (int)filter);
+	glTexParameteri(this->tex_type, GL_TEXTURE_MIN_FILTER, static_cast<int>(filter));
+	glTexParameteri(this->tex_type, GL_TEXTURE_MAG_FILTER, static_cast<int>(filter));
 
 	// Repeat, Mirrored Repeat, Clamp to Edge, Clamp to Border (then use array of RGBA to color the border)
-	glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_S, (int)wrap);
-	glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_T, (int)wrap);
+	glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_S, static_cast<int>(wrap));
+	glTexParameteri(this->tex_type, GL_TEXTURE_WRAP_T, static_cast<int>(wrap));
 
 	// Check before if is JPG or PNG
 	GLenum texture_format = 0;
@@ -35,13 +35,13 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 
 	// 4 Colors
 	if(surface->format->BytesPerPixel == 4) {
-		if (surface->format->Rmask == 0x000000ff) {
+		if (surface->format->Rmask == 0x000000FF) {
 			texture_format = GL_RGBA;
 		} else {
 			texture_format = GL_BGRA;
 		}
 	} else {
-		if(surface->format->Rmask == 0x000000ff) {
+		if(surface->format->Rmask == 0x000000FF) {
 			texture_format = GL_RGB;
 		} else {
 			texture_format = GL_BGR;
