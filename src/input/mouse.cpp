@@ -1,7 +1,8 @@
 #include "Dynastinae/input/mouse.hpp"
-#include <SDL2/SDL_events.h>
+#include "Dynastinae/utils/log.hpp"
+#include "Dynastinae/window/window.hpp"
 
-#include <iostream>
+// #include <iostream>
 
 void Mouse::handle_event(const SDL_Event& event) {
 	// CLICK //
@@ -9,9 +10,8 @@ void Mouse::handle_event(const SDL_Event& event) {
 		SDL_MouseButtonEvent button = event.button;
 
 		// Click location
-		this->position.set_values(button.x, button.y);
+		this->position.set_values(static_cast<uint32>(button.x), static_cast<uint32>(button.y));
 
-		
 		this->up = MouseBTN::NONE; // No buttons pressed
 		this->down = static_cast<MouseBTN>(button.button); // Button clicked
 		this->clicks = button.clicks;
@@ -30,7 +30,7 @@ void Mouse::handle_event(const SDL_Event& event) {
 		// std::cout << "Mouse Motion: " << event.motion.x << ":" << event.motion.y << std::endl;
 		// std::cout << "Mouse dir: " << event.motion.xrel << ":" << event.motion.yrel << std::endl;
 
-		this->motion.set_values(motion.x, motion.y);
+		this->motion.set_values(static_cast<uint32>(motion.x), static_cast<uint32>(motion.y));
 		this->direction.set_values(event.motion.xrel, event.motion.yrel);
 
 	}
@@ -43,12 +43,12 @@ void Mouse::handle_event(const SDL_Event& event) {
 	}
 }
 
-void Mouse::set_position(const int x, const int y) {
+void Mouse::set_cursor_position(const Window& window, const uint32 x, const uint32 y) {
+	if(window.out_of_bounds(static_cast<int>(x), static_cast<int>(y))) {
+		LOG_ERROR("x or y args are out of window bounds");
+		return;
+	}
+
+	SDL_WarpMouseInWindow(window.get_reference(), static_cast<int>(x), static_cast<int>(y));
 	this->position.set_values(x, y);
 }
-
-// void Mouse::set_position(const Window& window, const uint32 x, const uint32 y) {
-// 	SDL_WarpMouseInWindow(window, x, y);
-// 	this->x = x;
-// 	this->y = y;
-// }
