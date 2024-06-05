@@ -1,8 +1,8 @@
 #include "Dynastinae/types/texture.hpp"
 #include "Dynastinae/utils/sdl.hpp"
+#include "Dynastinae/utils/log.hpp"
 
 #include <SDL2/SDL_render.h>
-#include <iostream> // TODO -- Remove later
 
 Texture::Texture(const std::string& path, const TextureFilter filter, const TextureWrap wrap) : path(path) {
 	// Open image with SDL
@@ -13,7 +13,7 @@ Texture::Texture(const std::string& path, const TextureFilter filter, const Text
 		throw std::runtime_error("Failed to load texture \"" + path + "\"\n~> " + SDL_GetError());
 	}
 
-	std::cout << "Texture loaded successfully! Width: " << surface->w << ", Height: " << surface->h << ", Format: " << surface->format->BytesPerPixel << " bytes per pixel" << std::endl;
+	LOG_INFO_NF("Texture loaded succesfully! Width: %d, Height: %d", surface->w, surface->h);
 	SDLHelper::flip_vertically(surface); // OpenGL draws image fliped, so flip before
 
 	glGenTextures(1, &this->id); // num of textures, pointer
@@ -99,7 +99,7 @@ Texture::Texture(const SDL_Surface* surface, const TextureFilter filter) {
 		}
 	}
 
-	// TODO -- Add supported formate here? I don't know if it is really necessary
+	// TODO -- Add supported formats here? I don't know if it is really necessary
 
 	glTexImage2D(GL_TEXTURE_2D, 0, colors, surface->w, surface->h, 0, texture_format, GL_UNSIGNED_BYTE, surface->pixels);
 

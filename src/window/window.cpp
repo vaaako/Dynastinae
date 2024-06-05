@@ -8,7 +8,7 @@
 #include <stdexcept>
 
 Window::Window(const std::string& title, const uint32 width, const uint32 height, const bool vsync, const bool debug_info)
-	: title(title), width(width), height(height) {
+	: title(title), width(width), height(height), debug_info(debug_info) {
 
 	/**
 	 * INIT SDL */
@@ -95,19 +95,10 @@ Window::Window(const std::string& title, const uint32 width, const uint32 height
 		SDL_Log("GL Version: %s", glGetString(GL_VERSION));
 		SDL_Log("Vendor: %s", glGetString(GL_VENDOR));
 		SDL_Log("Renderer: %s", glGetString(GL_RENDERER));
-		SDL_Log("Viewport: %dx%d \n==========\n", width, height);
+		SDL_Log("Viewport: %dx%d \n\n", width, height);
 	}
 }
 
-
-void Window::set_cursor_position(const int x, const int y) {
-	if(x > (int)(this->width) || y > (int)(this->height)) {
-		return;
-	}
-
-	SDL_WarpMouseInWindow(this->window, x, y);
-	this->mouse_handler->set_position(x, y);
-}
 
 float Window::fps() {
 	uint32 current_time = SDL_GetTicks();

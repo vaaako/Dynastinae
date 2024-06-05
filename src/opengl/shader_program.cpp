@@ -1,5 +1,5 @@
 #include "Dynastinae/opengl/shader_program.hpp"
-#include <SDL2/SDL_log.h>
+#include "Dynastinae/utils/log.hpp"
 #include <cstddef>
 
 ShaderProgram::ShaderProgram(const char* vertex_shader_source, const char* fragment_shader_source) {
@@ -14,7 +14,7 @@ ShaderProgram::ShaderProgram(const char* vertex_shader_source, const char* fragm
 	if(!success) {
 		GLchar info_log[512];
 		glGetShaderInfoLog(vertex_shader, 512, NULL, info_log);
-		SDL_Log("\nVertex shader compilation failed: \n~> %s", info_log);
+		LOG_ERROR("\nVertex shader compilation failed: %s", info_log);
 	}
 
 	GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -26,7 +26,7 @@ ShaderProgram::ShaderProgram(const char* vertex_shader_source, const char* fragm
 	if(!success) {
 		GLchar info_log[512];
 		glGetShaderInfoLog(fragment_shader, 512, NULL, info_log);
-		SDL_Log("\nFragment shader compilation failed: \n~> %s", info_log);
+		LOG_ERROR("\nFragment shader compilation failed: %s", info_log);
 	}
 
 
@@ -41,7 +41,7 @@ ShaderProgram::ShaderProgram(const char* vertex_shader_source, const char* fragm
 	if(!success) {
 		GLchar info_log[512];
 		glGetProgramInfoLog(this->id, 512, NULL, info_log);
-		SDL_Log("\nHad error on linking shaders: \n~> %s\n", info_log);
+		LOG_ERROR("\nHad error on linking shaders: %s", info_log);
 	}
 
 	// Not necessary anymore

@@ -22,6 +22,7 @@
 #include "Dynastinae/input/keyboard.hpp"
 #include "Dynastinae/input/mouse.hpp"
 #include "Dynastinae/window/events.hpp"
+#include "Dynastinae/utils/log.hpp"
 
 class Window {
 	public:
@@ -32,7 +33,10 @@ class Window {
 			delete this->mouse_handler;
 
 			// Delete window
-			SDL_Log("Window %d destroyed", SDL_GetWindowID(this->window));
+			if(this->debug_info) {
+				LOG_INFO_NF("Window %d destroyed", SDL_GetWindowID(this->window));
+			}
+
 			SDL_GL_DeleteContext(this->glContext);
 			SDL_DestroyWindow(this->window);
 
@@ -54,7 +58,7 @@ class Window {
 		 * WINDOW PROCESS */
 
 		// True while the window is open
-		inline bool is_open() {
+		inline bool is_open() const {
 			return this->window_open;
 		}
 
@@ -69,7 +73,7 @@ class Window {
 		}
 
 		// Clear the screen with some color
-		inline void clear(const Color& color) {
+		inline void clear(const Color& color) const {
 			glClearColor(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
@@ -77,9 +81,9 @@ class Window {
 
 		/**
 		 * GETTERS */
-		// inline SDL_Window* get_reference() const {
-		// 	return this->window;
-		// }
+		inline SDL_Window* get_reference() const {
+			return this->window;
+		}
 
 		inline Keyboard* keyboard() const {
 			return this->keyboard_handler;
@@ -102,10 +106,16 @@ class Window {
 		}
 
 		// Check if event in array is not 0, if not, event is activated
-		inline bool trigger_event(Event event) {
+		inline bool trigger_event(Event event) const {
 			return std::find(this->frame_events.begin(), this->frame_events.end(),
 					static_cast<uint32>(event)) != this->frame_events.end();
 		}
+
+		inline bool out_of_bounds(const int x, const int y) const {
+			return (x < 0 || x > static_cast<int>(this->width))
+					|| (y < 0 || y > static_cast<int>(this->height));
+		}
+
 
 		/**
 		 * SETTERS */
@@ -118,17 +128,13 @@ class Window {
 			SDL_SetWindowTitle(this->window, title.c_str());
 		}
 
-		inline void grab_cursor(const bool grab) {
+		inline void grab_cursor(const bool grab) const {
 			SDL_SetRelativeMouseMode(static_cast<SDL_bool>(grab));
 		}
 
-		inline void hide_cursor(const bool hide) {
+		inline void hide_cursor(const bool hide) const {
 			SDL_ShowCursor(!hide);
 		}
-
-		// TODO -- Put on mouse struct, but how? how can i avoid circular?
-		void set_cursor_position(const int x, const int y);
-
 
 
 		/**
@@ -143,7 +149,7 @@ class Window {
 		 *
 		 * This value wraps if the program runs for more than ~49 days.
 		 */
-		inline uint32 time() {
+		inline uint32 time() const {
 			return SDL_GetTicks();
 		}
 
@@ -173,6 +179,7 @@ class Window {
 		uint32 width;
 		uint32 height;
 		bool window_open = true;
+		const bool debug_info;
 
 		std::vector<uint32> frame_events;
 
@@ -187,7 +194,7 @@ class Window {
 		float FPS = 0.0f;
 
 		// KEYS
-		// Since it has a get for these objects, it need to be pointers, so i can pass as reference to other methods
+		// Since window has a get for these objects, it need to be pointers, so i can pass as reference to other methods
 		Keyboard* keyboard_handler = new Keyboard();
 		Mouse* mouse_handler = new Mouse(); // To not have the same name as the "mouse" function
 };

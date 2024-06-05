@@ -1,33 +1,41 @@
 # Target
 - [X] Use Vector2f and Vector3f instead of glm versions
+- [X] Custom keyboard enums
+- [X] Structs to `.cpp`
+- [X] BUG: If font is not a pointer, the window has a error when trying to close and the program has a segfaut
+	+ Maybe it has something to do with the texture pointer in `font.hpp`
+	+ **SOLUTION:** I was closing `TTF_Font` when i shoudn't, in `font.cpp`
+- [X] **[DISCARTED]** Add `template struct vec<>` for vectors
+- [X] Split `shapes/` and `renderers/`
+	+ I don't know if `renderes/` is the correct name
+- [X] View `Raylib` source code
 - [ ] Unify shader and `shader_texture` somehow
 	+ I don't think this is possible
-- [ ] **[?]** Texture overlay
+	+ Maybe set the texture alpha to zero when using just solid color?
+- [ ] **[?]** More texture options
+	+ Texture overlay
 	+ Texture atlas support
 	+ Opacity
-- [X] Custom keyboard enums
 - [ ] Window Events
 	+ [X] Custom event enums
 	+ [X] Multiple events support
 	+ [ ] Resizing support
 	+ [ ] Mouse handle click and motion at the same time
 	+ [ ] More window events
-- [X] Structs to `.cpp`
-- [ ] Avoid circular import for `set_cursor_position` in `window.hpp`
-- [X] BUG: If font is not a pointer, the window has a error when trying to close and the program has a segfaut
-	+ Maybe it has something to do with the texture pointer in `font.hpp`
-	+ **SOLUTION:** I was closing `TTF_Font` when i shoudn't, in `font.cpp`
-- [ ] Rotation of 3D shape not working
 - [ ] Camera
 	+ [X] **[DISCARTED]** [Camera Movement](https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/main/Game.java#L121)
 	+ [X] Best mouse movement
 	+ [X] Custom position for shapes
-	+ [ ] Shapes custom size
-- [X] **[DISCARTED]** Add `template struct vec<>` for vectors
+	+ [X] Rotation of 3D shape not working
+	+ [ ] Shapes custom scale
+- [ ] Avoid circular import for `set_cursor_position` in `window.hpp`
 - [ ] Memory leak somewhere (i don't know if is on my `font.hpp` or SDL2 one)
-- [X] Split `shapes/` and `renderers/`
-	+ I don't know if `renderes/` is the correct name
-- [X] View `Raylib` source code
+- [ ] **[!]** Move draw to the shape struct. e.g. Cube -> import cube shape -> `cube.draw(args)`;
+	+ Renderer3D -> `renderer.draw_cube(texture)` -> `cube.draw(texture)`
+	+ [Tutorial](https://www.youtube.com/watch?v=NUZF_5RKfS4)
+	+ Rename `shape.hpp` to `mesh.hpp`
+- [ ] Fix log `fmt`
+	+ [ ] Log for `audio.cpp` and `font.cpp` -> instead of logging full path, make a method on `StringHelper` to get only the file name
 
 # Notes
 - **[?]** Custom vertex colors for 2D

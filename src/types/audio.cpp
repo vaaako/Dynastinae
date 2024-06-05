@@ -1,4 +1,5 @@
 #include "Dynastinae/types/audio.hpp"
+#include "Dynastinae/utils/log.hpp"
 #include "Dynastinae/utils/string.hpp"
 
 #include <SDL2/SDL.h>
@@ -12,7 +13,7 @@ Audio::Audio(const std::string& path, const AudioType type ) : path(path), type(
 		throw std::invalid_argument("Failed to load audio \"" + path + "\"\n~> Supported extensions are: WAV, OGG, FLAC and MP3");
 	}
 
-	// Init
+	// Init audio manager
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) != 0) {
 		Mix_CloseAudio();
 		SDL_Quit();
@@ -34,6 +35,7 @@ bool Audio::isplaying() const {
 
 void Audio::set_volume(const uint8 volume) {
 	if(volume > MIX_MAX_VOLUME) {
+		LOG_ERROR("set_volume arg exceeds max volume (128), setting to max volume instead w");
 		this->volume = MIX_MAX_VOLUME;
 	}
 
