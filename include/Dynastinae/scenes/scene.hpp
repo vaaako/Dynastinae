@@ -8,11 +8,11 @@ enum class DrawMode {
 	FILL = 6914
 };
 
-class Renderer {
+class Scene {
 	public:
-		Renderer(const Window& window);
-		Renderer(const uint32 width, const uint32 height);
-		~Renderer() {
+		Scene(const Window& window);
+		Scene(const uint32 width, const uint32 height);
+		~Scene() {
 			delete this->shader;
 			delete this->shader_texture;
 		}
@@ -23,8 +23,8 @@ class Renderer {
 
 		virtual inline void update_viewport(const Window& window) = 0;
 		virtual inline void update_viewport(const uint32 width, const uint32 height) = 0;
+
 	protected:
-		// TODO -- Store as float
 		uint32 width;
 		uint32 height;
 };

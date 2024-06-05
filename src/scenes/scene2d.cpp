@@ -1,15 +1,15 @@
-#include "Dynastinae/renderers/renderer2d.hpp"
+#include "Dynastinae/scenes/scene2d.hpp"
 #include "Dynastinae/window/window.hpp"
 
-Renderer2D::Renderer2D(const Window& window) : Renderer(window) {
+Scene2D::Scene2D(const Window& window) : Scene(window) {
 	this->update_viewport(window);
 }
 
-Renderer2D::Renderer2D(const uint32 width, const uint32 height) : Renderer(width, height) {
+Scene2D::Scene2D(const uint32 width, const uint32 height) : Scene(width, height) {
 	this->update_viewport(width, height);
 }
 
-void Renderer2D::update_viewport(const uint32 width, const uint32 height) {
+void Scene2D::update_viewport(const uint32 width, const uint32 height) {
 	this->width = width;
 	this->height = height;
 
@@ -31,7 +31,7 @@ void Renderer2D::update_viewport(const uint32 width, const uint32 height) {
 
 
 
-void Renderer2D::draw_2d(const Shape2D& shape, const ShaderProgram& shader, const GLenum draw_type,
+void Scene2D::draw_2d(const Shape2D& shape, const ShaderProgram& shader, const GLenum draw_type,
 		const Texture* texture, const vec2<float>& pos, const vec2<float>& size, const Color& color,
 		const float rotate, const DrawMode draw_mode) const {
 

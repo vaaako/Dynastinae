@@ -3,7 +3,7 @@
 #include "Dynastinae/types/font.hpp"
 #include "Dynastinae/shapes/2d/triangle.hpp"
 #include "Dynastinae/shapes/2d/rectangle.hpp"
-#include "Dynastinae/renderers/renderer.hpp"
+#include "Dynastinae/scenes/scene.hpp"
 
 
 /* TODO 
@@ -14,10 +14,10 @@
 
 */
 
-class Renderer2D : public Renderer {
+class Scene2D : public Scene {
 	public:
-		Renderer2D(const Window& window);
-		Renderer2D(const uint32 width, const uint32 height);
+		Scene2D(const Window& window);
+		Scene2D(const uint32 width, const uint32 height);
 
 		// TODO -- Think on a better way of drawing shapes function, because this is getting too much
 
