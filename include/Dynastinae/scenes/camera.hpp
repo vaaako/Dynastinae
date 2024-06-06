@@ -11,24 +11,11 @@
 
 
 class Camera {
+	friend class Scene3D; // Scene3D can acess private members of Camera (for movement)
+
 	public:
-		float fov;
 		float sensitivity;
-		float near_plane = 0.1f;
-		float far_plane = 100.0f;
 		float speed = 0.1f;
-
-		// Movement
-		bool firstclick = true;
-
-		// -90 in yaw prevents camera from jumping on the first click
-		float yaw = -90.0f; // Horizontal rotation
-		float pitch = 0.0f; // Vertical rotation
-
-		glm::vec3 position = { 0.0f, 0.0f, 2.0f };
-		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
-		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-
 
 		Camera(const Window& window, const float fov = 45.0f, const float sensitivity = 100.0f);
 		Camera(const uint32 width, const uint32 height, const float fov = 45.0f, const float sensitivity = 100.0f);
@@ -49,29 +36,15 @@ class Camera {
 
 		/**
 		 * SETTERS */
-		inline void set_fov(const float fov) {
-			this->fov = fov;
-		}
+		void set_near_plane(const float near_plane);
+		void set_far_plane(const float far_plane);
+		void set_fov(const float fov);
 
 		// Set the minimum amount of fov possible (used for zoom out)
-		inline void set_min_fov(const float min_fov) {
-			if(min_fov < this->max_fov) {
-				LOG_ERROR("[set_min_fov] min fov can't be higher than max pov value");
-				return;
-			}
-
-			this->min_fov = min_fov;
-		}
+		void set_min_fov(const float min_fov);
 
 		// Set the maximum amount of fov possible (used for zoom out)
-		inline void set_max_fov(const float max_fov) {
-			if(max_fov < this->min_fov) {
-				LOG_ERROR("max fov can't be lower than min pov value");
-				return;
-			}
-
-			this->max_fov = max_fov;
-		}
+		void set_max_fov(const float max_fov);
 
 		inline void update_viewport(const uint32 width, const uint32 height) {
 			this->width = width;
@@ -110,8 +83,6 @@ class Camera {
 			this->position -= this->up * this->speed;
 		}
 
-
-
 		// Zoom in, in a certain speed, to instant zoom in, set the speed to equal or higher than the current fov
 		//
 		// You can change "min_fov" to set the zoom in distance
@@ -124,13 +95,25 @@ class Camera {
 
 		void rotate(const Mouse& mouse);
 
-
 	private:
 		// Configuration 
 		uint32 width;
 		uint32 height;
 
+		float fov;
 		float max_fov;
 		float min_fov = 10.0f;
+		float near_plane = 0.1f;
+		float far_plane = 100.0f;
+
+		// Movement
+		bool firstclick = true;
+		// -90 in yaw prevents camera from jumping on the first click
+		float yaw = -90.0f; // Horizontal rotation
+		float pitch = 0.0f; // Vertical rotation
+
+		glm::vec3 position = { 0.0f, 0.0f, 2.0f };
+		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 };
 

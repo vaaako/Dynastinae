@@ -8,10 +8,10 @@
 #include "Dynastinae/scenes/camera.hpp"
 
 Camera::Camera(const Window& window, const float fov, const float sensitivity)
-	: fov(fov), sensitivity(sensitivity), width(window.get_width()), height(window.get_height()), max_fov(fov) {}
+	: sensitivity(sensitivity), width(window.get_width()), height(window.get_height()), fov(fov), max_fov(fov) {}
 
 Camera::Camera(const uint32 width, const uint32 height, const float fov, const float sensitivity)
-	: fov(fov), sensitivity(sensitivity), width(width), height(height), max_fov(fov) {}
+	: sensitivity(sensitivity), width(width), height(height), fov(fov), max_fov(fov) {}
 
 
 void Camera::rotate(const Mouse& mouse) {
@@ -36,6 +36,54 @@ void Camera::rotate(const Mouse& mouse) {
 	front.z = std::sin(glm::radians(this->yaw)) * std::cos(glm::radians(this->pitch));
 	this->orientation = glm::normalize(front);
 }
+
+
+
+void Camera::set_near_plane(const float near_plane) {
+	if(near_plane > this->far_plane) {
+		LOG_ERROR("new \"near plane\" value, can't be higher than \"far plane\" current value");
+		return;
+	}
+
+	this->near_plane = near_plane;
+}
+
+void Camera::set_far_plane(const float far_plane) {
+	if(far_plane < this->near_plane) {
+		LOG_ERROR("new \"far plane\" value, can't be lower than \"near plane\" current value");
+		return;
+	}
+
+	this->far_plane = far_plane;
+}
+
+void Camera::set_fov(const float fov) {
+	if(fov < this->near_plane || fov > this->far_plane) {
+		LOG_ERROR("new \"fov\" value, must be between \"near plane\" and \"far plane\" current values");
+		return;
+	}
+
+	this->fov = fov;
+}
+
+void Camera::set_min_fov(const float min_fov) {
+	if(min_fov < this->max_fov) {
+		LOG_ERROR("new \"min fov\" value, can't be higher than \"max fov\" current value");
+		return;
+	}
+
+	this->min_fov = min_fov;
+}
+
+void Camera::set_max_fov(const float max_fov) {
+	if(max_fov < this->min_fov) {
+		LOG_ERROR("new \"max fov\" value, can't be lower than \"min fov\" current value");
+		return;
+	}
+
+	this->max_fov = max_fov;
+}
+
 
 void Camera::zoom_in(const float speed) {
 	this->fov -= speed;

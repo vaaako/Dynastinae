@@ -12,7 +12,7 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/vector_angle.hpp>
 
-struct Scene3D : Scene {
+class Scene3D : Scene {
 	public:
 		Scene3D(Camera& camera);
 
