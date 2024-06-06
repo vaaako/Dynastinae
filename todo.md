@@ -13,9 +13,10 @@
 	+ I don't think this is possible
 	+ Maybe set the texture alpha to zero when using just solid color?
 - [ ] **[?]** More texture options
-	+ Texture overlay
-	+ Texture atlas support
-	+ Opacity
+	+ [ ] Different texture for each face
+	+ [ ] Texture overlay
+	+ [ ] Texture atlas support
+	+ [ ] Opacity
 - [ ] Window Events
 	+ [X] Custom event enums
 	+ [X] Multiple events support

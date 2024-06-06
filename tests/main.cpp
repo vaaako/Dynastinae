@@ -96,8 +96,6 @@ int main() {
 	Camera camera = Camera(window, 70.0f, 100.0f); // 3D environment
 	Scene3D scene3d = Scene3D(camera); // 3D render
 
-	LOG_ERROR("testing error %d", 123);
-
 	bool can_move = false; // Used for camera movement
 	float rotation = 0.0f;
 	uint32 start_time = window.time();

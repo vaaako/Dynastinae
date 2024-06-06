@@ -1,8 +1,10 @@
 #pragma once
 
+#include <cstdarg>
 #include <cstring>
 #include <iostream>
 #include <string>
+#include <vector>
 
 // Macros on the end of the file
 namespace Log {
@@ -15,12 +17,32 @@ namespace Log {
 
 	// fmt
 	inline void message(const std::string& level, const char* fmt, ...) {
-		std::cout << "[" << level << "] " << fmt << std::endl;
+		std::vector<char> buffer = std::vector<char>(1024);
+
+		va_list args;
+		va_start(args, fmt);
+
+		// Format the string
+		vsnprintf(buffer.data(), buffer.size(), fmt, args);
+
+		va_end(args);
+
+		std::cout << "[" << level << "] " << buffer.data() << std::endl;
 	}
 
 	// Avoid ambiguous
 	inline void message_macro(const std::string& level, const std::string& func, const char* fmt, ...) {
-		std::cout << "[" << level << "] " << "[" << func << "] " << fmt << std::endl;
+		std::vector<char> buffer = std::vector<char>(1024);
+
+		va_list args;
+		va_start(args, fmt);
+
+		// Format the string
+		vsnprintf(buffer.data(), buffer.size(), fmt, args);
+
+		va_end(args);
+
+		std::cout << "[" << level << "] " << "[" << func << "] " << buffer.data() << std::endl;
 	}
 
 
