@@ -88,5 +88,16 @@ struct vec6 {
 
 		return *this;
 	}
+
+	vec6<T>& operator=(const T other) {
+		x = other;
+		y = other;
+		z = other;
+		u = other;
+		v = other;
+		w = other;
+
+		return *this;
+	}
 };
 

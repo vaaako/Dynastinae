@@ -94,7 +94,7 @@ int main() {
 	Scene2D scene2d = Scene2D(window);
 
 	Camera camera = Camera(window, 70.0f, 100.0f); // 3D environment
-	Scene3D scene3d = Scene3D(camera); // 3D render
+	// Scene3D scene3d = Scene3D(camera); // 3D render
 
 	bool can_move = false; // Used for camera movement
 	float rotation = 0.0f;
@@ -116,16 +116,16 @@ int main() {
 		process_camera(window, *window.keyboard(), *window.mouse(), camera, can_move);
 
 		// Draw 2D Shapes
-		// scene2d.triangle(&brick, { 100.0f, 100.0f }, 100.0f, 50.0f, Color(0, 255, 0));
+		scene2d.triangle(&brick, { 100.0f, 100.0f }, 100.0f, 50.0f, Color(0, 255, 0));
 		// scene2d.rectangle(&brick, { 50.0f, 100.0f }, 200.0f, 200.0f);
 		// scene2d.triangle({ 550.0f, 350.0f }, 100.0f, rotation);
 		// scene2d.rectangle({ 500.0f, 370.0f }, 200.0f, 200.0f, Color::from_hex(0xCA1773));
 
 
 		// Don't worry about draw order with 2D, 2D shapes are always above 3D shapes
-		scene3d.pyramid(&hideri, { 0.0f, 0.0f, -2.0f }, rotation, { 0, 1.0f, 0 });
-		scene3d.cube(&kuromi, { 3.0f, 2.0f, 1.0f }, rotation, { 1.0f, 1.0f, 1.0f });
-		scene3d.cube(&brick, { 5.0f, -2.0f, 4.0f }, rotation, { 1.0f, 1.0f, 1.0f });
+		// scene3d.pyramid(&hideri, { 0.0f, 0.0f, -2.0f }, rotation, { 0, 1.0f, 0 });
+		// scene3d.cube(&kuromi, { 3.0f, 2.0f, 1.0f }, rotation, { 1.0f, 1.0f, 1.0f });
+		// scene3d.cube(&brick, { 5.0f, -2.0f, 4.0f }, rotation, { 1.0f, 1.0f, 1.0f });
 
 		// Update FPS each second
 		uint32 current_time = window.time();

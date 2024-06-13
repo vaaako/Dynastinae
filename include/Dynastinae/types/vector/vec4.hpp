@@ -28,61 +28,70 @@ struct vec4 {
 		this->w = w;
 	}
 
-		inline glm::vec4 to_glm() const {
-			return glm::vec4(this->x, this->y, this->z, this->w);
-		}
+	inline glm::vec4 to_glm() const {
+		return glm::vec4(this->x, this->y, this->z, this->w);
+	}
 
-		vec4 operator+(const vec4<T>& other) const {
-			return vec4(this->x + other.x, this->y + other.y, this->z + other.z, this->w + other.w);
-		}
+	vec4 operator+(const vec4<T>& other) const {
+		return vec4(this->x + other.x, this->y + other.y, this->z + other.z, this->w + other.w);
+	}
 
-		vec4 operator+(const T scalar) const {
-			return vec4(this->x + scalar, this->y + scalar, this->z + scalar, this->w + scalar);
-		}
-
-
-		vec4 operator-(const vec4<T>& other) const {
-			return vec4(this->x - other.x, this->y - other.y, this->z - other.z, this->w - other.w);
-		}
-
-		vec4 operator-(const T scalar) const {
-			return vec4(this->x - scalar, this->y - scalar, this->z - scalar, this->w - scalar);
-		}
+	vec4 operator+(const T scalar) const {
+		return vec4(this->x + scalar, this->y + scalar, this->z + scalar, this->w + scalar);
+	}
 
 
-		vec4 operator*(const vec4<T>& other) const {
-			return vec4(this->x * other.x, this->y * other.y, this->z * other.y, this->w * other.w);
-		}
+	vec4 operator-(const vec4<T>& other) const {
+		return vec4(this->x - other.x, this->y - other.y, this->z - other.z, this->w - other.w);
+	}
 
-		vec4 operator*(const T scalar) const {
-			return vec4(this->x * scalar, this->y * scalar, this->z * scalar, this->w * scalar);
-		}
-
-
-		vec4 operator/(const vec4<T>& other) const {
-			return vec4(this->x / other.x, this->y / other.y, this->z / other.y, this->w / other.w);
-		}
-
-		vec4 operator/(const T scalar) const {
-			return vec4(this->x / scalar, y / scalar, this->z / scalar, this->w / scalar);
-		}
+	vec4 operator-(const T scalar) const {
+		return vec4(this->x - scalar, this->y - scalar, this->z - scalar, this->w - scalar);
+	}
 
 
-		bool operator==(const vec4<T>& other) const {
-			return (this->x == other.x && this->y == other.y && this->z == other.z && this->w == other.w);
-		}
+	vec4 operator*(const vec4<T>& other) const {
+		return vec4(this->x * other.x, this->y * other.y, this->z * other.y, this->w * other.w);
+	}
 
-		bool operator!=(const vec4<T>& other) const {
-			return !(*this == other);
-		}
+	vec4 operator*(const T scalar) const {
+		return vec4(this->x * scalar, this->y * scalar, this->z * scalar, this->w * scalar);
+	}
 
-		vec4<T>& operator=(const vec4<T>& other) {
+
+	vec4 operator/(const vec4<T>& other) const {
+		return vec4(this->x / other.x, this->y / other.y, this->z / other.y, this->w / other.w);
+	}
+
+	vec4 operator/(const T scalar) const {
+		return vec4(this->x / scalar, y / scalar, this->z / scalar, this->w / scalar);
+	}
+
+
+	bool operator==(const vec4<T>& other) const {
+		return (this->x == other.x && this->y == other.y && this->z == other.z && this->w == other.w);
+	}
+
+	bool operator!=(const vec4<T>& other) const {
+		return !(*this == other);
+	}
+
+	vec4<T>& operator=(const vec4<T>& other) {
 		if(this != &other) {
 			x = other.x;
 			y = other.y;
 			z = other.z;
 			w = other.w;
 		}
+
+		return *this;
+	}
+
+	vec4<T>& operator=(const T other) {
+		x = other;
+		y = other;
+		z = other;
+		w = other;
 
 		return *this;
 	}

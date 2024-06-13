@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Dynastinae/shapes/shape.hpp"
+#include "Dynastinae/shapes/mesh.hpp"
 
-struct Shape3D : Shape {
-	Shape3D() = default;
-	Shape3D(const vec3<float>& position, const vec2<float>& size, const float rotate);
+struct Shape3D : Mesh {
+	Shape3D(const std::vector<float>& vertices, const std::vector<uint32>& indices);
 };

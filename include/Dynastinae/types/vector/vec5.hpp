@@ -84,5 +84,15 @@ struct vec5 {
 
 		return *this;
 	}
+
+	vec5<T>& operator=(const T other) {
+		x = other;
+		y = other;
+		z = other;
+		w = other;
+		h = other;
+
+		return *this;
+	}
 };
 

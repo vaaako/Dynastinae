@@ -1,8 +1,13 @@
 #include "Dynastinae/shapes/2d/triangle.hpp"
 
-Triangle::Triangle() {
-	this->set_vbo_and_ebo(this->vertices, this->indices);
-}
+Triangle::Triangle()
+	: Shape2D({
+			// VERTICES / TEXTURE
+			1.0f, 1.0f,   0.0f, 0.0f, // Bottom Right
+			0.0f, 1.0f,   1.0f, 0.0f, // Bottom Left
+			0.5f, 0.0f,   0.5f, 1.0f  // Middle
+		},
+		{
+			0, 1, 2
+		}) {}
 
-Triangle::Triangle(const vec2<float>& position, const vec2<float>& size, const float rotate)
-	: Shape2D(position, size, rotate) {}

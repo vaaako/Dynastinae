@@ -19,6 +19,4 @@ EBO::EBO(const std::vector<uint32>& indices, const std::vector<uint32>& indices2
 	glGenBuffers(1, &this->id);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->id);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, intercalated_data.size() * sizeof(uint32), intercalated_data.data(), GL_STATIC_DRAW);
-
-	this->unbind();
 }

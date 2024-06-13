@@ -2,7 +2,7 @@
 #include "Dynastinae/window/window.hpp"
 
 Scene2D::Scene2D(const Window& window) : Scene(window) {
-	this->update_viewport(window);
+	this->update_viewport(window.get_width(), window.get_height());
 }
 
 Scene2D::Scene2D(const uint32 width, const uint32 height) : Scene(width, height) {
@@ -30,7 +30,7 @@ void Scene2D::update_viewport(const uint32 width, const uint32 height) {
 
 
 
-
+// TODO -- remove later
 void Scene2D::draw_2d(const Shape2D& shape, const ShaderProgram& shader, const GLenum draw_type,
 		const Texture* texture, const vec2<float>& pos, const vec2<float>& size, const Color& color,
 		const float rotate, const DrawMode draw_mode) const {
@@ -59,7 +59,7 @@ void Scene2D::draw_2d(const Shape2D& shape, const ShaderProgram& shader, const G
 	}
 
 	shape.vao->bind();
-	glDrawElements(draw_type, shape.indices_size, GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(draw_type, static_cast<int>(shape.indices_size), GL_UNSIGNED_INT, (void*)0);
 	// glDrawArrays(draw_type, 0, shape.vertices_count);
 }
 

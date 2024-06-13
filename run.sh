@@ -38,3 +38,7 @@ if [ "$1" == "-m" ]; then
 	./$TARGET
 fi
 
+if [ "$1" == "-v" ]; then
+	valgrind --leak-check=full ./build/$TARGET
+fi
+

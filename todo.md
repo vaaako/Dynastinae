@@ -9,6 +9,9 @@
 - [X] Split `shapes/` and `renderers/`
 	+ I don't know if `renderes/` is the correct name
 - [X] View `Raylib` source code
+- [X] Fix log `fmt`
+	+ [X] Log for `audio.cpp` and `font.cpp` -> instead of logging full path, make a method on `StringHelper` to get only the file name
+- [X] Avoid circular import for `set_cursor_position` in `window.hpp`
 - [ ] Unify shader and `shader_texture` somehow
 	+ I don't think this is possible
 	+ Maybe set the texture alpha to zero when using just solid color?
@@ -29,14 +32,13 @@
 	+ [X] Custom position for shapes
 	+ [X] Rotation of 3D shape not working
 	+ [ ] Shapes custom scale
-- [ ] Avoid circular import for `set_cursor_position` in `window.hpp`
 - [ ] Memory leak somewhere (i don't know if is on my `font.hpp` or SDL2 one)
 - [ ] **[!]** Move draw to the shape struct. e.g. Cube -> import cube shape -> `cube.draw(args)`;
 	+ Renderer3D -> `renderer.draw_cube(texture)` -> `cube.draw(texture)`
 	+ [Tutorial](https://www.youtube.com/watch?v=NUZF_5RKfS4)
 	+ Rename `shape.hpp` to `mesh.hpp`
-- [ ] Fix log `fmt`
-	+ [ ] Log for `audio.cpp` and `font.cpp` -> instead of logging full path, make a method on `StringHelper` to get only the file name
+- [ ] Put required libraries `shared libraries` files on `libs/` folder
+
 
 # Notes
 - **[?]** Custom vertex colors for 2D

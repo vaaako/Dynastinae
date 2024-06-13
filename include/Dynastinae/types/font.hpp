@@ -2,14 +2,12 @@
 
 #include <SDL2/SDL_ttf.h>
 #include <GL/glew.h>
+#include "Dynastinae/shapes/2d/rectangle.hpp"
 #include "Dynastinae/types/color.hpp"
 #include "Dynastinae/types/texture.hpp"
 
-struct Font {
-	// Necessary to draw
-	int width;
-	int height;
-	Texture* texture = nullptr; // Texture needs to be a pointer, when changing the texture, the old texture need to be deleted (i could solve this by adding a "change texture" method in texture.hpp, but i don't think this makes any sense)
+struct Font : public Rectangle {
+	// Texture needs to be a pointer, when changing the texture, the old texture need to be deleted (i could solve this by adding a "change texture" method in texture.hpp, but i don't think this makes any sense)
 
 	Font(const char* path, const std::string& text, const uint16 size = 24, const Color& color = { 255 }, const TextureFilter filter = TextureFilter::LINEAR);
 	~Font() {
@@ -20,12 +18,12 @@ struct Font {
 	void update_texture();
 	void set_text(const std::string& text);
 	void set_color(const Color& color);
-	void set_size(const uint16 size);
+	void set_size(const uint16 fsize);
 
 	private:
 		const char* path; // Avoid conversion each frame, since path would be used each frame using std::string would lead me converting it to char* each frame
 		std::string text; // This is not char* because of convenience
-		uint16 size;
+		uint16 fsize;
 		Color color;
 		TextureFilter filter;
 

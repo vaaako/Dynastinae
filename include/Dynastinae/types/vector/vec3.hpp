@@ -82,5 +82,13 @@ struct vec3 {
 
 		return *this;
 	}
+
+	vec3<T>& operator=(const T other) {
+		x = other;
+		y = other;
+		z = other;
+
+		return *this;
+	}
 };
 

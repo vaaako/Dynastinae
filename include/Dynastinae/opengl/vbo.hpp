@@ -3,10 +3,14 @@
 #include <GL/glew.h>
 #include <vector>
 #include "Dynastinae/types.hpp"
+#include "Dynastinae/types/vertex.hpp"
 
 class VBO {
 	public:
 		VBO();
+		VBO(std::vector<Vertex>& vertices);
+		VBO(std::vector<float>& vertices);
+
 		~VBO() {
 			glDeleteBuffers(1, &this->id);
 		}
@@ -19,11 +23,8 @@ class VBO {
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 
-		void store_data(const std::vector<float>& data, const uint32 position, const uint32 dimension, const uint32 total_dimensions, const void* offset);
-		void link_attrib(const uint32 position, const uint32 dimension, const uint32 total_dimensions, const void* offset);
-		void store_two_fields_data(const std::vector<float>& data, const uint32 pos_dim, const uint32 tex_dim, const uint32 vertex1 = 0, const uint32 vertex2 = 1);
-		
+		void alloc_data(const uint64 size, const void* data);
+		void link_attrib(const uint32 vertex, const uint32 dimension, const int total_byte_size, const uint32 offset);
 	private:
 		GLuint id;
-		// long uint32 size = 0; // INFO -- I don't think i will be using this
 };

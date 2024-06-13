@@ -79,5 +79,12 @@ struct vec2 {
 
 		return *this;
 	}
+
+	vec2<T>& operator=(const T other) {
+		x = other;
+		y = other;
+
+		return *this;
+	}
 };
 

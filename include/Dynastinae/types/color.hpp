@@ -44,7 +44,7 @@ struct Color {
 
 	Color& operator=(const Color& other) {
 		// Check if is not the same
-		if (this != &other) {
+		if(this != &other) {
 			this->r = other.r;
 			this->g = other.g;
 			this->b = other.b;
@@ -53,6 +53,14 @@ struct Color {
 		return *this;
 	}
 
+	Color& operator=(const uint8 other) {
+		// Check if is not the same
+		this->r = other;
+		this->g = other;
+		this->b = other;
+		this->a = other;
+		return *this;
+	}
 
 
 	inline void reset(const uint8 value = 255) {

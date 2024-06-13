@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 Font::Font(const char* path, const std::string& text, const uint16 size, const Color& color, const TextureFilter filter)
-	: path(path), text(text), size(size), color(color), filter(filter) {
+	: path(path), text(text), fsize(size), color(color), filter(filter) {
 
 	// Check extension
 	const std::string extension = StringHelper::file_extension(std::string(path));
@@ -17,7 +17,7 @@ Font::Font(const char* path, const std::string& text, const uint16 size, const C
 	}
 
 	// Check if font exist and avoid futher fram-by-frame check
-	if(TTF_OpenFont(this->path, this->size) == NULL) {
+	if(TTF_OpenFont(this->path, this->fsize) == NULL) {
 		TTF_Quit();
 		SDL_Quit();
 		throw std::runtime_error("Failed to load " + std::string(path) + "\n~> " + TTF_GetError());
@@ -34,7 +34,7 @@ void Font::update_texture() {
 	// Delete old sdl font
 	TTF_CloseFont(this->sdl_font);
 
-	this->sdl_font = TTF_OpenFont(this->path, this->size);
+	this->sdl_font = TTF_OpenFont(this->path, this->fsize);
 	SDL_Surface* ttf_surface = TTF_RenderText_Blended(this->sdl_font, this->text.c_str(), this->color.to_sdl_color());
 
 	// Create a surface to the correct size in RGB format, and copy the old image
@@ -42,12 +42,13 @@ void Font::update_texture() {
 	SDLHelper::flip_vertically(surface);
 	SDLHelper::flip_horizontally(surface);
 
-	this->width = surface->w;
-	this->height = surface->h;
+	// this->width = surface->w;
+	// this->height = surface->h;
+	this->size.set_values(static_cast<float>(surface->w), static_cast<float>(surface->h), 0.0f);
+
 
 	// Delete old texture to avoid memory leak
-	delete this->texture;
-	this->texture = new Texture(surface, this->filter);
+	this->set_texture(new Texture(surface, this->filter));
 
 	// Free surfaces
 	SDL_FreeSurface(ttf_surface);
@@ -70,3 +71,5 @@ void Font::set_size(const uint16 size) {
 	this->size = size;
 	this->update_texture();
 }
+
+

@@ -2,7 +2,6 @@
 
 #include "Dynastinae/types.hpp"
 #include "Dynastinae/window/window.hpp"
-#include "Dynastinae/utils/log.hpp"
 #include <glm/gtc/constants.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -11,7 +10,8 @@
 
 
 class Camera {
-	friend class Scene3D; // Scene3D can acess private members of Camera (for movement)
+	// Mesh and Childs
+	friend struct Mesh; // Mesh can acess private members of Camera (for movement)
 
 	public:
 		float sensitivity;
