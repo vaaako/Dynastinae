@@ -101,7 +101,7 @@ class Scene2D : public Scene {
 		const char* vertex_shader = R"(
 			#version 330 core
 
-			layout (location = 0) in vec2 aPos;
+			layout (location = 0) in vec3 aPos;
 
 			uniform mat4 model;
 			uniform mat4 projection;
@@ -113,7 +113,6 @@ class Scene2D : public Scene {
 
 		const char* fragment_shader = R"(
 			#version 330 core
-
 
 			out vec4 FragColor;
 			uniform vec4 shapeColor; // Color is defined by user later
@@ -127,7 +126,7 @@ class Scene2D : public Scene {
 		const char* vertex_shader_texture = R"(
 			#version 330 core
 
-			layout (location = 0) in vec2 aPos;
+			layout (location = 0) in vec3 aPos;
 			layout (location = 1) in vec2 aTex;
 
 			out vec2 texCoord;

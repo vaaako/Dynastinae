@@ -1,15 +1,11 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <vector>
 #include "Dynastinae/types.hpp"
-#include "Dynastinae/types/vertex.hpp"
 
 class VBO {
 	public:
 		VBO();
-		VBO(std::vector<Vertex>& vertices);
-		VBO(std::vector<float>& vertices);
 
 		~VBO() {
 			glDeleteBuffers(1, &this->id);

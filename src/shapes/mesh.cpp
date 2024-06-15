@@ -4,27 +4,25 @@
 #include "Dynastinae/opengl/vbo.hpp"
 #include "Dynastinae/utils/log.hpp"
 
-Mesh::Mesh(const std::vector<float>& vertices, const std::vector<uint32>& indices, const uint8 pos_dim, const uint8 tex_dim)
-	: vertices(vertices), indices(indices), indices_size(indices.size()) {
+Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<uint32>& indices, const uint8 pos_dim, const uint8 tex_dim)
+	: indices_size(indices.size()) {
 
 	if(vertices.empty() || indices.empty()) {
 		LOG_ERROR("\"vertices\" or \"indices\" is empty");
 		throw;
 	}
 
-
-
 	this->vao->bind();
 
-	// Calc total size
+	// Calc total dimension size
 	const int total_size = (pos_dim + tex_dim) * sizeof(float);
 
 	// Make VBO and EBO object to construct on VAO
 	VBO vbo = VBO();
-	EBO ebo = EBO(this->indices);
+	EBO ebo = EBO(indices);
 
 	// Build VBO
-	vbo.alloc_data(vertices.size() * sizeof(float), vertices.data());
+	vbo.alloc_data(vertices.size() * sizeof(Vertex), vertices.data());
 	vbo.link_attrib(0, pos_dim, total_size, 0);       // Position
 	vbo.link_attrib(1, tex_dim, total_size, pos_dim); // Texture
 
@@ -33,10 +31,10 @@ Mesh::Mesh(const std::vector<float>& vertices, const std::vector<uint32>& indice
 	ebo.unbind();
 }
 
+Mesh::Mesh(const std::vector<float>& vertices, const std::vector<uint32>& indices, const uint8 pos_dim, const uint8 tex_dim)
+	: indices_size(indices.size()) {
 
-
-
-
+}
 
 void Mesh::draw2d(const ShaderProgram& shader, const DrawMode draw_mode, const uint32 draw_type) const {
 	this->draw_start(shader, draw_mode);

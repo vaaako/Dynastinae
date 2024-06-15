@@ -9,6 +9,7 @@
 #include "Dynastinae/types/color.hpp"
 #include "Dynastinae/types/texture.hpp"
 #include "Dynastinae/types/vector/vec3.hpp"
+#include "Dynastinae/types/vertex.hpp"
 
 
 /*
@@ -30,11 +31,12 @@
 // LATER
 // TODO -- Rotate and Position (maybe) methods (maybe will need VBO back)
 // TODO -- Take color in constructor
+// TODO -- Change Texture to reference, if possible (remember to change on font.hpp)
 
 struct Mesh {
+	// I don't think I need to store this two
 	// const std::vector<Vertex> vertices;
-	std::vector<float> vertices;
-	const std::vector<uint32> indices;
+	// const std::vector<uint32> indices;
 	const uint64 indices_size; // Pre calculated indices size
 
 	// Safe free memory
@@ -45,11 +47,11 @@ struct Mesh {
 	float rotate_speed = 0;
 	Color color = 255;
 
-	// TODO -- Change to reference (remember to change on font.hpp)
 	Texture* texture = nullptr; // Pointer because might be nullptr
 
 
 	// Position and Texture dimension for building VBO
+	Mesh(const std::vector<Vertex>& vertices, const std::vector<uint32>& indices, const uint8 pos_dim, const uint8 tex_dim);
 	Mesh(const std::vector<float>& vertices, const std::vector<uint32>& indices, const uint8 pos_dim, const uint8 tex_dim);
 	~Mesh() {
 		// No need to delete texture, since is actually a "reference" to another texture
