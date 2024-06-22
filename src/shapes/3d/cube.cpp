@@ -4,42 +4,41 @@
 Cube::Cube()
 	: Shape3D({
 		// Vertices: 24
-		// VERTICES         /   TEXTURE
 		// Front face
-		-1.0f, -1.0f, 1.0f,   0.0f, 0.0f, // Bottom left vertex
-		 1.0f, -1.0f, 1.0f,   1.0f, 0.0f, // Bottom right vertex
-		 1.0f,  1.0f, 1.0f,   1.0f, 1.0f, // Top right vertex
-		-1.0f,  1.0f, 1.0f,   0.0f, 1.0f, // Top left vertex
+		Vertex { .position = glm::vec3(-1.0f, -1.0f, 1.0f), .texuv = glm::vec2(0.0f, 0.0f) }, // Bottom left vertex
+		Vertex { .position = glm::vec3( 1.0f, -1.0f, 1.0f), .texuv = glm::vec2(1.0f, 0.0f) }, // Bottom right vertex
+		Vertex { .position = glm::vec3( 1.0f,  1.0f, 1.0f), .texuv = glm::vec2(1.0f, 1.0f) }, // Top right vertex
+		Vertex { .position = glm::vec3(-1.0f,  1.0f, 1.0f), .texuv = glm::vec2(0.0f, 1.0f) }, // Top left vertex
 
 		// Back face
-		-1.0f, -1.0f, -1.0f,   1.0f, 0.0f, // 4
-		-1.0f,  1.0f, -1.0f,   1.0f, 1.0f, // 5
-		 1.0f,  1.0f, -1.0f,   0.0f, 1.0f, // 6
-		 1.0f, -1.0f, -1.0f,   0.0f, 0.0f, // 7
-		
+		Vertex { .position = glm::vec3(-1.0f, -1.0f, -1.0f), .texuv = glm::vec2(1.0f, 0.0f) }, // 4
+		Vertex { .position = glm::vec3(-1.0f,  1.0f, -1.0f), .texuv = glm::vec2(1.0f, 1.0f) }, // 5
+		Vertex { .position = glm::vec3( 1.0f,  1.0f, -1.0f), .texuv = glm::vec2(0.0f, 1.0f) }, // 6
+		Vertex { .position = glm::vec3( 1.0f, -1.0f, -1.0f), .texuv = glm::vec2(0.0f, 0.0f) }, // 7
+
 		// Top face
-		-1.0f, 1.0f, -1.0f,   0.0f, 1.0f, // 8
-		-1.0f, 1.0f,  1.0f,   0.0f, 0.0f, // 9
-		 1.0f, 1.0f,  1.0f,   1.0f, 0.0f, // 10
-		 1.0f, 1.0f, -1.0f,   1.0f, 1.0f, // 11
-		
+		Vertex { .position = glm::vec3(-1.0f, 1.0f, -1.0f), .texuv = glm::vec2(0.0f, 1.0f) }, // 8
+		Vertex { .position = glm::vec3(-1.0f, 1.0f,  1.0f), .texuv = glm::vec2(0.0f, 0.0f) }, // 9
+		Vertex { .position = glm::vec3( 1.0f, 1.0f,  1.0f), .texuv = glm::vec2(1.0f, 0.0f) }, // 10
+		Vertex { .position = glm::vec3( 1.0f, 1.0f, -1.0f), .texuv = glm::vec2(1.0f, 1.0f) }, // 11
+
 		// Bottom face
-		-1.0f, -1.0f, -1.0f,   0.0f, 0.0f, // 12
-		 1.0f, -1.0f, -1.0f,   1.0f, 0.0f, // 13
-		 1.0f, -1.0f,  1.0f,   1.0f, 1.0f, // 14
-		-1.0f, -1.0f,  1.0f,   0.0f, 1.0f, // 15
-		
+		Vertex { .position = glm::vec3(-1.0f, -1.0f, -1.0f), .texuv = glm::vec2(0.0f, 0.0f) }, // 12
+		Vertex { .position = glm::vec3( 1.0f, -1.0f, -1.0f), .texuv = glm::vec2(1.0f, 0.0f) }, // 13
+		Vertex { .position = glm::vec3( 1.0f, -1.0f,  1.0f), .texuv = glm::vec2(1.0f, 1.0f) }, // 14
+		Vertex { .position = glm::vec3(-1.0f, -1.0f,  1.0f), .texuv = glm::vec2(0.0f, 1.0f) }, // 15
+
 		// Right face
-		1.0f, -1.0f, -1.0f,   1.0f, 0.0f, // 16
-		1.0f,  1.0f, -1.0f,   1.0f, 1.0f, // 17
-		1.0f,  1.0f,  1.0f,   0.0f, 1.0f, // 18
-		1.0f, -1.0f,  1.0f,   0.0f, 0.0f, // 19
-		
+		Vertex { .position = glm::vec3(1.0f, -1.0f, -1.0f), .texuv = glm::vec2(1.0f, 0.0f) }, // 16
+		Vertex { .position = glm::vec3(1.0f,  1.0f, -1.0f), .texuv = glm::vec2(1.0f, 1.0f) }, // 17
+		Vertex { .position = glm::vec3(1.0f,  1.0f,  1.0f), .texuv = glm::vec2(0.0f, 1.0f) }, // 18
+		Vertex { .position = glm::vec3(1.0f, -1.0f,  1.0f), .texuv = glm::vec2(0.0f, 0.0f) }, // 19
+
 		// Left face
-		-1.0f, -1.0f, -1.0f,   0.0f, 0.0f, // 20
-		-1.0f, -1.0f,  1.0f,   1.0f, 0.0f, // 21
-		-1.0f,  1.0f,  1.0f,   1.0f, 1.0f, // 22
-		-1.0f,  1.0f, -1.0f,   0.0f, 1.0f  // 23
+		Vertex { .position = glm::vec3(-1.0f, -1.0f, -1.0f), .texuv = glm::vec2(0.0f, 0.0f) }, // 20
+		Vertex { .position = glm::vec3(-1.0f, -1.0f,  1.0f), .texuv = glm::vec2(1.0f, 0.0f) }, // 21
+		Vertex { .position = glm::vec3(-1.0f,  1.0f,  1.0f), .texuv = glm::vec2(1.0f, 1.0f) }, // 22
+		Vertex { .position = glm::vec3(-1.0f,  1.0f, -1.0f), .texuv = glm::vec2(0.0f, 1.0f) }  // 23
 	},
 	{
 		// Front face

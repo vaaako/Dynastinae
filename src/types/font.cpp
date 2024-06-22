@@ -42,10 +42,8 @@ void Font::update_texture() {
 	SDLHelper::flip_vertically(surface);
 	SDLHelper::flip_horizontally(surface);
 
-	// this->width = surface->w;
-	// this->height = surface->h;
-	this->size.set_values(static_cast<float>(surface->w), static_cast<float>(surface->h), 0.0f);
-
+	// Set Size
+	this->set_size({ static_cast<float>(surface->w), static_cast<float>(surface->h) });
 
 	// Delete old texture to avoid memory leak
 	this->set_texture(new Texture(surface, this->filter));
@@ -67,8 +65,8 @@ void Font::set_color(const Color& color) {
 	this->update_texture();
 }
 
-void Font::set_size(const uint16 size) {
-	this->size = size;
+void Font::set_font_size(const uint16 fsize) {
+	this->fsize = fsize;
 	this->update_texture();
 }
 

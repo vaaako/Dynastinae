@@ -10,3 +10,4 @@ std::string StringHelper::file_extension(const std::string& filename) {
 	// Return an empty string if the dot is not found
 	return "";
 }
+

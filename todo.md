@@ -12,10 +12,20 @@
 - [X] Fix log `fmt`
 	+ [X] Log for `audio.cpp` and `font.cpp` -> instead of logging full path, make a method on `StringHelper` to get only the file name
 - [X] Avoid circular import for `set_cursor_position` in `window.hpp`
+- [X] **[!]** Move draw to the shape struct. e.g. Cube -> import cube shape -> `cube.draw(args)`;
+	+ [X] Rename `shape.hpp` to `mesh.hpp`
+	+ [X] Renderer3D -> `renderer.draw_cube(texture)` -> `cube.draw(texture)`
+	+ [Tutorial](https://www.youtube.com/watch?v=NUZF_5RKfS4)
+- [X] Camera
+	+ [X] **[DISCARTED]** [Camera Movement](https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/main/Game.java#L121)
+	+ [X] Best mouse movement
+	+ [X] Custom position for shapes
+	+ [X] Rotation of 3D shape not working
+	+ [X] Shapes custom scale
 - [ ] Unify shader and `shader_texture` somehow
 	+ I don't think this is possible
 	+ Maybe set the texture alpha to zero when using just solid color?
-- [ ] **[?]** More texture options
+- [ ] More texture options
 	+ [ ] Different texture for each face
 	+ [ ] Texture overlay
 	+ [ ] Texture atlas support
@@ -26,18 +36,10 @@
 	+ [ ] Resizing support
 	+ [ ] Mouse handle click and motion at the same time
 	+ [ ] More window events
-- [ ] Camera
-	+ [X] **[DISCARTED]** [Camera Movement](https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/main/Game.java#L121)
-	+ [X] Best mouse movement
-	+ [X] Custom position for shapes
-	+ [X] Rotation of 3D shape not working
-	+ [ ] Shapes custom scale
 - [ ] Memory leak somewhere (i don't know if is on my `font.hpp` or SDL2 one)
-- [ ] **[!]** Move draw to the shape struct. e.g. Cube -> import cube shape -> `cube.draw(args)`;
-	+ Renderer3D -> `renderer.draw_cube(texture)` -> `cube.draw(texture)`
-	+ [Tutorial](https://www.youtube.com/watch?v=NUZF_5RKfS4)
-	+ Rename `shape.hpp` to `mesh.hpp`
 - [ ] Put required libraries `shared libraries` files on `libs/` folder
+- [ ] Assets path relative to file instead of executable
+- [ ] Fix FPS drop when movement is enabled
 
 
 # Notes

@@ -11,7 +11,7 @@
 
 class Camera {
 	// Mesh and Childs
-	friend struct Mesh; // Mesh can acess private members of Camera (for movement)
+	friend class Mesh; // Mesh can acess private members of Camera (for movement)
 
 	public:
 		float sensitivity;

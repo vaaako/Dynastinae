@@ -1,5 +1,7 @@
 #include "Dynastinae/input/keycode.hpp"
-#include "Dynastinae/utils/log.hpp"
+#include "Dynastinae/shapes/2d/triangle.hpp"
+#include "Dynastinae/shapes/3d/cube.hpp"
+#include "Dynastinae/shapes/3d/pyramid.hpp"
 #include "Dynastinae/window/window.hpp"
 #include "Dynastinae/scenes/scene2d.hpp"
 #include "Dynastinae/scenes/scene3d.hpp"
@@ -89,16 +91,17 @@ int main() {
 	Audio wav = Audio("tests/assets/sounds/sound2.wav", AudioType::MUSIC);
 
 	Font font = Font("tests/assets/fonts/msgothic.ttf", "FPS: 0", 24, { 255 }); // Path, Text, Size, Color
+	font.set_position({ 10.0f, 10.0f });
 
 	// Scenes
 	Scene2D scene2d = Scene2D(window);
-
 	Camera camera = Camera(window, 70.0f, 100.0f); // 3D environment
-	// Scene3D scene3d = Scene3D(camera); // 3D render
+	Scene3D scene3d = Scene3D(camera);             // 3D render
 
 	bool can_move = false; // Used for camera movement
 	float rotation = 0.0f;
 	uint32 start_time = window.time();
+
 	while(window.is_open()) {
 		// Clear screen with color
 		window.clear({ 255, 127, 255 });
@@ -116,16 +119,52 @@ int main() {
 		process_camera(window, *window.keyboard(), *window.mouse(), camera, can_move);
 
 		// Draw 2D Shapes
-		scene2d.triangle(&brick, { 100.0f, 100.0f }, 100.0f, 50.0f, Color(0, 255, 0));
 		// scene2d.rectangle(&brick, { 50.0f, 100.0f }, 200.0f, 200.0f);
 		// scene2d.triangle({ 550.0f, 350.0f }, 100.0f, rotation);
-		// scene2d.rectangle({ 500.0f, 370.0f }, 200.0f, 200.0f, Color::from_hex(0xCA1773));
+
+		Triangle().set_texture(&brick).set_position({ 100.0f, 100.0f })
+			.set_size(100.0f).set_angle(50.0f).set_color({ 0, 255, 0 })
+			.draw2d(scene2d);
+
+		scene2d.draw_shape(
+			Rectangle().set_position({ 500.0f, 370.0f }).set_size(100.0f).set_angle(rotation)
+				.set_color(Color::from_hex(0xCA1773))
+		);
 
 
 		// Don't worry about draw order with 2D, 2D shapes are always above 3D shapes
-		// scene3d.pyramid(&hideri, { 0.0f, 0.0f, -2.0f }, rotation, { 0, 1.0f, 0 });
+		// scene3d.pyramid(&hideri, { 0.0f, 0.0f, -2.0f }, { 2.0f, 2.0f, 2.0f }, rotation, { 1.0f, 1.0f, 0.0f });
+
+		// scene3d.pyramid(&hideri, { 0.0f, 0.0f, -1.0f })
+		// 	.set_scale({ 2.0f, 2.0f, 2.0f }).set_rotation_speed(rotation);
+
+		scene3d.draw_shapes(
+			Pyramid().set_texture(&hideri)
+				.set_position({ 0.0f, 0.0f, -3.0f })
+				.set_scale(2.0f)
+				.set_angle(rotation)
+				.set_axis({ 0, 1, 0 }),
+
+			Pyramid().set_color(Color::from_hex(0xca1773))
+				.set_position({ 5.0f, 0.0f, -3.0f })
+				.set_angle(rotation)
+				.set_axis({ 0, -1, 0 }),
+
+			Cube().set_texture(&kuromi)
+				.set_position({ 3.0f, 2.0f, 1.0f })
+				.set_angle(rotation)
+				.set_axis({ 1, 1, 1 }),
+
+			Cube().set_texture(&brick)
+				.set_position({ 5.0f, -2.0f, 4.0f })
+				.set_angle(rotation)
+				.set_axis({ 0, 1, -1 })
+		);
+
 		// scene3d.cube(&kuromi, { 3.0f, 2.0f, 1.0f }, rotation, { 1.0f, 1.0f, 1.0f });
 		// scene3d.cube(&brick, { 5.0f, -2.0f, 4.0f }, rotation, { 1.0f, 1.0f, 1.0f });
+
+
 
 		// Update FPS each second
 		uint32 current_time = window.time();
@@ -135,7 +174,7 @@ int main() {
 		}
 
 		// Draw fps
-		scene2d.draw_font(font, { 10.0f, 10.0f });
+		scene2d.draw_font(font);
 
 		// Rotate
 		rotation += 1.0f;
