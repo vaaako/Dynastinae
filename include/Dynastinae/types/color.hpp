@@ -13,23 +13,26 @@ struct Color {
 
 	// TODO -- Constructor with Colors enum
 	Color() = default;
-	Color(vec3<uint8>& color);
-	Color(vec4<uint8>& color);
+	Color(const uint8 value);
+	Color(const vec3<uint8>& color);
+	Color(const vec4<uint8>& color);
 	Color(const uint8 r, const uint8 g, const uint8 b, const uint8 a = 255);
+	Color(const Color& other) = default; // Copy constructor
 
-	Color(uint8 color, const uint8 alpha = 255) {
-		this->r = color;
-		this->g = color;
-		this->b = color;
-		this->a = alpha;
+
+	inline bool isempty() const {
+		return (this->r + this->g + this->b + this->a) == 0;
 	}
-	// Copy constructor
-	Color(const Color& other) {
-		this->r = other.r;
-		this->g = other.g;
-		this->b = other.b;
-		this->a = other.a;
+
+	inline vec4<uint8> to_vec4() const {
+		return vec4(this->r, this->g, this->b, this->a);
 	}
+
+	inline SDL_Color to_sdl_color() const {
+		return { static_cast<uint8>(this->r), static_cast<uint8>(this->g), static_cast<uint8>(this->b), static_cast<uint8_t>(this->a) };
+	}
+
+	static Color from_hex(const int hex_value, const uint8 alpha = 255);
 
 	bool operator==(const Color& other) {
 		return (this->r == other.r)
@@ -54,7 +57,6 @@ struct Color {
 	}
 
 	Color& operator=(const uint8 other) {
-		// Check if is not the same
 		this->r = other;
 		this->g = other;
 		this->b = other;
@@ -63,31 +65,4 @@ struct Color {
 	}
 
 
-	inline void reset(const uint8 value = 255) {
-		this->r = value;
-		this->g = value;
-		this->b = value;
-		this->a = value;
-	}
-
-	inline bool isempty() const {
-		return (this->r + this->g + this->b + this->a) == 0;
-	}
-
-
-	inline vec4<uint8> to_vec4() const {
-		return vec4(this->r, this->g, this->b, this->a);
-	}
-
-	inline SDL_Color to_sdl_color() const {
-		return { static_cast<uint8>(this->r), static_cast<uint8>(this->g), static_cast<uint8>(this->b), static_cast<uint8_t>(this->a) };
-	}
-
-	static Color from_hex(const int hex_value, const uint8 alpha = 255) {
-		const int rr = ((hex_value >> 16) & 0xFF);
-		const int gg = ((hex_value >> 8) & 0xFF);
-		const int bb = (hex_value & 0xFF);
-
-		return Color(static_cast<uint8>(rr), static_cast<uint8>(gg), static_cast<uint8>(bb), alpha);
-	}
 };
