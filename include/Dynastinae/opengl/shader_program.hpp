@@ -3,13 +3,17 @@
 #include <GL/glew.h>
 #include <glm/ext.hpp>
 #include <glm/mat4x4.hpp>
-#include "Dynastinae/types/vector/vec4.hpp"
+#include <string>
+#include "../types/vector/vec4.hpp"
 
 struct ShaderProgram {
 		ShaderProgram(const char* vertex_source, const char* fragment_source);
+		ShaderProgram(const std::string& vertex_source, const std::string& fragment_source);
 		~ShaderProgram() {
 			glDeleteProgram(this->id);
 		}
+
+		void make_program(const char* vertex_source, const char* fragment_source);
 
 		inline void use() const {
 			glUseProgram(this->id);
@@ -18,7 +22,6 @@ struct ShaderProgram {
 		inline void unbind() const {
 			glUseProgram(0);
 		}
-
 
 		/**
 		 * UNIFORMS */
