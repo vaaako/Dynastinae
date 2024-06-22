@@ -3,7 +3,6 @@
 #include <SDL2/SDL_events.h>
 #include "Dynastinae/types.hpp"
 #include "Dynastinae/types/vector/vec2.hpp"
-// #include "Dynastinae/window/window.hpp"
 
 enum class MouseBTN {
 	LMB = 1,
@@ -18,7 +17,8 @@ enum class Scroll {
 	DOWN = -1
 };
 
-class Window; // Avoid foward declaration
+// Avoid foward declaration
+class Window;
 
 // TODO -- Vector for events so is possible to click and move in the same frame
 struct Mouse {
