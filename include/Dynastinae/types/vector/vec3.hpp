@@ -75,18 +75,18 @@ struct vec3 {
 
 	vec3<T>& operator=(const vec3<T>& other) {
 		if(this != &other) {
-			x = other.x;
-			y = other.y;
-			z = other.z;
+			this->x = other.x;
+			this->y = other.y;
+			this->z = other.z;
 		}
 
 		return *this;
 	}
 
 	vec3<T>& operator=(const T other) {
-		x = other;
-		y = other;
-		z = other;
+		this->x = other;
+		this->y = other;
+		this->z = other;
 
 		return *this;
 	}

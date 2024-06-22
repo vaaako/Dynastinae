@@ -78,20 +78,20 @@ struct vec4 {
 
 	vec4<T>& operator=(const vec4<T>& other) {
 		if(this != &other) {
-			x = other.x;
-			y = other.y;
-			z = other.z;
-			w = other.w;
+			this->x = other.x;
+			this->y = other.y;
+			this->z = other.z;
+			this->w = other.w;
 		}
 
 		return *this;
 	}
 
 	vec4<T>& operator=(const T other) {
-		x = other;
-		y = other;
-		z = other;
-		w = other;
+		this->x = other;
+		this->y = other;
+		this->z = other;
+		this->w = other;
 
 		return *this;
 	}

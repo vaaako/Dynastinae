@@ -73,16 +73,16 @@ struct vec2 {
 
 	vec2<T>& operator=(const vec2<T>& other) {
 		if(this != &other) {
-			x = other.x;
-			y = other.y;
+			this->x = other.x;
+			this->y = other.y;
 		}
 
 		return *this;
 	}
 
 	vec2<T>& operator=(const T other) {
-		x = other;
-		y = other;
+		this->x = other;
+		this->y = other;
 
 		return *this;
 	}

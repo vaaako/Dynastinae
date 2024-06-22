@@ -78,24 +78,24 @@ struct vec6 {
 
 	vec6<T>& operator=(const vec6<T>& other) {
 		if(this != &other) {
-			x = other.x;
-			y = other.y;
-			z = other.z;
-			u = other.u;
-			v = other.v;
-			w = other.w;
+			this->x = other.x;
+			this->y = other.y;
+			this->z = other.z;
+			this->u = other.u;
+			this->v = other.v;
+			this->w = other.w;
 		}
 
 		return *this;
 	}
 
 	vec6<T>& operator=(const T other) {
-		x = other;
-		y = other;
-		z = other;
-		u = other;
-		v = other;
-		w = other;
+		this->x = other;
+		this->y = other;
+		this->z = other;
+		this->u = other;
+		this->v = other;
+		this->w = other;
 
 		return *this;
 	}

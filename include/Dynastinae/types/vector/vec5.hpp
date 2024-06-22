@@ -75,22 +75,22 @@ struct vec5 {
 
 	vec5<T>& operator=(const vec5<T>& other) {
 		if(this != &other) {
-			x = other.x;
-			y = other.y;
-			z = other.z;
-			w = other.w;
-			h = other.h;
+			this->x = other.x;
+			this->y = other.y;
+			this->z = other.z;
+			this->w = other.w;
+			this->h = other.h;
 		}
 
 		return *this;
 	}
 
 	vec5<T>& operator=(const T other) {
-		x = other;
-		y = other;
-		z = other;
-		w = other;
-		h = other;
+		this->x = other;
+		this->y = other;
+		this->z = other;
+		this->w = other;
+		this->h = other;
 
 		return *this;
 	}
