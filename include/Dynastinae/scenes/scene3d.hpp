@@ -18,21 +18,6 @@ class Scene3D : public Scene {
 			mesh.draw3d(this->camera, (mesh.get_texture() != nullptr) ? *this->shader_texture : *this->shader, drawmode, drawtype);
 		}
 
-		// Variadic template function to accept multiple Mesh objects
-		template <typename... Meshes>
-		inline void draw_shapes(const Meshes&... meshes) const {
-			// Store the meshes in a vector
-			std::vector<const Mesh*> buffer  = { &meshes... };
-
-			// Draw each
-			for(const Mesh* mesh : buffer) {
-				mesh->draw3d(this->camera,
-					(mesh->get_texture() != nullptr) ? *this->shader_texture : *this->shader,
-					DrawMode::FILL
-				);
-			}
-		}
-
 		inline const Camera& get_camera() const {
 			return this->camera;
 		}
@@ -45,6 +30,39 @@ class Scene3D : public Scene {
 			camera.update_viewport(width, height);
 		}
 
+
+		// NOTE -- template methods need to be referenced on header file
+
+		// Variadic template function to accept multiple Mesh objects
+		template <typename... Meshes>
+		void draw_shapes(const Meshes&... meshes) const {
+			// Store the meshes in a vector
+			std::vector<const Mesh*> buffer  = { &meshes... };
+
+			// Draw each
+			for(const Mesh* mesh : buffer) {
+				mesh->draw3d(
+					this->camera,
+					(mesh->get_texture() != nullptr) ? *this->shader_texture : *this->shader,
+					DrawMode::FILL
+				);
+			}
+		}
+
+		template <typename... Meshes>
+		void draw_shapes(const DrawMode drawmode, const Meshes&... meshes) const {
+			// Store the meshes in a vector
+			std::vector<const Mesh*> buffer  = { &meshes... };
+
+			// Draw each
+			for(const Mesh* mesh : buffer) {
+				mesh->draw3d(
+					this->camera,
+					(mesh->get_texture() != nullptr) ? *this->shader_texture : *this->shader,
+					drawmode
+				);
+			}
+		}
 	private:
 		std::vector<Mesh> shapes;
 		Camera& camera;

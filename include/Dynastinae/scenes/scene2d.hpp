@@ -13,9 +13,24 @@ class Scene2D : public Scene {
 			mesh.draw2d((mesh.get_texture() != nullptr) ? *this->shader_texture : *this->shader, drawmode, drawtype);
 		}
 
+		inline void draw_font(Font& font) const {
+			font.draw2d(*this->shader_texture, DrawMode::FILL, GL_TRIANGLE_FAN);
+		}
+
+		// NOTE -- not sure if i have to change glViewport too
+		inline void update_viewport(const Window& window) {
+			this->update_viewport(window.get_width(), window.get_height());
+		}
+
+		void update_viewport(const uint32 width, const uint32 height);
+
+
+
+		// NOTE -- template methods need to be referenced on header file
+
 		// Variadic template function to accept multiple Mesh objects
 		template <typename... Meshes>
-		inline void draw_shapes(const Meshes&... meshes) const {
+		void draw_shapes(const Meshes&... meshes) const {
 			// Store the meshes in a vector
 			std::vector<const Mesh*> buffer  = { &meshes... };
 
@@ -28,17 +43,19 @@ class Scene2D : public Scene {
 			}
 		}
 
+		template <typename... Meshes>
+		void draw_shapes(const DrawMode drawmode, const Meshes&... meshes) const {
+			// Store the meshes in a vector
+			std::vector<const Mesh*> buffer  = { &meshes... };
 
-		inline void draw_font(Font& font) const {
-			font.draw2d(*this->shader_texture, DrawMode::FILL, GL_TRIANGLE_FAN);
+			// Draw each
+			for(const Mesh* mesh : buffer) {
+				mesh->draw2d(
+					(mesh->get_texture() != nullptr) ? *this->shader_texture : *this->shader,
+					drawmode
+				);
+			}
 		}
-
-		// NOTE -- not sure if i have to change glViewport too
-		inline void update_viewport(const Window& window) {
-			this->update_viewport(window.get_width(), window.get_height());
-		}
-		void update_viewport(const uint32 width, const uint32 height);
-
 	private:
 		// Shaders
 		const char* vertex_shader = FileHelper::get_file_content(SOURCE_DIR + "/../opengl/shaders/2d/vertex.glsl");
