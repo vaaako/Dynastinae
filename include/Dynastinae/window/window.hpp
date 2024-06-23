@@ -81,26 +81,33 @@ class Window {
 
 		/**
 		 * GETTERS */
+
+		// Get SDL_Window object
 		inline SDL_Window* get_reference() const {
 			return this->window;
 		}
 
+		// Get keyboard
 		inline Keyboard* keyboard() const {
 			return this->keyboard_handler;
 		}
 
+		// Get mouse
 		inline Mouse* mouse() const {
 			return this->mouse_handler;
 		}
 
+		// Get window's title
 		inline std::string get_title() const {
 			return this->title;
 		}
 
+		// Get window's width
 		inline uint32 get_width() const {
 			return this->width;
 		}
 
+		// Get window's height
 		inline uint32 get_height() const {
 			return this->height;
 		}
@@ -111,6 +118,7 @@ class Window {
 					static_cast<uint32>(event)) != this->frame_events.end();
 		}
 
+		// Check if X or Y is out of window bounds
 		inline bool out_of_bounds(const int x, const int y) const {
 			return (x < 0 || x > static_cast<int>(this->width))
 					|| (y < 0 || y > static_cast<int>(this->height));
@@ -119,19 +127,24 @@ class Window {
 
 		/**
 		 * SETTERS */
+
+		// Changes window.isopen to false
 		inline void close() {
 			this->window_open = false;
 		}
 
+		// Changes window's title
 		inline void set_title(const std::string& title) {
 			this->title = title.c_str();
 			SDL_SetWindowTitle(this->window, title.c_str());
 		}
 
+		// Cursor fixes on center of window
 		inline void grab_cursor(const bool grab) const {
 			SDL_SetRelativeMouseMode(static_cast<SDL_bool>(grab));
 		}
 
+		// Hide cursor when inside window
 		inline void hide_cursor(const bool hide) const {
 			SDL_ShowCursor(!hide);
 		}

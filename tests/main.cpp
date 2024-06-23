@@ -49,6 +49,12 @@ void process_camera(Window& window, Keyboard& keyboard, Mouse& mouse, Camera& ca
 		camera.move_backward();
 	}
 
+	// if(keyboard.isdown(Keycode::W)) {
+	// 	camera.move_front();
+	// } else if(keyboard.isdown(Keycode::S)) {
+	// 	camera.move_back();
+	// }
+
 	if(keyboard.isdown(Keycode::A)) {
 		camera.move_left();
 	} else if(keyboard.isdown(Keycode::D)) {
@@ -56,9 +62,9 @@ void process_camera(Window& window, Keyboard& keyboard, Mouse& mouse, Camera& ca
 	}
 
 	if(keyboard.isdown(Keycode::LSHIFT)) {
-		camera.move_down();
+		camera.fly_down();
 	} else if(keyboard.isdown(Keycode::SPACE)) {
-		camera.move_up();
+		camera.fly_up();
 	}
 
 
@@ -72,11 +78,6 @@ void process_camera(Window& window, Keyboard& keyboard, Mouse& mouse, Camera& ca
 
 
 
-/*
- * WARNING -- There is a small memory leak in font, but i don't know if is because of SDL_ttf or i am doing something wrong
- * - Font, i don't know if is my fault or not
- * - Texture may be causing this?
- */
 int main() {
 	Window window = Window("Hello Dynastinae", 800, 600, true, true);
 
@@ -91,7 +92,7 @@ int main() {
 	Audio wav = Audio("tests/assets/sounds/sound2.wav", AudioType::MUSIC);
 
 	Font font = Font("tests/assets/fonts/msgothic.ttf", "FPS: 0", 24, { 255 }); // Path, Text, Size, Color
-	font.set_position({ 10.0f, 10.0f });
+	font.set_position({ 10.0f, 10.0f }); // This won't change, so is a good idea to set here
 
 	// Scenes
 	Scene2D scene2d = Scene2D(window);
@@ -119,24 +120,13 @@ int main() {
 		process_camera(window, *window.keyboard(), *window.mouse(), camera, can_move);
 
 		// Draw 2D Shapes
-		// scene2d.rectangle(&brick, { 50.0f, 100.0f }, 200.0f, 200.0f);
-		// scene2d.triangle({ 550.0f, 350.0f }, 100.0f, rotation);
+		scene2d.draw_shapes(
+			Triangle().set_texture(&brick).set_position({ 100.0f, 100.0f })
+				.set_size(100.0f).set_angle(50.0f).set_color({ 0, 255, 0 }),
 
-		Triangle().set_texture(&brick).set_position({ 100.0f, 100.0f })
-			.set_size(100.0f).set_angle(50.0f).set_color({ 0, 255, 0 })
-			.draw2d(scene2d);
-
-		scene2d.draw_shape(
 			Rectangle().set_position({ 500.0f, 370.0f }).set_size(100.0f).set_angle(rotation)
 				.set_color(Color::from_hex(0xCA1773))
 		);
-
-
-		// Don't worry about draw order with 2D, 2D shapes are always above 3D shapes
-		// scene3d.pyramid(&hideri, { 0.0f, 0.0f, -2.0f }, { 2.0f, 2.0f, 2.0f }, rotation, { 1.0f, 1.0f, 0.0f });
-
-		// scene3d.pyramid(&hideri, { 0.0f, 0.0f, -1.0f })
-		// 	.set_scale({ 2.0f, 2.0f, 2.0f }).set_rotation_speed(rotation);
 
 		scene3d.draw_shapes(
 			Pyramid().set_texture(&hideri)
@@ -160,11 +150,6 @@ int main() {
 				.set_angle(rotation)
 				.set_axis({ 0, 1, -1 })
 		);
-
-		// scene3d.cube(&kuromi, { 3.0f, 2.0f, 1.0f }, rotation, { 1.0f, 1.0f, 1.0f });
-		// scene3d.cube(&brick, { 5.0f, -2.0f, 4.0f }, rotation, { 1.0f, 1.0f, 1.0f });
-
-
 
 		// Update FPS each second
 		uint32 current_time = window.time();

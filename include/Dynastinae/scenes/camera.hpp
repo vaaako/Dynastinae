@@ -55,31 +55,49 @@ class Camera {
 
 		/**
 		 * MOVEMENT */
+
+		/*
+		 *
+		 * 
+		 *
+		 */
+
+		// Moves foward to the axis the camera is looking
 		inline void move_foward() {
 			this->position += this->orientation * this->speed;
 		}
 
+		// Moves backward to the axis the camera is looking
 		inline void move_backward() {
 			this->position -= this->orientation * this->speed;
 		}
 
+		// Moves foward to all axis except Z axis
+		inline void move_front() {
+			this->position += glm::normalize(glm::vec3(this->orientation.x, 0.0f, this->orientation.z)) * this->speed;
+		}
+
+		// Moves backward to all axis except Z axis
+		inline void move_back() {
+			this->position -= glm::normalize(glm::vec3(this->orientation.x, 0.0f, this->orientation.z)) * this->speed;
+		}
+
+		// Moves left on Y axis
 		inline void move_left() {
 			this->position -= glm::normalize(glm::cross(this->orientation, this->up)) * this->speed;
 		}
 
+		// Moves right on Y axis
 		inline void move_right() {
 			this->position += glm::normalize(glm::cross(this->orientation, this->up)) * this->speed ;
 		}
 
 		// Fly
-
-		// Go up
-		inline void move_up() {
+		inline void fly_up() {
 			this->position += this->up * this->speed;
 		}
 
-		// Go up
-		inline void move_down() {
+		inline void fly_down() {
 			this->position -= this->up * this->speed;
 		}
 
@@ -114,6 +132,8 @@ class Camera {
 
 		glm::vec3 position = { 0.0f, 0.0f, 2.0f };
 		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
+
 		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f);
 };
 
