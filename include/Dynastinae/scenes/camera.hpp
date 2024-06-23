@@ -72,22 +72,22 @@ class Camera {
 			this->position -= this->orientation * this->speed;
 		}
 
-		// Moves foward to all axis except Z axis
+		// Moves foward to all axis except Y axis
 		inline void move_front() {
 			this->position += glm::normalize(glm::vec3(this->orientation.x, 0.0f, this->orientation.z)) * this->speed;
 		}
 
-		// Moves backward to all axis except Z axis
+		// Moves backward to all axis except Y axis
 		inline void move_back() {
 			this->position -= glm::normalize(glm::vec3(this->orientation.x, 0.0f, this->orientation.z)) * this->speed;
 		}
 
-		// Moves left on Y axis
+		// Moves left on X and Z axis
 		inline void move_left() {
 			this->position -= glm::normalize(glm::cross(this->orientation, this->up)) * this->speed;
 		}
 
-		// Moves right on Y axis
+		// Moves right on X and Z axis
 		inline void move_right() {
 			this->position += glm::normalize(glm::cross(this->orientation, this->up)) * this->speed ;
 		}
