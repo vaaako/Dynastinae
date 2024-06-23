@@ -44,11 +44,14 @@ void Mouse::handle_event(const SDL_Event& event) {
 }
 
 void Mouse::set_cursor_position(const Window& window, const uint32 x, const uint32 y) {
-	if(window.out_of_bounds(static_cast<int>(x), static_cast<int>(y))) {
+	int int_x = static_cast<int>(x);
+	int int_y = static_cast<int>(y);
+	
+	if(window.out_of_bounds(int_x, int_y)) {
 		LOG_ERROR("x or y args are out of window bounds");
 		return;
 	}
 
-	SDL_WarpMouseInWindow(window.get_reference(), static_cast<int>(x), static_cast<int>(y));
+	SDL_WarpMouseInWindow(window.get_reference(), int_x, int_y);
 	this->position.set_values(x, y);
 }
