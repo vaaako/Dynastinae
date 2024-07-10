@@ -21,17 +21,24 @@ class Scene3D;
 
 class Mesh {
 	public:
+		// Decide what to do later
+		Mesh();
+		// Custom shape
 		Mesh(const std::vector<Vertex>& vertices, const std::vector<uint32>& indices);
+		// Load obj file
+		Mesh(const std::string& path);
 		~Mesh() {
 			// No need to delete texture, since is actually a "reference" to another texture
 			delete this->vao;
 		}
 
+
+		// TODO -- remove from mesh and put on shape2d or shape3d?
 		void draw2d(const ShaderProgram& shader, const DrawMode drawmode = DrawMode::FILL, const uint32 drawtype = GL_TRIANGLES) const;
 		void draw3d(const Camera& camera, const ShaderProgram& shader, const DrawMode drawmode = DrawMode::FILL, const uint32 drawtype = GL_TRIANGLES) const;
 
-		void draw2d(const Scene2D scene2d, const DrawMode drawmode = DrawMode::FILL, const uint32 drawtype = GL_TRIANGLES) const;
-		void draw3d(const Scene3D scene3d, const DrawMode drawmode = DrawMode::FILL, const uint32 drawtype = GL_TRIANGLES) const;
+		std::vector<Vertex> load_obj(const std::string& path, std::vector<uint32>& out_indices, bool& has_texuv);
+
 
 
 		inline const Texture* get_texture() const {
@@ -56,7 +63,7 @@ class Mesh {
 
 
 		inline Mesh& set_size(const float size) {
-			this->size.set_values(size, size, 0.0f);
+			this->size.set_values(size, size, size);
 			return *this;
 		}
 
@@ -65,14 +72,19 @@ class Mesh {
 			return *this;
 		}
 
+		inline Mesh& set_size(const vec3<float> size) {
+			this->size = size;
+			return *this;
+		}
+
 
 		inline Mesh& set_scale(const float scale) {
-			this->size = scale;
+			this->size = this->size * scale;
 			return *this;
 		}
 
 		inline Mesh& set_scale(const vec3<float> scale) {
-			this->size = scale;
+			this->size = this->size * scale;
 			return *this;
 		}
 
@@ -89,6 +101,11 @@ class Mesh {
 		}
 
 		inline Mesh& set_texture(Texture* texture) {
+			if(!has_texuv) {
+				LOG_INFO("This mesh does not support texture");
+				return *this;
+			}
+
 			this->texture = texture;
 			return *this;
 		}
@@ -97,13 +114,15 @@ class Mesh {
 		Texture* texture = nullptr; // Pointer because might be nullptr
 		Color color = 255;
 		vec3<float> position;
-		vec3<int8> axis = 0;
+		vec3<int8> axis = { 0, 1, 0 }; // If is all zero the mesh isn't rendered, this won't affect the Mesh if angle is zero
 		vec3<float> size = { 1.0f, 1.0f, 1.0f };
 		float angle = 0;
+		bool has_texuv = true;
 
 		// Safe free memory
 		VAO* vao = new VAO();
-		const uint64 indices_size; // Pre calculated indices size
+		GLsizei indices_size; // Pre calculated indices size
+		GLsizei vertices_size = 0; // Used for models only (currently)
 
 		// All below are inline because it should be in draw methods
 		inline void draw_start(const ShaderProgram& shader, const DrawMode drawmode) const {
@@ -120,6 +139,7 @@ class Mesh {
 			}
 
 			this->vao->bind();
-			glDrawElements(drawtype, static_cast<int>(this->indices_size), GL_UNSIGNED_INT, (void*)0);
+
+			glDrawElements(drawtype, this->indices_size, GL_UNSIGNED_INT, (void*)0);
 		}
 };

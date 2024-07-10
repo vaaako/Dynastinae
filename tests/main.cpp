@@ -76,8 +76,7 @@ void process_camera(Window& window, Keyboard& keyboard, Mouse& mouse, Camera& ca
 	}
 }
 
-
-
+// TODO -- Making a circle -- https://github.com/vaaako/Vakraft/blob/main/src/main/java/com/magenta/game/Aim.java
 int main() {
 	Window window = Window("Hello Dynastinae", 800, 600, true, true);
 
@@ -85,6 +84,7 @@ int main() {
 	Texture hideri = Texture("tests/assets/images/hideri.jpg", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 	Texture kuromi = Texture("tests/assets/images/kuromi.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
 	Texture brick = Texture("tests/assets/images/brick.png", TextureFilter::NEAREST, TextureWrap::MIRRORED);
+	Texture spot_texture = Texture("tests/assets/images/spot_texture.png");
 
 	// MUSIC - Play only one at the channel
 	// SOUND - Can play multple at the same channel
@@ -94,6 +94,13 @@ int main() {
 	Font font = Font("tests/assets/fonts/msgothic.ttf", "FPS: 0", 24, { 255 }); // Path, Text, Size, Color
 	font.set_position({ 10.0f, 10.0f }); // This won't change, so is a good idea to set here
 
+	Mesh teapot = Mesh("tests/assets/objs/teapot.obj");
+	Mesh cow = Mesh("tests/assets/objs/cow.obj");
+	Mesh spot = Mesh("tests/assets/objs/spot.obj");
+	Mesh bunny = Mesh("tests/assets/objs/stanford-bunny.obj");
+	Mesh armadillo = Mesh("tests/assets/objs/armadillo.obj");
+	Mesh dragon = Mesh("tests/assets/objs/xyzrgb_dragon.obj");
+
 	// Scenes
 	Scene2D scene2d = Scene2D(window);
 	Camera camera = Camera(window, 70.0f, 100.0f); // 3D environment
@@ -102,7 +109,6 @@ int main() {
 	bool can_move = false; // Used for camera movement
 	float rotation = 0.0f;
 	uint32 start_time = window.time();
-
 	while(window.is_open()) {
 		// Clear screen with color
 		window.clear({ 255, 127, 255 });
@@ -120,15 +126,49 @@ int main() {
 		process_camera(window, *window.keyboard(), *window.mouse(), camera, can_move);
 
 		// Draw 2D Shapes
-		scene2d.draw_shapes(
-			Triangle().set_texture(&brick).set_position({ 100.0f, 100.0f })
-				.set_size(100.0f).set_angle(50.0f).set_color({ 0, 255, 0 }),
+		// scene2d.draw_shapes(
+		// 	Triangle().set_texture(&brick).set_position({ 100.0f, 100.0f })
+		// 		.set_size(100.0f).set_angle(50.0f).set_color({ 0, 255, 0 }),
+		//
+		// 	Rectangle().set_position({ 500.0f, 370.0f }).set_size(100.0f).set_angle(rotation)
+		// 		.set_color(Color::from_hex(0xCA1773))
+		// );
 
-			Rectangle().set_position({ 500.0f, 370.0f }).set_size(100.0f).set_angle(rotation)
-				.set_color(Color::from_hex(0xCA1773))
-		);
-
+		// TODO -- set_scale not working for custom models
 		scene3d.draw_shapes(
+			teapot.set_color(Color::from_hex(0xca1773))
+					.set_position({ -15.0f, 0.0f, -10.0f })
+					.set_angle(rotation)
+					.set_axis({ 0, -1, 0 }),
+
+			cow.set_color(Color::from_hex(0xffe189))
+					.set_position({ -15.0f, 0.0f, -25.0f })
+					.set_angle(rotation)
+					.set_axis({ 0, 1, 0 }),
+
+			spot.set_texture(&spot_texture)
+					.set_position({ -15.0f, 0.0f, -40.0f })
+					.set_angle(rotation)
+					.set_axis({ 0, 1, 0 }),
+
+			bunny.set_color(Color::from_hex(0xffe189))
+					.set_size(30.0f) // Bunny
+					.set_position({ -15.0f, 0.0f, -55.0f })
+					.set_angle(rotation)
+					.set_axis({ 0, 1, 0 }),
+
+			armadillo.set_color(Color::from_hex(0xffe189))
+					.set_size(0.075f)
+					.set_position({ -15.0f, 0.0f, -70.0f })
+					.set_angle(rotation)
+					.set_axis({ 0, -1, 0 }),
+
+			dragon.set_color({ 0, 255, 0 })
+					.set_size(0.075f)
+					.set_position({ -15.0f, 0.0f, -85.0f })
+					.set_angle(rotation)
+					.set_axis({ 0, 1, 0 }),
+
 			Pyramid().set_texture(&hideri)
 				.set_position({ 0.0f, 0.0f, -3.0f })
 				.set_scale(2.0f)
@@ -148,7 +188,60 @@ int main() {
 			Cube().set_texture(&brick)
 				.set_position({ 5.0f, -2.0f, 4.0f })
 				.set_angle(rotation)
-				.set_axis({ 0, 1, -1 })
+				.set_axis({ 0, 1, -1 }),
+			
+
+			/*
+			 * EXPLAINING SIZES
+			 */
+			// Cubes has 1.0f of size
+			// Since this is the case, scaling to 2.0f is the same that setting the size to 2.0f
+			// But if first set the size to 2.0f and then the scale 2.0f, the size becomes 4.0f
+			Cube().set_texture(&brick)
+				// Scales to size 4.0f
+				.set_size(2.0f)
+				.set_scale(2.0f)
+
+				.set_position({ 0.0f, 0.0f, -20.0f }),
+
+			// Since the first cube size is 1.0f, 2.0f places this cube right on the limit of the first cube
+			// This .1f is just to show the offset between
+			Cube().set_texture(&brick)
+				.set_position({ 5.1f, 0.0f, -20.0f }), // For 4.0f size
+				// .set_position({ 2.1f, 0.0f, -20.0f }), // For 1.0f size
+
+			// Pyramid size is also 1.0f
+			Pyramid().set_texture(&brick)
+				.set_position({ 0.0f, 5.5f, -20.0f }),
+
+			Pyramid().set_texture(&brick)
+				.set_position({ 2.1f, 5.5f, -20.0f }),
+
+			// You can set size to some specific axis
+			// For example, if you set the cube axis Z size to 0.0f, you make a square
+			Cube().set_texture(&brick)
+				.set_position({ 10.0f, 0.0f, -10.0f })
+				.set_size({ 1.0f, 1.0f, 0.0f })
+				// Rotating a bit to show the effect
+				.set_angle(20.0f)
+				.set_axis({ 0, 10, 0 }),
+
+
+			// You can also set the initial size, angle and etc on cube creation
+			// Cube(&brick, { 0.0f, 0.0f, -15.0f }, 2.0f, 10.0f) // Texture, position, size, angle
+			// Same to other shapes
+			
+
+			// A little house!
+			Cube().set_texture(&kuromi)
+				.set_position({ -10.0f, 0.0f, 0.0f }),
+			Pyramid().set_texture(&brick)
+				.set_position({ -10.0f, 2.0f, 0.0f }),
+
+			// Pulsing cube
+			Cube().set_texture(&kuromi)
+				.set_position({ 10.0f, 0.0f, 0.0f })
+				.set_size(std::sin(rotation / 10.0f))
 		);
 
 		// Update FPS each second

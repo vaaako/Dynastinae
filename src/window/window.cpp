@@ -45,7 +45,7 @@ Window::Window(const std::string& title, const uint32 width, const uint32 height
 
 		static_cast<int>(width), static_cast<int>(height),
 
-		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
+		SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN
 	);
 
 	if(!this->window) {

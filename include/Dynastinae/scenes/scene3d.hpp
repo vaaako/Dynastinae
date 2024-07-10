@@ -63,6 +63,8 @@ class Scene3D : public Scene {
 				);
 			}
 		}
+
+
 	private:
 		std::vector<Mesh> shapes;
 		Camera& camera;

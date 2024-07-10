@@ -40,7 +40,7 @@
 - [ ] Put required libraries `shared libraries` files on `libs/` folder
 - [ ] Assets path relative to file instead of executable
 - [ ] Fix FPS drop when movement is enabled
-
+- [ ] Merge `set_angle` and `set_axis`
 
 # Notes
 - **[?]** Custom vertex colors for 2D

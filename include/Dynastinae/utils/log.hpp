@@ -31,7 +31,7 @@ namespace Log {
 	}
 
 	// Avoid ambiguous
-	inline void message_macro(const std::string& level, const std::string& func, const char* fmt, ...) {
+	inline void message_macro(const char* level, const std::string& func, const char* fmt, ...) {
 		std::vector<char> buffer = std::vector<char>(1024);
 
 		va_list args;

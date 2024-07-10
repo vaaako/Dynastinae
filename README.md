@@ -27,15 +27,15 @@ These are the main objectives *at the moment*
 	+ [X] Colors
 	+ [X] Texture
 	+ [X] Position
-	+ [ ] 3D shape scale
+	+ [X] 3D shape scale
 	+ [ ] Skybox
 	+ [ ] Import `.obj`
 	+ [ ] Sphere
 - [X] Movement
 - [X] Audio
 - [X] Fonts
-- [ ] **[?]** Gif texture
-- [ ] **[?]** Texture overlay
+<!-- - [ ] **[?]** Gif texture -->
+<!-- - [ ] **[?]** Texture overlay -->
 
 See [`todo.md`](todo.md) for more objectives
 
